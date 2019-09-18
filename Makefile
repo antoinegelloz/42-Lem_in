@@ -13,7 +13,7 @@
 CC = gcc
 NAME = lem_in
 CFLAGS = -Wall -Wextra -Werror
-#CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address,undefined -Wpadded
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address,undefined -Wpadded
 LIBH = libft/inc
 INC = inc/
 HEAD = $(INC)lem_in.h

@@ -13,7 +13,7 @@
 NAME = libft.a
 CC = Clang
 CFLAGS = -Wall -Werror -Wextra
-#CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address,undefined -Wpadded
+CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address,undefined -Wpadded
 CLEANUP = /bin/rm -rf
 INC = libft.h
 INC_DIR = inc/
@@ -103,6 +103,7 @@ SRC += ft_putnbr_fd.c
 SRC += ft_putstr.c
 SRC += ft_putstr_fd.c
 SRC += ft_lstnew.c
+SRC += ft_lstadd.c
 SRC += ft_lstprepend.c
 SRC += ft_lstappend.c
 SRC += ft_lstdel.c
