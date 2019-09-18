@@ -6,14 +6,14 @@
 #    By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/05 10:17:32 by agelloz           #+#    #+#              #
-#    Updated: 2019/09/16 15:38:24 by agelloz          ###   ########.fr        #
+#    Updated: 2019/09/18 13:20:53 by agelloz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 CC = Clang
 CFLAGS = -Wall -Werror -Wextra
-#CFLAGS = -Wall -Werror -Wextra -fsanitize=address,undefined -g3
+#CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address,undefined -Wpadded
 CLEANUP = /bin/rm -rf
 INC = libft.h
 INC_DIR = inc/
@@ -94,7 +94,6 @@ SRC += ft_toupper.c
 SRC += ft_atoi.c
 SRC += ft_atol.c
 SRC += ft_itoa.c
-SRC += ft_get_next_line.c
 SRC += ft_putchar.c
 SRC += ft_putchar_fd.c
 SRC += ft_putendl.c
@@ -122,6 +121,7 @@ SRC += ft_lstgetmin.c
 SRC += ft_lstgetmax.c
 SRC += ft_lstindex.c
 SRC += ft_lst_mergesort.c
+SRC += get_next_line.c
 
 OBJ = $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC))
 

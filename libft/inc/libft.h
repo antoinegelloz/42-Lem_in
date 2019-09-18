@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 11:20:40 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/17 12:41:00 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/18 10:26:36 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 # include <string.h>
 # include "printf.h"
 
-# define BUFF_SIZE 4096
+# define SUCCESS	1
+# define FAILURE	0
+# define BUFF_SIZE	4096
 
 void				ft_bzero(void *s, size_t n);
 void				ft_memdel(void **ap);
@@ -80,7 +82,7 @@ void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char const *s, int fd);
 void				ft_putendl_fd(char const *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
-int					ft_get_next_line(const int fd, char **line);
+int					get_next_line(const int fd, char **line);
 
 typedef struct		s_list
 {

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_next_line.c                                 :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agelloz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 12:04:47 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/16 15:32:21 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/18 10:28:51 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		ft_memmoveclear(void **dst, void *src)
+void		memmoveclear(void **dst, void *src)
 {
 	char		*d;
 	char		*s;
@@ -27,7 +27,7 @@ void		ft_memmoveclear(void **dst, void *src)
 		*d++ = '\0';
 }
 
-t_list		*ft_delete_file(t_list **file, int fd)
+t_list		*delete_file(t_list **file, int fd)
 {
 	t_list *curr;
 	t_list *prev;
@@ -54,7 +54,7 @@ t_list		*ft_delete_file(t_list **file, int fd)
 	return (NULL);
 }
 
-t_list		*ft_switch_file(t_list **file, int fd)
+t_list		*switch_file(t_list **file, int fd)
 {
 	t_list	*curr;
 	t_list	*prev;
@@ -83,7 +83,7 @@ t_list		*ft_switch_file(t_list **file, int fd)
 	return (curr);
 }
 
-int			ft_fill_line(t_list **file, char ***line, int fd)
+int			fill_line(t_list **file, char ***line, int fd)
 {
 	t_list	*c;
 	char	*p;
@@ -95,18 +95,18 @@ int			ft_fill_line(t_list **file, char ***line, int fd)
 				- ft_strlen(p + 1));
 		if (!(**line))
 			return (-1);
-		ft_memmoveclear(&c->content, p + 1);
+		memmoveclear(&c->content, p + 1);
 	}
 	else
 	{
 		if (!(**line = ft_strdup(c->content)))
 			return (-1);
-		*file = ft_delete_file(&(*file), fd);
+		*file = delete_file(&(*file), fd);
 	}
 	return (1);
 }
 
-int			ft_get_next_line(const int fd, char **line)
+int			get_next_line(const int fd, char **line)
 {
 	static t_list	*file;
 	char			buf[BUFF_SIZE + 1];
@@ -114,10 +114,10 @@ int			ft_get_next_line(const int fd, char **line)
 
 	ft_memset(buf, 0, BUFF_SIZE + 1);
 	if ((fd < 0 || line == NULL || read(fd, buf, 0) < 0 || BUFF_SIZE <= 0)
-			|| !(file = ft_switch_file(&file, fd)))
+			|| !(file = switch_file(&file, fd)))
 		return (-1);
 	if (ft_strchr(file->content, '\n'))
-		return (ft_fill_line(&file, &line, fd));
+		return (fill_line(&file, &line, fd));
 	while (!ft_strchr(file->content, '\n') && (byt = read(fd, buf, BUFF_SIZE)))
 	{
 		buf[byt] = '\0';
@@ -126,10 +126,10 @@ int			ft_get_next_line(const int fd, char **line)
 	}
 	if (byt < BUFF_SIZE && !ft_strlen(file->content))
 	{
-		file = ft_delete_file(&file, fd);
+		file = delete_file(&file, fd);
 		if (buf[0] == '\0')
 			return (0);
 		return ((*line = ft_strdup(buf)) ? 0 : -1);
 	}
-	return (ft_fill_line(&file, &line, fd));
+	return (fill_line(&file, &line, fd));
 }

@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 11:33:53 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/05 12:28:43 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/18 09:35:46 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct	s_ldouble_bits
 	unsigned long long	mantissa:64;
 	unsigned long long	exp:15;
 	unsigned long long	sign:1;
+	char				pad[6];
 }				t_ldouble_bits;
 
 typedef union	u_double

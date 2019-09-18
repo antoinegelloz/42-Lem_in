@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/11 11:44:18 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/05 12:28:14 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/18 09:34:28 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct	s_sp
 	char	space;
 	char	plus;
 	char	type_size;
+	char	pad[2];
 }				t_sp;
 
 int				ft_printf(const char *restrict format, ...);
