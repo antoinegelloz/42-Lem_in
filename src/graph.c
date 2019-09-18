@@ -22,10 +22,10 @@ void	print_graph(t_graph *graph)
 	while (index < graph->size)
 	{
 		temp = graph->array[index].head;
-		ft_printf("Adjacency list of node %d: head", index);
+		ft_printf("Node %d", index);
 		while (temp)
 		{
-			ft_printf(" -> %d", temp->dest);
+			ft_printf(" | %d -> %d", index, temp->dest);
 			temp = temp->next;
 		}
 		ft_printf("\n");

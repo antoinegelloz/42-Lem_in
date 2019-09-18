@@ -44,6 +44,7 @@ int8_t	add_edge(t_graph *graph, int src, int dest);
 
 t_graph	*exit_parse_error(void);
 t_graph *exit_graph_error(void);
+t_graph *exit_read_error(t_list **file);
 int8_t	exit_free_graph(t_graph *graph);
 
 void	print_graph(t_graph *graph);

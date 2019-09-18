@@ -25,6 +25,13 @@ t_graph	*exit_graph_error(void)
 	return (NULL);
 }
 
+t_graph	*exit_read_error(t_list **file)
+{
+	ft_lstdel(file, ft_delcontent);
+	ft_putendl_fd("READ ERROR", 2);
+	return (NULL);
+}
+
 int8_t	exit_free_graph(t_graph *graph)
 {
 	size_t	index;
