@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 11:20:40 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/18 10:26:36 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/19 18:19:56 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,6 @@ typedef struct		s_list
 	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
-
-typedef struct		s_file
-{
-	char			*rest;
-	int				fd;
-}					t_file;
 
 int					ft_lstcount(t_list *lst);
 int					ft_lstsorted(t_list *list, int size,

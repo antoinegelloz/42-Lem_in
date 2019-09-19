@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/18 13:28:45 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/19 19:29:48 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ typedef struct	s_graph
 	t_node	*array;
 }				t_graph;
 
-t_graph	*create_graph(size_t size);
-int8_t	add_edge(t_graph *graph, int src, int dest);
+t_graph			*create_graph(size_t size);
+int8_t			add_edge(t_graph *graph, int src, int dest);
 
-t_graph	*exit_parse_error(void);
-t_graph *exit_graph_error(void);
-t_graph *exit_read_error(t_list **file);
-int8_t	exit_free_graph(t_graph *graph);
+t_graph			*exit_parse_error(void);
+t_graph			*exit_graph_error(void);
+t_list			*exit_read_error(t_list **file);
+int8_t			exit_free_graph(t_graph *graph);
 
-void	print_graph(t_graph *graph);
+void			print_graph(t_graph *graph);
 
 #endif
