@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:00:34 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/18 13:30:30 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/19 15:14:57 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_graph	*exit_graph_error(void)
 	return (NULL);
 }
 
-t_graph	*exit_read_error(t_list **file)
+t_list	*exit_read_error(t_list **file)
 {
 	ft_lstdel(file, ft_delcontent);
 	ft_putendl_fd("READ ERROR", 2);

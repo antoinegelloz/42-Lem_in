@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/18 12:13:55 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/19 19:29:02 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	print_graph(t_graph *graph)
 
 int8_t	add_edge(t_graph *graph, int src, int dest)
 {
-	t_edge *forward_edge; 
-	t_edge *backward_edge; 
+	t_edge *forward_edge;
+	t_edge *backward_edge;
 
 	if ((forward_edge = (t_edge *)malloc(sizeof(t_edge))) == FAILURE)
 		return (FAILURE);
@@ -60,7 +60,7 @@ t_graph	*create_graph(size_t size)
 	size_t	i;
 
 	if (size == 0 || (graph = (t_graph *)malloc(sizeof(t_graph))) == FAILURE)
-			return (NULL);
+		return (NULL);
 	graph->size = size;
 	if ((graph->array = (t_node *)malloc(size * sizeof(t_node))) == FAILURE)
 	{
