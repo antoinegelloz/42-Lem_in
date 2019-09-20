@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 11:20:40 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/19 18:19:56 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/20 12:39:41 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,21 @@
 # define SUCCESS	1
 # define FAILURE	0
 # define BUFF_SIZE	4096
+
+typedef struct		s_list
+{
+	void			*content;
+	size_t			content_size;
+	struct s_list	*next;
+}					t_list;
+
+typedef struct		s_file
+{
+	int				fd;
+	int				state;
+	char			*rest;
+	char			*curr;
+}					t_file;
 
 void				ft_bzero(void *s, size_t n);
 void				ft_memdel(void **ap);
@@ -83,14 +98,6 @@ void				ft_putstr_fd(char const *s, int fd);
 void				ft_putendl_fd(char const *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 int					get_next_line(const int fd, char **line);
-
-typedef struct		s_list
-{
-	void			*content;
-	size_t			content_size;
-	struct s_list	*next;
-}					t_list;
-
 int					ft_lstcount(t_list *lst);
 int					ft_lstsorted(t_list *list, int size,
 									int (*cmp)(void *, void *));
