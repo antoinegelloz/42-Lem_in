@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:00:34 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/19 15:14:57 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/20 12:04:26 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,17 @@ t_graph	*exit_parse_error(void)
 	return (NULL);
 }
 
-t_graph	*exit_graph_error(void)
+t_graph	*exit_graph_error(t_list **file)
 {
+	ft_lstdel(file, ft_delcontent);
 	ft_putendl_fd("GRAPH ERROR", 2);
 	return (NULL);
 }
 
-t_list	*exit_read_error(t_list **file)
+t_list	*exit_file_error(t_list **file)
 {
 	ft_lstdel(file, ft_delcontent);
-	ft_putendl_fd("READ ERROR", 2);
+	ft_putendl_fd("FILE ERROR", 2);
 	return (NULL);
 }
 
