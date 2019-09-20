@@ -40,6 +40,12 @@ typedef struct	s_graph
 	t_node	*array;
 }				t_graph;
 
+int8_t			is_tunnel(char *line);
+int8_t			is_room(char *line);
+int8_t			is_comment_or_false_command(char *line);
+int8_t			is_ants(char *line);
+int8_t			is_command(char *line);
+
 t_graph			*create_graph(size_t size);
 int8_t			add_edge(t_graph *graph, int src, int dest);
 

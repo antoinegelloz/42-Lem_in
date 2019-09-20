@@ -10,82 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "lem_in.h"
-
-int8_t	is_tunnel(char *line)
-{
-	int	i;
-
-	if (line == NULL)
-		return (FAILURE);
-	i = 0;
-	while (line[i] != '\0' && line[i] != '-')
-		if (!ft_isprint(line[i++]))
-			return (FAILURE);
-	if (line[i++] != '-')
-		return (FAILURE);
-	while (line[i] != '\0')
-		if (!ft_isprint(line[i++]))
-			return (FAILURE);
-	return (SUCCESS);
-}
-
-int8_t	is_room(char *line)
-{
-	int	i;
-
-	if (line == NULL)
-		return (FAILURE);
-	i = 0;
-	while (line[i] != '\0' && line[i] != ' ')
-		if (!ft_isprint(line[i++]))
-			return (FAILURE);
-	if (line[i++] != ' ')
-		return (FAILURE);
-	while (line[i] != '\0' && line[i] != ' ')
-		if (!ft_isdigit(line[i++]))
-			return (FAILURE);
-	if (line[i++] != ' ')
-		return (FAILURE);
-	while (line[i] != '\0')
-		if (!ft_isdigit(line[i++]))
-			return (FAILURE);
-	return (SUCCESS);
-}
-
-int8_t	is_comment_or_false_command(char *line)
-{
-	if (line == NULL)
-		return (FAILURE);
-	if (line[0] == '#' && (line[1] != '#'
-				|| !ft_strequ(line, "##start")
-				|| !ft_strequ(line, "##end")))
-		return (SUCCESS);
-	else
-		return (FAILURE);
-}
-
-int8_t	is_ants(char *line)
-{
-	int	i;
-
-	if (line == NULL)
-		return (FAILURE);
-	i = 0;
-	while (line[i] != '\0')
-		if (!ft_isdigit(line[i++]))
-			return (FAILURE);
-	return (SUCCESS);
-}
-
-int8_t	is_command(char *line)
-{
-	if (ft_strequ(line, "##start") || ft_strequ(line, "##end"))
-		return (SUCCESS);
-	else
-		return (FAILURE);
-}
 
 int8_t	check_line(char **line)
 {
@@ -117,6 +42,7 @@ t_list	*save_file(void)
 	new_line = NULL;
 	while ((ret = get_next_line(STDIN_FILENO, &line)) > 0)
 	{
+		ft_putendl(line);
 		if (check_line(&line) == FAILURE)
 			return (NULL);
 		if ((new_line = ft_lstnew(line, ft_strlen(line)
@@ -132,6 +58,26 @@ t_list	*save_file(void)
 	return (file);
 }
 
+size_t	get_graph_size(t_list *file)
+{
+	size_t size;
+
+	size = 0;
+	while (file && file->next && (is_room(file->content)
+				|| is_command(file->content)
+				|| is_comment_or_false_command(file->content)))
+	{
+		if (is_command(file->content) && !is_room(file->next->content))
+				return (FAILURE);
+		else if (is_room(file->content))
+			size++;	
+		file = file->next;
+	}
+	if (size < 2 || !file || !is_tunnel(file->content))
+		return (FAILURE);
+	return (size);
+}
+
 t_graph	*build_graph(t_list *file)
 {
 	t_graph	*graph;
@@ -142,22 +88,13 @@ t_graph	*build_graph(t_list *file)
 	graph = NULL;
 	if (!is_ants(file->content) || (ants = ft_atol(file->content)) < 1)
 		return (NULL);
-	file = file->next;
-	size = 0;
-	while (file && file->next && (is_room(file->content) || is_command(file->content)
-									|| is_comment_or_false_command(file->content)))
-	{
-		if (is_command(file->content) && !is_room(file->next->content))
-				return (NULL);
-		else if (is_room(file->content))
-			size++;	
-	}
-	if (!file || !is_tunnel(file->content))
+	if ((size = get_graph_size(file->next)) == FAILURE)
+		return (NULL);
+	if (check_rooms(file->next, size) == FAILURE)
 		return (NULL);
 	if ((graph = create_graph(size)) == NULL)
 		return (NULL);
-	if (size > 1)
-		add_edge(graph, 0, 1);
+	add_edge(graph, 0, 1);
 	return (graph);
 }
 
