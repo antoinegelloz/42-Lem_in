@@ -20,7 +20,7 @@ HEAD = $(INC)lem_in.h
 LIBA = libft/libft.a
 SRC_DIR = src/
 
-SRC_FILES = lem_in.c graph.c exit.c
+SRC_FILES = lem_in.c parsing_tests.c graph.c exit.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(SRC:%.c=%.o)

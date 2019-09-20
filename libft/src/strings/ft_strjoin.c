@@ -10,22 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** Alloue (avec malloc(3)) et retourne une chaîne de caractères
-** “fraiche” terminée par un ’\0’ résultant de la concaténation
-** de s1 et s2. Si l’allocation echoue, la fonction renvoie NULL.
-*/
-
 #include "libft.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char *result;
+	char	*s_new;
+	size_t	len_s1;
+	size_t	len_s2;
 
-	if (!s1 || !s2 || !(result = ft_strnew((ft_strlen(s1)
-						+ ft_strlen(s2) + 1))))
+	if (!s1 && !s2)
 		return (NULL);
-	ft_strcpy(result, s1);
-	ft_strcat(result, s2);
-	return (result);
+	if (!s1)
+		s_new = ft_strdup((char *)s2);
+	else if (!s2)
+		s_new = ft_strdup((char *)s1);
+	else
+	{
+		len_s1 = ft_strlen(s1);
+		len_s2 = ft_strlen(s2);
+		if (!(s_new = (char *)malloc(sizeof(char) * (len_s1 + len_s2 + 1))))
+			return (NULL);
+		ft_strncpy(s_new, s1, ft_strlen(s1));
+		ft_strcpy(s_new + ft_strlen(s1), s2);
+	}
+	return (s_new);
 }
