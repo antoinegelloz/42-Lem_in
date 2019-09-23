@@ -6,57 +6,11 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/20 13:00:58 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/23 10:39:41 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-int8_t	check_line(char **line)
-{
-	if (*line == NULL)
-		return (FAILURE);
-	if (is_command(*line))
-		return (SUCCESS);
-	if (is_comment_or_false_command(*line))
-		return (SUCCESS);
-	if (is_ants(*line))
-		return (SUCCESS);
-	if (is_room(*line))
-		return (SUCCESS);
-	if (is_tunnel(*line))
-		return (SUCCESS);
-	ft_strdel(line);
-	return (FAILURE);
-}
-
-t_list	*save_file(void)
-{
-	char	*line;
-	t_list	*new_line;
-	t_list	*file;
-	int		ret;
-
-	file = NULL;
-	line = NULL;
-	new_line = NULL;
-	while ((ret = get_next_line(STDIN_FILENO, &line)) > 0)
-	{
-		ft_putendl(line);
-		if (check_line(&line) == FAILURE)
-			return (NULL);
-		if ((new_line = ft_lstnew(line, ft_strlen(line)
-						* sizeof(char) + 1)) == NULL)
-			return (NULL);
-		if (file == NULL)
-			file = new_line;
-		else
-			ft_lstappend(&file, new_line);
-		ft_strdel(&line);
-	}
-	ft_strdel(&line);
-	return (file);
-}
 
 size_t	get_graph_size(t_list *file)
 {
@@ -78,6 +32,13 @@ size_t	get_graph_size(t_list *file)
 	return (size);
 }
 
+int8_t	check_rooms(t_list *file, size_t size)
+{
+	(void)file;
+	(void)size;
+	return (SUCCESS);		
+}
+
 t_graph	*build_graph(t_list *file)
 {
 	t_graph	*graph;
@@ -87,32 +48,37 @@ t_graph	*build_graph(t_list *file)
 	ants = 0;
 	graph = NULL;
 	if (!is_ants(file->content) || (ants = ft_atol(file->content)) < 1)
-		return (NULL);
+		return (exit_graph_error(&file));
 	if ((size = get_graph_size(file->next)) == FAILURE)
-		return (NULL);
+		return (exit_graph_error(&file));
 	if (check_rooms(file->next, size) == FAILURE)
-		return (NULL);
+		return (exit_graph_error(&file));
 	if ((graph = create_graph(size)) == NULL)
-		return (NULL);
+		return (exit_graph_error(&file));
 	add_edge(graph, 0, 1);
 	return (graph);
 }
-
 
 t_graph	*parse_file(void)
 {
 	t_graph	*graph;
 	t_list	*file;
+	t_list	*curr;
 
 	if ((file = save_file()) == NULL)
-	{
-		exit_file_error(&file);
 		return (NULL);
+	ft_printf("File saved successfully\n");
+	curr = file;
+	while (curr)
+	{
+		ft_printf("%s\n", curr->content);
+		curr = curr->next;
 	}
-	ft_printf("File saved in a linked list\n");
 	graph = NULL;
 	if ((graph = build_graph(file)) == NULL)
-		return (exit_graph_error(&file));
+		return (NULL);
+	ft_printf("Graph built successfully\n");
+	ft_lstdel(&file, ft_delcontent);
 	return (graph);
 }
 
