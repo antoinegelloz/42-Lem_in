@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/20 11:44:23 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/23 10:15:55 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct	s_graph
 	t_node	*array;
 }				t_graph;
 
+t_list			*save_file(void);
 int8_t			is_tunnel(char *line);
 int8_t			is_room(char *line);
 int8_t			is_comment_or_false_command(char *line);
@@ -49,7 +50,6 @@ int8_t			is_command(char *line);
 t_graph			*create_graph(size_t size);
 int8_t			add_edge(t_graph *graph, int src, int dest);
 
-t_graph			*exit_parse_error(void);
 t_graph			*exit_graph_error(t_list **file);
 t_list			*exit_file_error(t_list **file);
 int8_t			exit_free_graph(t_graph *graph);

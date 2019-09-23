@@ -6,18 +6,12 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:00:34 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/20 12:04:26 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/23 10:15:51 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lem_in.h"
-
-t_graph	*exit_parse_error(void)
-{
-	ft_putendl_fd("ERROR", 2);
-	return (NULL);
-}
 
 t_graph	*exit_graph_error(t_list **file)
 {

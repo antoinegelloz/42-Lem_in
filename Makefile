@@ -6,21 +6,21 @@
 #    By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/19 11:32:25 by agelloz           #+#    #+#              #
-#    Updated: 2019/09/20 12:16:48 by agelloz          ###   ########.fr        #
+#    Updated: 2019/09/23 10:11:59 by agelloz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 NAME = lem_in
-#CFLAGS = -Wall -Wextra -Werror
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address,undefined -Wpadded
+CFLAGS = -Wall -Wextra -Werror
+#CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address,undefined -Wpadded
 LIBH = libft/inc
 INC = inc/
 HEAD = $(INC)lem_in.h
 LIBA = libft/libft.a
 SRC_DIR = src/
 
-SRC_FILES = lem_in.c parsing_tests.c graph.c exit.c
+SRC_FILES = lem_in.c parsing_save.c parsing_tests.c graph.c exit.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(SRC:%.c=%.o)
