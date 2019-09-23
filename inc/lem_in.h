@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/23 10:15:55 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/23 12:03:26 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,20 @@
 
 typedef struct	s_edge
 {
-	int				dest;
-	int				capacity;
+	size_t			dest;
+	size_t			capacity;
 	struct s_edge	*next;
 }				t_edge;
 
 typedef struct	s_node
 {
-	int		index;
-	int		source;
-	int		sink;
-	int		bfs_marked;
+	size_t	index;
+	size_t	source;
+	size_t	sink;
 	char	*name;
 	t_edge	*head;
+	int8_t	bfs_marked;
+	char	pad[7];
 }				t_node;
 
 typedef struct	s_graph
@@ -50,9 +51,9 @@ int8_t			is_command(char *line);
 t_graph			*create_graph(size_t size);
 int8_t			add_edge(t_graph *graph, int src, int dest);
 
-t_graph			*exit_graph_error(t_list **file);
+t_graph			*exit_graph_error(t_graph *graph, t_list *file);
 t_list			*exit_file_error(t_list **file);
-int8_t			exit_free_graph(t_graph *graph);
+void			free_graph(t_graph *graph);
 
 void			print_graph(t_graph *graph);
 

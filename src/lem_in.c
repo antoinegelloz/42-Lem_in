@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/23 10:39:41 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/23 12:26:46 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ size_t	get_graph_size(t_list *file)
 
 	size = 0;
 	while (file && file->next && (is_room(file->content)
-				|| is_command(file->content)
-				|| is_comment_or_false_command(file->content)))
+							   || is_command(file->content)
+							   || is_comment_or_false_command(file->content)))
 	{
 		if (is_command(file->content) && !is_room(file->next->content))
 				return (FAILURE);
@@ -32,11 +32,25 @@ size_t	get_graph_size(t_list *file)
 	return (size);
 }
 
+int8_t	check_tunnels(t_list *file, size_t size)
+{
+	(void)file;
+	(void)size;
+	return (SUCCESS);		
+}
+
 int8_t	check_rooms(t_list *file, size_t size)
 {
 	(void)file;
 	(void)size;
 	return (SUCCESS);		
+}
+
+int8_t	add_tunnels(t_graph *graph, t_list *file)
+{
+	(void)file;
+	add_edge(graph, 0, 1);
+	return (SUCCESS);	
 }
 
 t_graph	*build_graph(t_list *file)
@@ -48,14 +62,19 @@ t_graph	*build_graph(t_list *file)
 	ants = 0;
 	graph = NULL;
 	if (!is_ants(file->content) || (ants = ft_atol(file->content)) < 1)
-		return (exit_graph_error(&file));
+		return (exit_graph_error(graph, file));
 	if ((size = get_graph_size(file->next)) == FAILURE)
-		return (exit_graph_error(&file));
+		return (exit_graph_error(graph, file));
 	if (check_rooms(file->next, size) == FAILURE)
-		return (exit_graph_error(&file));
+		return (exit_graph_error(graph, file));
+	ft_printf("Rooms checked\n", size);
 	if ((graph = create_graph(size)) == NULL)
-		return (exit_graph_error(&file));
-	add_edge(graph, 0, 1);
+		return (exit_graph_error(graph, file));
+	ft_printf("Graph of size %d created\n", size);
+	if (check_tunnels(file->next, size) == FAILURE)
+		return (exit_graph_error(graph, file));
+	if (add_tunnels(graph, file) == FAILURE)
+		return (exit_graph_error(graph, file));
 	return (graph);
 }
 
@@ -87,10 +106,10 @@ int		main(void)
 	t_graph	*graph;
 
 	graph = NULL;
+	//ft_printf("size_t:%lu\ns_edge:%lu\nchar*:%lu\nint8_t:%lu\n", sizeof(size_t), sizeof(t_edge), sizeof(char *), sizeof(int8_t));
 	if ((graph = parse_file()) == NULL)
 		return (EXIT_FAILURE);
 	print_graph(graph);
-	if (exit_free_graph(graph) == FAILURE)
-		return (EXIT_FAILURE);
+	free_graph(graph);
 	return (EXIT_SUCCESS);
 }
