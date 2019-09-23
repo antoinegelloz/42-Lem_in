@@ -26,8 +26,8 @@ typedef struct	s_edge
 typedef struct	s_node
 {
 	size_t	index;
-	size_t	source;
-	size_t	sink;
+	int8_t	source;
+	int8_t	sink;
 	char	*name;
 	t_edge	*head;
 	int8_t	bfs_marked;

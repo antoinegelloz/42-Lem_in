@@ -53,7 +53,7 @@ void	free_graph(t_graph *graph)
 	index = 0;
 	while (index < graph->size)
 	{
-		ft_strdel(&graph->array[index].name);
+		//ft_strdel(&graph->array[index].name);
 		edge_del(&graph->array[index].head);
 		index++;
 	}
