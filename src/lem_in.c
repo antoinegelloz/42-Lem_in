@@ -18,8 +18,8 @@ size_t	get_graph_size(t_list *file)
 
 	size = 0;
 	while (file && file->next && (is_room(file->content)
-							   || is_command(file->content)
-							   || is_comment_or_false_command(file->content)))
+				|| is_command(file->content)
+				|| is_comment_or_false_command(file->content)))
 	{
 		if (is_command(file->content) && !is_room(file->next->content))
 				return (FAILURE);
@@ -32,25 +32,46 @@ size_t	get_graph_size(t_list *file)
 	return (size);
 }
 
-int8_t	check_tunnels(t_list *file, size_t size)
-{
-	(void)file;
-	(void)size;
-	return (SUCCESS);		
-}
-
-int8_t	check_rooms(t_list *file, size_t size)
-{
-	(void)file;
-	(void)size;
-	return (SUCCESS);		
-}
-
 int8_t	add_tunnels(t_graph *graph, t_list *file)
 {
 	(void)file;
 	add_edge(graph, 0, 1);
 	return (SUCCESS);	
+}
+
+int8_t	check_rooms(t_graph *graph, t_list *file, size_t size)
+{
+	size_t i;
+	size_t name_len;
+
+	i = 0;
+	while (i < size)
+	{
+		name_len = 0;
+		graph->array[i].source = 0;
+		graph->array[i].sink = 0;
+		if (ft_strequ(file->content, "##start"))
+		{
+			file = file->next;
+			graph->array[i].source = 1;
+		}
+		if (ft_strequ(file->content, "##end"))
+		{
+			file = file->next;
+			graph->array[i].sink = 1;
+		}		
+		name_len = file->content - ft_strchr(file->content, ' ');
+		graph->array[i].name = ft_strsub(file->content, 0, name_len);
+		i++;
+	}
+	return (SUCCESS);
+}
+
+int8_t	check_tunnels(t_graph *graph, t_list *file, size_t size)
+{
+	(void)size;
+	(void)file;
+	return (SUCCESS);
 }
 
 t_graph	*build_graph(t_list *file)
@@ -65,13 +86,11 @@ t_graph	*build_graph(t_list *file)
 		return (exit_graph_error(graph, file));
 	if ((size = get_graph_size(file->next)) == FAILURE)
 		return (exit_graph_error(graph, file));
-	if (check_rooms(file->next, size) == FAILURE)
-		return (exit_graph_error(graph, file));
-	ft_printf("Rooms checked\n", size);
 	if ((graph = create_graph(size)) == NULL)
 		return (exit_graph_error(graph, file));
-	ft_printf("Graph of size %d created\n", size);
-	if (check_tunnels(file->next, size) == FAILURE)
+	if (check_rooms(graph, file->next, size) == FAILURE)
+		return (exit_graph_error(graph, file));
+	if (check_tunnels(graph, file->next, size) == FAILURE)
 		return (exit_graph_error(graph, file));
 	if (add_tunnels(graph, file) == FAILURE)
 		return (exit_graph_error(graph, file));
