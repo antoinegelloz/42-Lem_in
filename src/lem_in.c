@@ -6,11 +6,12 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/24 14:35:14 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/24 16:24:26 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+#include <limits.h>
 
 size_t	get_graph_size(t_list *file)
 {
@@ -39,49 +40,62 @@ int8_t	add_edges(t_graph *graph, t_list *file)
 	return (SUCCESS);	
 }
 
-int8_t	check_nodes_duplicates(t_graph *graph)
+int8_t	check_nodes_duplicates(t_graph *graph, size_t size)
 {
-	(void)graph;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (i < size)
+	{
+		j = i + 1;
+		while (j < size)
+		{
+			if (ft_strequ(graph->array[i].name, graph->array[j].name))
+					return (FAILURE);
+			if (graph->array[i].x_coord == graph->array[j].x_coord
+				&& graph->array[i].y_coord == graph->array[j].y_coord)
+				return (FAILURE);
+			j++;
+		}
+		i++;
+	}
 	return (SUCCESS);
 }
 
 int8_t	check_nodes(t_graph *graph, t_list *file, size_t size)
 {
-	size_t	i;
-	char	**node_data;
+	size_t		i;
+	char		**node_data;
 
 	i = 0;
 	while (i < size)
 	{
-		graph->array[i].source = 0;
-		graph->array[i].sink = 0;
 		if (is_comment_or_false_command(file->content))
 			file = file->next;
 		if (ft_strequ(file->content, "##start"))
-		{
-			file = file->next;
 			graph->array[i].source = 1;
-		}
 		if (ft_strequ(file->content, "##end"))
-		{
-			file = file->next;
 			graph->array[i].sink = 1;
-		}
+		if (is_command(file->content))
+				file = file ->next;
 		if ((node_data = ft_strsplit(file->content, ' ')) == NULL)
 			return (FAILURE);
-		if ((graph->array[i].name = ft_strdupfree(node_data[0])) == NULL)
+		if ((graph->array[i].name = ft_strdup(node_data[0])) == NULL)
 			return (exit_node_error(node_data));
-		if ((graph->array[i].x_coord = ft_atol(node_data[1])) < 1)
-			return (FAILURE);
-		free(node_data[1]);
-		if ((graph->array[i].y_coord = ft_atol(node_data[2])) < 1)
-			return (FAILURE);
-		free(node_data[2]);
+		ft_strdel(&node_data[0]);
+		if (ft_atol(node_data[1]) < INT_MIN || ft_atol(node_data[1]) > INT_MAX
+				|| ft_atol(node_data[2]) < INT_MIN || ft_atol(node_data[2]) > INT_MAX)
+			return (exit_node_error(node_data));
+		graph->array[i].x_coord = ft_atol(node_data[1]);
+		ft_strdel(&node_data[1]);
+		graph->array[i].y_coord = ft_atol(node_data[2]);
+		ft_strdel(&node_data[2]);
 		free(node_data);
 		file = file->next;
 		i++;
 	}
-	return (check_nodes_duplicates(graph));
+	return (check_nodes_duplicates(graph, size));
 }
 
 int8_t	check_edges(t_graph *graph, t_list *file, size_t size)

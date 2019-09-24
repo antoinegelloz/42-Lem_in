@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:00:34 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/24 14:26:19 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/24 15:59:42 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 int8_t	exit_node_error(char **node_data)
 {
-	if (node_data[0] != NULL)
-		ft_strdel(&node_data[0]);
-	if (node_data[1] != NULL)
-		ft_strdel(&node_data[1]);
-	if (node_data[2] != NULL)
-		ft_strdel(&node_data[2]);
+	if (node_data[0])
+		free(node_data[0]);
+	if (node_data[1])
+		free(node_data[1]);
+	if (node_data[2])
+		free(node_data[2]);
+	free(node_data);
 	return (FAILURE);
 }
 
@@ -59,7 +60,8 @@ void	free_graph(t_graph *graph)
 	index = 0;
 	while (index < graph->size)
 	{
-		ft_strdel(&graph->array[index].name);
+		if (graph->array[index].name)
+			ft_strdel(&graph->array[index].name);
 		edge_del(&graph->array[index].head);
 		index++;
 	}
