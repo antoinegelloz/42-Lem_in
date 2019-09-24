@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/19 19:29:02 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/24 14:30:51 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_graph(t_graph *graph)
 	while (index < graph->size)
 	{
 		temp = graph->array[index].head;
-		ft_printf("Node %d", index);
+		ft_printf("node%d, name|%s|, x|%d|, y|%d|", index, graph->array[index].name, graph->array[index].x_coord, graph->array[index].y_coord);
 		while (temp)
 		{
 			ft_printf(" | %d -> %d", index, temp->dest);
@@ -33,7 +33,7 @@ void	print_graph(t_graph *graph)
 	}
 }
 
-int8_t	add_edge(t_graph *graph, int src, int dest)
+int8_t	add_one_edge(t_graph *graph, int src, int dest)
 {
 	t_edge *forward_edge;
 	t_edge *backward_edge;
