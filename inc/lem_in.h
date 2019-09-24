@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/23 12:03:26 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/24 11:08:19 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ typedef struct	s_node
 	size_t	index;
 	int8_t	source;
 	int8_t	sink;
-	char	*name;
-	t_edge	*head;
 	int8_t	bfs_marked;
-	char	pad[7];
+	char	pad[5];
+	t_edge	*head;
+	char	*name;
 }				t_node;
 
 typedef struct	s_graph
@@ -54,6 +54,8 @@ int8_t			add_edge(t_graph *graph, int src, int dest);
 t_graph			*exit_graph_error(t_graph *graph, t_list *file);
 t_list			*exit_file_error(t_list **file);
 void			free_graph(t_graph *graph);
+
+t_graph			*edmonds_karp(t_graph *graph);
 
 void			print_graph(t_graph *graph);
 

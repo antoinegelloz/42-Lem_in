@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/24 10:45:07 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/24 11:34:28 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int8_t	check_rooms(t_graph *graph, t_list *file, size_t size)
 			file = file->next;
 			graph->array[i].sink = 1;
 		}		
-		name_len = file->content - ft_strchr(file->content, ' ');
+		name_len = (char *)file->content - ft_strchr(file->content, ' ');
 		graph->array[i].name = ft_strsub(file->content, 0, name_len);
 		i++;
 	}
@@ -71,6 +71,7 @@ int8_t	check_tunnels(t_graph *graph, t_list *file, size_t size)
 {
 	(void)size;
 	(void)file;
+	(void)graph;
 	return (SUCCESS);
 }
 
@@ -129,7 +130,7 @@ int		main(void)
 	if ((graph = parse_file()) == NULL)
 		return (EXIT_FAILURE);
 	print_graph(graph);
-	if ((graph = edmond(graph)) == NULL)
+	if ((graph = edmonds_karp(graph)) == NULL)
 		return (EXIT_FAILURE);
 	free_graph(graph);
 	return (EXIT_SUCCESS);
