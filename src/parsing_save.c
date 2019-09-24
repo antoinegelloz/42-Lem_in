@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/23 10:30:40 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/24 14:29:12 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int8_t	check_line(char **line)
 		return (SUCCESS);
 	if (is_ants(*line))
 		return (SUCCESS);
-	if (is_room(*line))
+	if (is_node(*line))
 		return (SUCCESS);
-	if (is_tunnel(*line))
+	if (is_edge(*line))
 		return (SUCCESS);
 	ft_strdel(line);
 	return (FAILURE);

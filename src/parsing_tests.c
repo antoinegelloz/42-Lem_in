@@ -6,13 +6,13 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/20 13:00:58 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/24 14:29:37 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int8_t	is_tunnel(char *line)
+int8_t	is_edge(char *line)
 {
 	int	i;
 
@@ -30,7 +30,7 @@ int8_t	is_tunnel(char *line)
 	return (SUCCESS);
 }
 
-int8_t	is_room(char *line)
+int8_t	is_node(char *line)
 {
 	int	i;
 

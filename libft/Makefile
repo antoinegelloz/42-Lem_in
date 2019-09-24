@@ -6,14 +6,14 @@
 #    By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/05 10:17:32 by agelloz           #+#    #+#              #
-#    Updated: 2019/09/23 12:42:06 by agelloz          ###   ########.fr        #
+#    Updated: 2019/09/24 14:34:16 by agelloz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 CC = Clang
-#CFLAGS = -Wall -Wextra
-CFLAGS = -Wall -Wextra -g3 -fsanitize=address,undefined -Wpadded
+CFLAGS = -Wall -Wextra
+#CFLAGS = -Wall -Wextra -g3 -fsanitize=address,undefined -Wpadded
 CLEANUP = /bin/rm -rf
 INC = libft.h
 INC_DIR = inc/
@@ -69,6 +69,7 @@ SRC += ft_strcmp.c
 SRC += ft_strcpy.c
 SRC += ft_strdel.c
 SRC += ft_strdup.c
+SRC += ft_strdupfree.c
 SRC += ft_strequ.c
 SRC += ft_striter.c
 SRC += ft_striteri.c

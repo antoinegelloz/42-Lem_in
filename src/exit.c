@@ -6,19 +6,21 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:00:34 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/23 12:19:51 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/24 14:26:19 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	edge_delone(t_edge **edge)
+int8_t	exit_node_error(char **node_data)
 {
-	if (!edge)
-		return ;
-	free(*edge);
-	*edge = NULL;
-	return ;
+	if (node_data[0] != NULL)
+		ft_strdel(&node_data[0]);
+	if (node_data[1] != NULL)
+		ft_strdel(&node_data[1]);
+	if (node_data[2] != NULL)
+		ft_strdel(&node_data[2]);
+	return (FAILURE);
 }
 
 void	edge_del(t_edge **edge)
@@ -26,7 +28,11 @@ void	edge_del(t_edge **edge)
 	if (*edge)
 	{
 		edge_del(&(*edge)->next);
-		edge_delone(edge);
+		if (edge)
+		{
+			free(*edge);
+			*edge = NULL;
+		}
 	}
 }
 
@@ -53,7 +59,7 @@ void	free_graph(t_graph *graph)
 	index = 0;
 	while (index < graph->size)
 	{
-		//ft_strdel(&graph->array[index].name);
+		ft_strdel(&graph->array[index].name);
 		edge_del(&graph->array[index].head);
 		index++;
 	}
