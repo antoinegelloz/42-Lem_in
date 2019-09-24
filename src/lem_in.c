@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/23 12:26:46 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/24 10:45:07 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ int		main(void)
 	if ((graph = parse_file()) == NULL)
 		return (EXIT_FAILURE);
 	print_graph(graph);
+	if ((graph = edmond(graph)) == NULL)
+		return (EXIT_FAILURE);
 	free_graph(graph);
 	return (EXIT_SUCCESS);
 }
