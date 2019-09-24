@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/24 14:29:37 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/24 16:08:16 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int8_t	is_node(char *line)
 	if (line == NULL)
 		return (FAILURE);
 	i = 0;
+	if (line[i] == 'L')
+		return (FAILURE);
 	while (line[i] != '\0' && line[i] != ' ')
 		if (!ft_isalnum(line[i++]))
 			return (FAILURE);
