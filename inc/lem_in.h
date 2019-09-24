@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/24 14:31:05 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/24 17:53:03 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int8_t			is_node(char *line);
 int8_t			is_comment_or_false_command(char *line);
 int8_t			is_ants(char *line);
 int8_t			is_command(char *line);
+int8_t			check_nodes(t_graph *graph, t_list *file, size_t size);
 
 t_graph			*create_graph(size_t size);
 int8_t			add_one_edge(t_graph *graph, int src, int dest);
