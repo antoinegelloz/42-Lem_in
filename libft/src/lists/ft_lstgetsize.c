@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   edmonds_karp.c                                     :+:      :+:    :+:   */
+/*   ft_lstgetsize.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/24 11:38:50 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/25 17:37:24 by agelloz          ###   ########.fr       */
+/*   Created: 2019/09/05 14:09:22 by agelloz           #+#    #+#             */
+/*   Updated: 2019/09/25 11:58:13 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-int8_t	edmonds_karp(t_graph *graph)
+size_t	ft_lstgetsize(t_list *list)
 {
-	(void)graph;
-	return (SUCCESS);
+	size_t size;
+
+	size = 0;
+	while (list)
+		size++;
+	return (size);
 }

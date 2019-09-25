@@ -6,7 +6,7 @@
 #    By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/05 10:17:32 by agelloz           #+#    #+#              #
-#    Updated: 2019/09/24 14:34:16 by agelloz          ###   ########.fr        #
+#    Updated: 2019/09/25 18:09:44 by agelloz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -121,6 +121,7 @@ SRC += ft_lstncpy.c
 SRC += ft_lstrev.c
 SRC += ft_lstgetmin.c
 SRC += ft_lstgetmax.c
+SRC += ft_lstgetsize.c
 SRC += ft_lstindex.c
 SRC += ft_lst_mergesort.c
 SRC += get_next_line.c

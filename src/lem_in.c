@@ -6,103 +6,110 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/24 17:51:52 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/25 18:08:18 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-#include <limits.h>
 
-size_t	get_graph_size(t_list *file)
+int8_t	process_line(char *line, t_parsing *p)
 {
-	size_t size;
-
-	size = 0;
-	while (file && file->next && (is_node(file->content)
-				|| is_command(file->content)
-				|| is_comment_or_false_command(file->content)))
-	{
-		if (is_command(file->content) && !is_node(file->next->content))
-			return (FAILURE);
-		else if (is_node(file->content))
-			size++;
-		file = file->next;
-	}
-	if (size < 2 || !file || !is_edge(file->content))
+	if (line == NULL)
 		return (FAILURE);
-	return (size);
-}
-
-int8_t	add_edges(t_graph *graph, t_list *file)
-{
-	(void)file;
-	add_one_edge(graph, 0, 1);
-	return (SUCCESS);
-}
-
-int8_t	check_edges(t_graph *graph, t_list *file, size_t size)
-{
-	(void)size;
-	(void)file;
-	(void)graph;
-	return (SUCCESS);
-}
-
-t_graph	*build_graph(t_list *file)
-{
-	t_graph	*graph;
-	size_t	ants;
-	size_t	size;
-
-	ants = 0;
-	graph = NULL;
-	if (!is_ants(file->content) || (ants = ft_atol(file->content)) < 1)
-		return (exit_graph_error(graph, file));
-	if ((size = get_graph_size(file->next)) == FAILURE)
-		return (exit_graph_error(graph, file));
-	if ((graph = create_graph(size)) == NULL)
-		return (exit_graph_error(graph, file));
-	if (check_nodes(graph, file->next, size) == FAILURE)
-		return (exit_graph_error(graph, file));
-	if (check_edges(graph, file->next, size) == FAILURE)
-		return (exit_graph_error(graph, file));
-	if (add_edges(graph, file) == FAILURE)
-		return (exit_graph_error(graph, file));
-	return (graph);
-}
-
-t_graph	*parse_file(void)
-{
-	t_graph	*graph;
-	t_list	*file;
-	t_list	*curr;
-
-	if ((file = save_file()) == NULL)
-		return (NULL);
-	ft_printf("File saved successfully\n");
-	curr = file;
-	while (curr)
+	if (is_ants(line) == SUCCESS)
 	{
-		ft_printf("%s\n", curr->content);
-		curr = curr->next;
+		if (p->ants != 0 || (p->ants = ft_atol(line)) < 1)
+			return (FAILURE);
+		return (SUCCESS);
 	}
-	graph = NULL;
-	if ((graph = build_graph(file)) == NULL)
-		return (NULL);
-	ft_printf("Graph built successfully\n");
-	ft_lstdel(&file, ft_delcontent);
-	return (graph);
+	if (is_command(line) == SUCCESS)
+	{
+		if (p->is_prev_command == TRUE 
+			|| (ft_strequ("##start", line) && p->is_start != 0)
+			|| (ft_strequ("##end", line) && p->is_end != 0))
+			return (FAILURE);
+		p->is_prev_command = TRUE;
+		if (ft_strequ("##start", line))
+			p->is_start = p->room_index;
+		if (ft_strequ("##end", line))
+			p->is_end = p->room_index;
+		return (SUCCESS);
+	}
+	if (is_comment_or_false_command(line) == SUCCESS)
+	{
+		if (p->is_prev_command == TRUE)
+			return (FAILURE);
+		return (SUCCESS);
+	}
+	if (is_node(line) == SUCCESS)
+	{
+		if (p->is_prev_command == TRUE)
+			p->is_prev_command = FALSE;
+		//save_node(line);
+		p->room_index++;
+		ft_putendl("node");
+		return (SUCCESS);
+	}
+	if (is_edge(line) == SUCCESS)
+	{
+		if (p->is_prev_command == TRUE)
+			return (FAILURE);
+		return (SUCCESS);
+	}
+	ft_strdel(&line);
+	return (FAILURE);
+}
+
+void	init(t_parsing *p)
+{
+	p->room_index = 0;
+	p->ants = 0;
+	p->size = 0;
+	p->is_prev_command = FALSE;
+	p->is_start = 0;
+	p->is_end = 0;
+	p->rooms = NULL;
+	p->x_coord = NULL;
+	p->y_coord = NULL;
+	p->file = NULL;
+}
+
+int8_t	parse_file(t_parsing *p)
+{
+	int			ret;
+	char		*line;
+
+	line = NULL;
+	while ((ret = get_next_line(STDIN_FILENO, &line)) > 0)
+	{
+		if (process_line(line, p) == FAILURE)
+			return (exit_parsing_error(p));
+		ft_strdel(&line);
+	}
+	if (ret == FAILURE)
+		ft_putendl_fd("READ ERROR", 2);
+	ft_strdel(&line);
+	get_next_line(CLEANUP, NULL);
+	return (SUCCESS);
 }
 
 int		main(void)
 {
-	t_graph	*graph;
+	t_parsing	p;
+	t_graph		*graph;
 
+	init(&p);
 	graph = NULL;
-	if ((graph = parse_file()) == NULL)
-		return (EXIT_FAILURE);
+	//if (parse_file(&p) == FAILURE)
+		//return (EXIT_FAILURE);
+	//if (build_graph(graph) == FAILURE)
+	//	return (EXIT_FAILURE);
+	graph = create_graph(5);
+	create_edge(graph, 0, 1);
+	create_edge(graph, 1, 3);
+	create_edge(graph, 3, 4);
 	print_graph(graph);
-	if ((graph = edmonds_karp(graph)) == NULL)
+	if (edmonds_karp(graph) == FAILURE)
 		return (EXIT_FAILURE);
 	free_graph(graph);
 	return (EXIT_SUCCESS);
