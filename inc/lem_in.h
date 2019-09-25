@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/25 17:54:53 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/25 18:20:43 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,14 @@ typedef struct	s_parsing
 	t_list	*file;
 }				t_parsing;
 
+typedef struct	s_queue
+{
+	int			front;
+	int			rear;
+	int			size;
+	unsigned	capacity;
+	int			*array;
+}				t_queue;
 
 int8_t			is_edge(char *line);
 int8_t			is_node(char *line);
