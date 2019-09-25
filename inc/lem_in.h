@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/24 17:53:03 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/24 18:29:10 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,9 @@ typedef struct	s_edge
 
 typedef struct	s_node
 {
-	int		x_coord;
-	int		y_coord;
 	int8_t	source;
 	int8_t	sink;
-	int8_t	bfs_marked;
-	char	pad[5];
 	t_edge	*head;
-	char	*name;
 }				t_node;
 
 typedef struct	s_graph
@@ -41,6 +36,14 @@ typedef struct	s_graph
 	size_t	size;
 	t_node	*array;
 }				t_graph;
+
+typedef struct	s_rooms
+{
+	int				x_coord;
+	int				y_coord;
+	char			*name;
+	struct s_room	*next;
+}				t_rooms;
 
 t_list			*save_file(void);
 int8_t			is_edge(char *line);
