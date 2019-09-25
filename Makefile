@@ -6,7 +6,7 @@
 #    By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/19 11:32:25 by agelloz           #+#    #+#              #
-#    Updated: 2019/09/24 17:53:34 by agelloz          ###   ########.fr        #
+#    Updated: 2019/09/25 18:09:19 by agelloz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,7 @@ HEAD = $(INC)lem_in.h
 LIBA = libft/libft.a
 SRC_DIR = src/
 
-SRC_FILES = lem_in.c parsing_save.c parsing_tests.c parsing_check_nodes.c \
-			graph.c exit.c edmonds_karp.c
+SRC_FILES = lem_in.c parsing_tests.c graph.c exit.c edmonds_karp.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(SRC:%.c=%.o)

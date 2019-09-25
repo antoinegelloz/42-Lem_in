@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/24 16:08:16 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/25 15:46:21 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int8_t	is_ants(char *line)
 		return (FAILURE);
 	i = 0;
 	while (line[i] != '\0')
-		if (!ft_isdigit(line[i++]))
+		if (line[0] == '0' || !ft_isdigit(line[i++]))
 			return (FAILURE);
 	return (SUCCESS);
 }

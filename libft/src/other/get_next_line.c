@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 12:26:22 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/20 12:52:35 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/25 11:31:28 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int			get_next_line(const int fd, char **line)
 		}
 		return ((*line == NULL && file.state != 0) ? FAILURE : file.state);
 	}
-	else if (fd != -42)
+	else if (fd != CLEANUP)
 		return (FAILURE);
 	ft_strdel(&file.rest);
 	ft_strdel(&file.curr);

@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 11:20:40 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/20 12:39:41 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/25 11:35:28 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@
 # include <string.h>
 # include "printf.h"
 
-# define SUCCESS	1
-# define FAILURE	0
+# define TRUE		1
+# define FALSE		0
+# define SUCCESS	0
+# define FAILURE	-1
+# define CLEANUP	-42
 # define BUFF_SIZE	4096
 
 typedef struct		s_list
