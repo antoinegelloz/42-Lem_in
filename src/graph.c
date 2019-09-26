@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/25 18:08:07 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/26 13:38:25 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_graph	*create_graph(size_t size)
 		graph->array[i].sink = 0;
 		graph->array[i].x_coord = 0;
 		graph->array[i].y_coord = 0;
+		graph->array[i].index = i;
 		i++;
 	}
 	return (graph);
