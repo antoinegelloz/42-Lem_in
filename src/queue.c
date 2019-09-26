@@ -6,15 +6,16 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:01:34 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/09/24 18:44:59 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/09/26 19:04:47 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-struct t_queue* create_queue(unsigned capacity) 
+t_queue	*create_queue(unsigned capacity) 
 { 
-	struct t_queue* queue = (struct t_queue*) malloc(sizeof(struct t_queue)); 
+	t_queue *queue;
+	queue = (t_queue*) malloc(sizeof(t_queue)); 
 	queue->capacity = capacity; 
 	queue->front = 0;
 	queue->size = 0;  
@@ -23,17 +24,17 @@ struct t_queue* create_queue(unsigned capacity)
 	return queue; 
 } 
 
-int isFull(struct t_queue* queue) 
+int isFull(t_queue *queue) 
 {
 	return (queue->size == queue->capacity);
 } 
 
-int isEmpty(struct t_queue* queue) 
+int isEmpty(t_queue *queue) 
 {
 	return (queue->size == 0);
 } 
 
-void enqueue(struct t_queue* queue, int data) 
+void enqueue(t_queue *queue, int data) 
 { 
 	if (isFull(queue)) 
 		return; 
@@ -43,23 +44,15 @@ void enqueue(struct t_queue* queue, int data)
 	printf("%d enqueued to queue\n", data); 
 } 
 
-int dequeue(struct t_queue* queue) 
+int dequeue(t_queue *queue) 
 { 
+	int		data;
+
 	if (isEmpty(queue)) 
-		return (FAILURE); 
-	int data = queue->array[queue->front]; 
+		return (FAILURE);
+	data = queue->array[queue->front];	
 	queue->front = (queue->front + 1)%queue->capacity; 
-	queue->size = queue->size - 1; 
+	queue->size = queue->size - 1;
+	printf("%d dequeued from queue\n", data);
 	return SUCCESS; 
 }
-
-int main() 
-{ 
-	struct t_queue* queue = create_queue(1000); 
-
-	enqueue(queue, 10); 
-	enqueue(queue, 20); 
-	enqueue(queue, 30); 
-	enqueue(queue, 40); 
-	return 0; 
-} 

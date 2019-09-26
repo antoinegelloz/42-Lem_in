@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/25 18:20:43 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/09/26 13:54:24 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include <limits.h>
+# include <stdio.h>
 
 typedef struct	s_edge
 {
@@ -25,6 +26,7 @@ typedef struct	s_edge
 
 typedef struct	s_node
 {
+	int		index;
 	int		x_coord;
 	int		y_coord;
 	int8_t	source;
@@ -61,10 +63,17 @@ typedef struct	s_queue
 {
 	int			front;
 	int			rear;
-	int			size;
+	unsigned	size;
 	unsigned	capacity;
 	int			*array;
 }				t_queue;
+
+t_queue			*create_queue(unsigned capacity);
+int 			isFull(t_queue *queue);
+int 			isEmpty(t_queue *queue);
+void 			enqueue(t_queue *queue, int data);
+int				dequeue(t_queue *queue);
+void			get_queue(t_graph *graph);
 
 int8_t			is_edge(char *line);
 int8_t			is_node(char *line);

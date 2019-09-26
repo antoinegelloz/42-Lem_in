@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/25 18:08:18 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/26 17:47:47 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,13 @@ int		main(void)
 	create_edge(graph, 0, 1);
 	create_edge(graph, 1, 3);
 	create_edge(graph, 3, 4);
+	create_edge(graph, 2, 3);
+	graph->array[0].source = 1;
+	graph->array[4].sink = 1;
 	print_graph(graph);
-	if (edmonds_karp(graph) == FAILURE)
-		return (EXIT_FAILURE);
+	get_queue(graph);
+	//if (edmonds_karp(graph) == FAILURE)
+	//	return (EXIT_FAILURE);
 	free_graph(graph);
 	return (EXIT_SUCCESS);
 }
