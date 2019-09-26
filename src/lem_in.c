@@ -6,11 +6,12 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/26 12:21:54 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/26 16:42:03 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+#include <stdio.h>
 
 int8_t	save_node(char *line, t_parsing *p)
 {
@@ -18,19 +19,27 @@ int8_t	save_node(char *line, t_parsing *p)
 	t_list	*new_name;
 	t_list	*new_x_coord;
 	t_list	*new_y_coord;
+	int		x;
+	int		y;
 
 	if ((tab = ft_strsplit(line, ' ')) == NULL)
 		return (exit_parsing_error(p, tab));
 	if ((new_name = ft_lstnew(tab[0], (ft_strlen(tab[0]) + 1)
 					* sizeof(char))) == NULL)
 			return (exit_parsing_error(p, tab));
+	//if (check_name_duplicate(p, new_name) == FAILURE)
+		//return (exit_parsing_error(p, tab));
 	ft_lstappend(&p->nodes, new_name);
-	if ((new_x_coord = ft_lstnew(tab[1], (ft_strlen(tab[1]) + 1)
-					* sizeof(char))) == NULL)
+	if (ft_atol(tab[1]) < 1 || ft_atol(tab[1]) < INT_MIN || ft_atol(tab[1]) > INT_MAX)
+			return (exit_parsing_error(p, tab));
+	x = ft_atoi(tab[1]);
+	if ((new_x_coord = ft_lstnew(&x, sizeof(int))) == NULL)
 			return (exit_parsing_error(p, tab));
 	ft_lstappend(&p->x_coord, new_x_coord);
-	if ((new_y_coord = ft_lstnew(tab[2], (ft_strlen(tab[2]) + 1)
-					* sizeof(char))) == NULL)
+	if (ft_atol(tab[2]) < 1 || ft_atol(tab[2]) < INT_MIN || ft_atol(tab[1]) > INT_MAX)
+			return (exit_parsing_error(p, tab));
+	y = ft_atoi(tab[2]);
+	if ((new_y_coord = ft_lstnew(&y, sizeof(int))) == NULL)
 			return (exit_parsing_error(p, tab));
 	ft_lstappend(&p->y_coord, new_y_coord);
 	free_tab(tab);
@@ -43,8 +52,9 @@ int8_t	process_line(char *line, t_parsing *p)
 		return (FAILURE);
 	if (is_ants(line) == SUCCESS)
 	{
-		if (p->ants != 0 || (p->ants = ft_atol(line)) < 1)
+		if (p->ants != 0 || ft_atol(line) < 1)
 			return (FAILURE);
+		p->ants = ft_atoi(line);
 		return (SUCCESS);
 	}
 	if (is_command(line) == SUCCESS)
@@ -122,7 +132,7 @@ int8_t	parse_file(t_parsing *p)
 	return (SUCCESS);
 }
 
-void	print_nodes(t_parsing *p)
+void	print_nodes_names(t_parsing *p)
 {
 	t_list		*curr;
 
@@ -135,11 +145,37 @@ void	print_nodes(t_parsing *p)
 	}
 }
 
+void	print_nodes_x(t_parsing *p)
+{
+	t_list		*curr;
+
+	ft_putendl("\nx_coord:");
+	curr = p->x_coord;
+	while (curr)
+	{
+		ft_printf("x:%d\n", *(int *)curr->content);
+		curr = curr->next;
+	}
+}
+
+void	print_nodes_y(t_parsing *p)
+{
+	t_list		*curr;
+
+	ft_putendl("\ny_coord:");
+	curr = p->y_coord;
+	while (curr)
+	{
+		ft_printf("y:%d\n", *(int *)curr->content);
+		curr = curr->next;
+	}
+}
+
 void	print_file(t_parsing *p)
 {
 	t_list		*curr;
 
-	ft_putendl("File:");
+	ft_putendl("\nFile:");
 	curr = p->file;
 	while (curr)
 	{
@@ -160,9 +196,12 @@ int		main(void)
 	//if (build_graph(graph) == FAILURE)
 	//	return (EXIT_FAILURE);
 	ft_putendl("File saved successfully");
-	print_nodes(&p);
+	print_nodes_names(&p);
+	print_nodes_x(&p);
+	print_nodes_y(&p);
 	print_file(&p);
 	graph = create_graph(ft_lstgetsize(p.nodes));
+	ft_putendl("\nGraph:");
 	print_graph(graph);
 	free_p(&p);
 	if (edmonds_karp(graph) == FAILURE)
