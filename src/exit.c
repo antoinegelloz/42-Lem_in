@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:00:34 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/26 12:04:37 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/26 13:19:52 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ void	free_tab(char **tab)
 	i = 0;
 	if (tab == NULL)
 		return ;
-	while (tab[i])
+	while (tab[i] != NULL)
 	{
 		ft_strdel(&tab[i]);
+		i++;
 	}
 	free(tab);
 	tab = NULL;
