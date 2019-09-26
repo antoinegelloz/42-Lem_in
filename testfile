@@ -1,13 +1,11 @@
 342
-room1 43 3333
+room0 43 33
 ##start
-room2 156655665 3423
-#com
+room1 155 323
 ##end
-room3 33 111
-room4 34 11
-room5 3 1
-rt-zf
-zf-aa
-# com2
-aa-rt
+room2 33 111
+room3 34 11
+room4 33 11
+room0-room1
+room1-room3
+room3-room4

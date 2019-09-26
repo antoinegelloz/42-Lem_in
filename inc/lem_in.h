@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/26 11:55:23 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/26 18:25:17 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,15 @@ typedef struct	s_parsing
 {
 	size_t	node_index;
 	size_t	ants;
-	size_t	source;
-	size_t	sink;
+	ssize_t	source;
+	ssize_t	sink;
 	int8_t	is_prev_command;
 	char	pad[7];
 	t_list	*nodes;
 	t_list	*x_coord;
 	t_list	*y_coord;
+	t_list	*from;
+	t_list	*to;
 	t_list	*file;
 }				t_parsing;
 
@@ -64,7 +66,7 @@ int8_t			is_ants(char *line);
 int8_t			is_command(char *line);
 
 t_graph			*create_graph(size_t size);
-int8_t			create_edge(t_graph *graph, int src, int dest);
+int8_t			create_edge(t_graph *graph, size_t src, size_t dest);
 
 int8_t			exit_parsing_error(t_parsing *p, char **tab);
 int8_t			free_p(t_parsing *p);

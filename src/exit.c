@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:00:34 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/26 13:19:52 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/26 18:58:01 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int8_t	exit_parsing_error(t_parsing *p, char **tab)
 	ft_lstdel(&p->nodes, ft_delcontent);
 	ft_lstdel(&p->x_coord, ft_delcontent);
 	ft_lstdel(&p->y_coord, ft_delcontent);
+	ft_lstdel(&p->from, ft_delcontent);
+	ft_lstdel(&p->to, ft_delcontent);
 	ft_lstdel(&p->file, ft_delcontent);
 	free_tab(tab);
 	ft_putendl_fd("PARSING ERROR", 2);
@@ -57,6 +59,8 @@ int8_t	free_p(t_parsing *p)
 	ft_lstdel(&p->nodes, ft_delcontent);
 	ft_lstdel(&p->x_coord, ft_delcontent);
 	ft_lstdel(&p->y_coord, ft_delcontent);
+	ft_lstdel(&p->from, ft_delcontent);
+	ft_lstdel(&p->to, ft_delcontent);
 	ft_lstdel(&p->file, ft_delcontent);
 	return (SUCCESS);
 }
