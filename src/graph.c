@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/25 18:08:07 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/26 12:03:03 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	print_graph(t_graph *graph)
 	size_t	i;
 	t_edge	*temp;
 
+	if (graph == NULL)
+		return ;
 	i = 0;
 	while (i < graph->size)
 	{
