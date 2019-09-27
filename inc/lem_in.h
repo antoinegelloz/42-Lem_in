@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 13:52:47 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/27 14:44:51 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct	s_queue
 	int			*array;
 	ssize_t		*out;
 	ssize_t		*prev;
+	t_list		*best_path;
 }				t_queue;
 
 int8_t			parse_file(t_parsing *p);
@@ -109,6 +110,6 @@ int 			isFull(t_queue *queue);
 int 			isEmpty(t_queue *queue);
 void 			enqueue(t_queue *queue, int data);
 int				dequeue(t_queue *queue);
-void			get_queue(t_graph *graph);
+t_list			*bfs(t_graph *graph);
 
 #endif
