@@ -81,6 +81,7 @@ t_graph	*create_graph(size_t size)
 		graph->array[i].sink = 0;
 		graph->array[i].x_coord = 0;
 		graph->array[i].y_coord = 0;
+		graph->array[i].index = i;
 		graph->array[i].bfs_marked = 0;
 		i++;
 	}

@@ -60,6 +60,7 @@ int		main(void)
 //print_edges(&p);
 	if ((graph = build_graph(&p)) == NULL)
 		return (EXIT_FAILURE);
+  get_queue(graph);
 	if (edmonds_karp(graph) == FAILURE)
 		return (EXIT_FAILURE);
 	print_file(&p);

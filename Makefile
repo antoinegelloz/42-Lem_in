@@ -28,7 +28,9 @@ SRC_FILES += parsing_tests.c
 SRC_FILES += parsing_tests2.c 
 SRC_FILES += graph.c 
 SRC_FILES += exit.c 
-SRC_FILES += edmonds_karp.c 
+SRC_FILES += edmonds_karp.c
+SRC_FILES += queue.c
+SRC_FILES += bfs.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(SRC:%.c=%.o)
