@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 15:46:48 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/27 17:05:53 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,27 +52,15 @@ int		main(void)
 {
 	t_parsing	p;
 	t_graph		*graph;
-	t_list		*best_path;
+	t_list		*aug_paths;
 
 	init_parsing(&p);
 	if (parse_file(&p) == FAILURE)
 		return (EXIT_FAILURE);
-//print_nodes_names(&p);
-//print_coord_x(&p);
-//print_coord_y(&p);
-//print_edges(&p);
 	if ((graph = build_graph(&p)) == NULL)
 		return (EXIT_FAILURE);
-  	best_path = bfs(graph);
-	//while (best_path != NULL)
-	//{
-	//	printf("%zu  ", *(ssize_t*)best_path->content);
-	//	best_path = best_path->next;
-	//}
-	ft_lstdel(&best_path, ft_delcontent);
-	//if (edmonds_karp(graph) == FAILURE)
-		//return (EXIT_FAILURE);
-
+	if ((aug_paths = edmonds_karp(graph)) == NULL)
+		return (EXIT_FAILURE);
 	print_file(&p);
 	free_p(&p);
 	free_graph(graph);

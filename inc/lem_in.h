@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 14:40:16 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/27 17:17:01 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,14 @@ void			print_coord_x(t_parsing *p);
 void			print_coord_y(t_parsing *p);
 void			print_edges(t_parsing *p);
 void			print_file(t_parsing *p);
+void			print_list(t_list *list);
 
 int8_t			exit_parsing_error(t_parsing *p, char *line, char **tab);
 int8_t			free_p(t_parsing *p);
 void			free_graph(t_graph *graph);
 void			free_tab(char **tab);
 
-int8_t			edmonds_karp(t_graph *graph);
+t_list			*edmonds_karp(t_graph *graph);
 t_queue			*create_queue(size_t capacity);
 int 			isFull(t_queue *queue);
 int 			isEmpty(t_queue *queue);

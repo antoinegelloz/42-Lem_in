@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 11:50:18 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/27 17:19:22 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,18 @@ void	print_file(t_parsing *p)
 	while (curr)
 	{
 		ft_putendl(curr->content);
+		curr = curr->next;
+	}
+}
+
+void	print_list(t_list *list)
+{
+	t_list		*curr;
+
+	curr = list;
+	while (curr)
+	{
+		printf("%zd -> ", *(ssize_t *)curr->content);
 		curr = curr->next;
 	}
 }
