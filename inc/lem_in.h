@@ -14,6 +14,7 @@
 # define LEM_IN_H
 
 # include "libft.h"
+# include <stdio.h>
 
 typedef struct	s_edge
 {
@@ -22,8 +23,15 @@ typedef struct	s_edge
 	struct s_edge	*next;
 }				t_edge;
 
+typedef struct	s_path
+{
+	size_t			value;
+	struct s_path	*next;
+}				t_path;
+
 typedef struct	s_node
 {
+	int		index;
 	int		x_coord;
 	int		y_coord;
 	int8_t	source;
@@ -43,7 +51,7 @@ typedef struct	s_graph
 
 typedef struct	s_parsing
 {
-	size_t	node_index;
+	size_t	index;
 	size_t	ants;
 	ssize_t	source;
 	ssize_t	sink;
@@ -61,9 +69,11 @@ typedef struct	s_queue
 {
 	int			front;
 	int			rear;
-	int			size;
+	unsigned	size;
 	unsigned	capacity;
 	int			*array;
+	ssize_t		*out;
+	ssize_t		*prev;
 }				t_queue;
 
 int8_t			parse_file(t_parsing *p);
@@ -94,5 +104,11 @@ void			free_graph(t_graph *graph);
 void			free_tab(char **tab);
 
 int8_t			edmonds_karp(t_graph *graph);
+t_queue			*create_queue(size_t capacity);
+int 			isFull(t_queue *queue);
+int 			isEmpty(t_queue *queue);
+void 			enqueue(t_queue *queue, int data);
+int				dequeue(t_queue *queue);
+void			get_queue(t_graph *graph);
 
 #endif
