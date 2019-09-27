@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 11:38:50 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 17:22:33 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/27 18:35:15 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int8_t	change_capacity(t_graph *graph, t_list *u, t_list *v, int8_t order)
 {
 	t_edge *curr;
 
-	curr = graph->array[*(size_t *)u->content].head;
+	printf("nb:%d\n", *(int *)u->content);
+	curr = graph->array[*(int *)u->content].head;
 	if (curr == NULL) 
 		return (FAILURE);
 	while (curr->dest != *(size_t *)v->content)
@@ -38,23 +39,25 @@ int8_t	change_capacity(t_graph *graph, t_list *u, t_list *v, int8_t order)
 t_list	*edmonds_karp(t_graph *graph)
 {
 	t_list	*aug_paths;
-	t_list	*new_path;
+	t_list	*curr;
+	t_bfs	*new_bfs;
 
 	aug_paths = NULL;
-	new_path = NULL;
-	while (TRUE)
-	{
-		if ((new_path = bfs(graph)) == NULL)
+	new_bfs = NULL;
+	//while (TRUE)
+	//{
+		if ((new_bfs = bfs(graph)) == NULL)
 			return (aug_paths);
 		ft_putendl("New aug_path:");
-		print_list(new_path);
-		ft_lstappend(&aug_paths, new_path);
-		while (new_path)
+		print_list(new_bfs->best_path);
+		ft_lstappend(&aug_paths, new_bfs->best_path);
+		curr = new_bfs->best_path;
+		while (curr)
 		{
-			change_capacity(graph, new_path, new_path->next, INCREASE);
-			change_capacity(graph, new_path->next, new_path, DECREASE);
-			new_path = new_path->next;
+			change_capacity(graph, curr, curr->next, INCREASE);
+			change_capacity(graph, curr->next, curr, DECREASE);
+			curr = curr->next;
 		}
-	}
+	//}
 	return (aug_paths);
 }

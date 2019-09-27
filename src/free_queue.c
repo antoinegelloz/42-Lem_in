@@ -6,17 +6,17 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 14:47:25 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/09/27 15:25:36 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/09/27 18:29:16 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void		free_queue(t_queue *queue)
+void		free_queue(t_bfs *bfs)
 {
-	free(queue->prev);
-	free(queue->out);
-	free(queue->array);
-	free(queue);
+	free(bfs->prev);
+	free(bfs->out);
+	free(bfs->array);
+	free(bfs);
 	return ;
 }
