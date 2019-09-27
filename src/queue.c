@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:01:34 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/09/27 14:23:19 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/09/27 14:54:45 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_queue			*create_queue(size_t capacity)
 	queue->prev = (ssize_t*) malloc(queue->capacity * sizeof(ssize_t));
 	fill_tab(queue->out, queue->capacity);
 	fill_tab(queue->prev, queue->capacity);
+	queue->best_path = NULL;
 	return queue; 
 } 
 
