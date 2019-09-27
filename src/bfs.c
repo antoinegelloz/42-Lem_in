@@ -6,25 +6,11 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:32:38 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/09/26 19:15:54 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/09/27 13:16:24 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-static void		fill_tab(ssize_t *tab, size_t size)
-{
-	size_t		i;
-
-	i = 0;
-
-	while (i < size)
-	{
-		tab[i] = -1;
-		i++;
-	}
-	return ;
-}
 
 static void		print_results(ssize_t *out, ssize_t *prev, size_t size)
 {
@@ -72,22 +58,62 @@ size_t			firstelt_queue(ssize_t *out, t_queue *queue, t_graph *graph)
 	return (i);
 }
 
+static size_t	find_pindex(ssize_t data, ssize_t *prev, size_t len)
+{
+	size_t		i;
+
+	i = 0;
+	while (i < len)
+	{
+		if (prev[i] == data)
+			break ;
+		i++;
+	}
+	return (i);
+}
+
+
+void			reconstruct_path(t_queue *queue, size_t len)
+{
+	t_list		*best_path;
+	t_list		*tmp;
+	size_t		i;
+
+	i = len - 1;
+	while (queue->out[i] == -1)
+		i--;	
+	best_path = ft_lstnew(&(queue->out[i]), sizeof(ssize_t));
+	while (i > 0)
+	{
+		tmp = ft_lstnew(queue->prev + i, sizeof(ssize_t));
+		ft_lstappend(&best_path, tmp);
+		i = find_pindex(queue->prev[i], queue->out, len);
+	}
+	ft_lstrev(&best_path);
+	printf("%zu", *(ssize_t*)best_path->content);
+	best_path = best_path->next;
+	while (best_path)
+	{
+		printf(" -> %zu", *(ssize_t*)best_path->content);
+		best_path = best_path->next;
+	}
+	printf("\n");
+	return ;
+}
+
 void			get_queue(t_graph *graph)
 {
 	size_t		i;
 	size_t		j;
 	t_queue 	*queue;
 	t_edge		*lst;
-	ssize_t		out[graph->size];
-	ssize_t		prev[graph->size];
 
 	queue = create_queue(graph->size);
-	fill_tab(out, graph->size);
-	fill_tab(prev, graph->size);
 	j = 1;
-	i = firstelt_queue(out, queue, graph);
+	i = firstelt_queue(queue->out, queue, graph);
 	while (isEmpty(queue) == FALSE)
 	{
+		i = find_index(queue->array[queue->front], graph->array, graph->size);
 		graph->array[i].bfs_marked = TRUE;
 		dequeue(queue);	
 		lst = graph->array[i].head;
@@ -96,15 +122,14 @@ void			get_queue(t_graph *graph)
 			if (graph->array[lst->dest].bfs_marked != TRUE)
 			{
 				enqueue(queue, lst->dest);
-				out[j] = lst->dest;
-				prev[j] = graph->array[i].index;
+				queue->out[j] = lst->dest;
+				queue->prev[j] = graph->array[i].index;
 				j++;
 			}
 			lst = lst->next;
-		}
-		if (isEmpty(queue) != 1)
-			i = find_index(queue->array[queue->front], graph->array, graph->size);
+		}	
 	}
-	print_results(out, prev, graph->size);
+	print_results(queue->out, queue->prev, graph->size);
+	reconstruct_path(queue, graph->size);
 	return ;
 }
