@@ -1,0 +1,10 @@
+room0 43 33
+##start
+room1 155 323
+##end
+room2 33 111
+room3 34 11
+room4 33 11
+room0-room1
+room1-room3
+room3-room4
