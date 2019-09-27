@@ -57,6 +57,15 @@ typedef struct	s_parsing
 	t_list	*file;
 }				t_parsing;
 
+typedef struct	s_queue
+{
+	int			front;
+	int			rear;
+	int			size;
+	unsigned	capacity;
+	int			*array;
+}				t_queue;
+
 int8_t			parse_file(t_parsing *p);
 int8_t			save_node(t_parsing *p, char *line);
 int8_t			save_edge(t_parsing *p, char *line);
