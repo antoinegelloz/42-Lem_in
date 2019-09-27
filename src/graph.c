@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 14:10:09 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/27 15:46:04 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ t_graph	*create_graph(t_parsing *p)
 	t_graph *graph;
 	ssize_t i;
 	ssize_t	size;
+	t_list	*curr_nodes;
+	t_list	*curr_x_coord;
+	t_list	*curr_y_coord;
 
 	size = ft_lstgetsize(p->nodes);
 	if (size == 0 || (graph = (t_graph *)malloc(sizeof(t_graph))) == NULL)
@@ -79,19 +82,22 @@ t_graph	*create_graph(t_parsing *p)
 		return (NULL);
 	}
 	i = 0;
+	curr_nodes = p->nodes;
+	curr_x_coord = p->x_coord;
+	curr_y_coord = p->y_coord;
 	while (i < size)
 	{
 		graph->array[i].index = i;
-		graph->array[i].name = ft_strdup(p->nodes->content);
+		graph->array[i].name = ft_strdup(curr_nodes->content);
 		graph->array[i].source = (p->source == i) ? 1 : 0;
 		graph->array[i].sink = (p->sink == i) ? 1 : 0;
-		graph->array[i].x_coord = *(int *)p->x_coord->content;
-		graph->array[i].y_coord = *(int *)p->y_coord->content;
+		graph->array[i].x_coord = *(int *)curr_x_coord->content;
+		graph->array[i].y_coord = *(int *)curr_y_coord->content;
 		graph->array[i].bfs_marked = 0;
 		graph->array[i].head = NULL;
-		p->nodes = p->nodes->next;
-		p->x_coord = p->x_coord->next;
-		p->y_coord = p->y_coord->next;
+		curr_nodes = curr_nodes->next;
+		curr_x_coord = curr_x_coord->next;
+		curr_y_coord = curr_y_coord->next;
 		i++;
 	}
 	return (graph);
