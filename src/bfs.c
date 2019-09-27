@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:32:38 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/09/27 14:44:49 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/09/27 16:29:24 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,18 +87,18 @@ void			reconstruct_path(t_queue *queue, t_graph *graph)
 	while (i > 0)
 	{
 		tmp = ft_lstnew(queue->prev + i, sizeof(ssize_t));
-		ft_lstappend(&(queue->best_path), tmp);
+		ft_lstappend(&queue->best_path, tmp);	
 		i = find_pindex(queue->prev[i], queue->out, graph->size);
 	}
 	ft_lstrev(&(queue->best_path));
-	printf("%zu", *(ssize_t*)queue->best_path->content);
-	queue->best_path = queue->best_path->next;
-	while (queue->best_path)
-	{
-		printf(" -> %zu", *(ssize_t*)queue->best_path->content);
-		queue->best_path = queue->best_path->next;
-	}
-	printf("\n");
+	//printf("%zu", *(ssize_t*)queue->best_path->content);
+	//queue->best_path = queue->best_path->next;
+	//while (queue->best_path)
+	//{
+	//	printf(" -> %zu", *(ssize_t*)queue->best_path->content);
+	//	queue->best_path = queue->best_path->next;
+	//}
+	//printf("\n");
 	return ;
 }
 
@@ -132,5 +132,6 @@ t_list			*bfs(t_graph *graph)
 	}
 	print_results(queue->out, queue->prev, graph->size);
 	reconstruct_path(queue, graph);
+	free_queue(queue);
 	return (queue->best_path);
 }
