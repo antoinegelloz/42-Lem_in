@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 16:29:26 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/09/27 15:46:48 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	init_parsing(t_parsing *p)
 	p->nodes = NULL;
 	p->x_coord = NULL;
 	p->y_coord = NULL;
+	p->from = NULL;
+	p->to = NULL;
 	p->file = NULL;
 }
 
@@ -68,8 +70,9 @@ int		main(void)
 	//	best_path = best_path->next;
 	//}
 	ft_lstdel(&best_path, ft_delcontent);
-	if (edmonds_karp(graph) == FAILURE)
-		return (EXIT_FAILURE);
+	//if (edmonds_karp(graph) == FAILURE)
+		//return (EXIT_FAILURE);
+
 	print_file(&p);
 	free_p(&p);
 	free_graph(graph);

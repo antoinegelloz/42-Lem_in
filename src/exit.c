@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:00:34 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 12:09:22 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/27 15:46:26 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,7 @@ void	free_graph(t_graph *graph)
 	i = 0;
 	while (i < graph->size)
 	{
-		if (graph->array[i].name)
-			ft_strdel(&graph->array[i].name);
+		ft_strdel(&graph->array[i].name);
 		edge_del(&graph->array[i].head);
 		i++;
 	}
