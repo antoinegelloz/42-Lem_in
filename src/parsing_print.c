@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 17:19:22 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/27 18:39:17 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,12 @@ void	print_list(t_list *list)
 {
 	t_list		*curr;
 
+	ft_putendl("print list");
 	curr = list;
 	while (curr)
 	{
-		printf("%zd -> ", *(ssize_t *)curr->content);
+		printf("%zu ", *(ssize_t *)curr->content);
 		curr = curr->next;
 	}
+	printf("\n");
 }

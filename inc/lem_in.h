@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 17:17:01 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/27 18:26:02 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ typedef struct	s_node
 	int8_t	source;
 	int8_t	sink;
 	int8_t	bfs_marked;
-	char	pad[5];
-	t_edge	*head;
+	char	pad[1];
 	char	*name;
+	t_edge	*head;
 }				t_node;
 
 typedef struct	s_graph
@@ -65,7 +65,7 @@ typedef struct	s_parsing
 	t_list	*file;
 }				t_parsing;
 
-typedef struct	s_queue
+typedef struct	s_bfs
 {
 	int			front;
 	int			rear;
@@ -75,7 +75,7 @@ typedef struct	s_queue
 	ssize_t		*out;
 	ssize_t		*prev;
 	t_list		*best_path;
-}				t_queue;
+}				t_bfs;
 
 int8_t			parse_file(t_parsing *p);
 int8_t			save_node(t_parsing *p, char *line);
@@ -106,12 +106,12 @@ void			free_graph(t_graph *graph);
 void			free_tab(char **tab);
 
 t_list			*edmonds_karp(t_graph *graph);
-t_queue			*create_queue(size_t capacity);
-int 			isFull(t_queue *queue);
-int 			isEmpty(t_queue *queue);
-void 			enqueue(t_queue *queue, int data);
-int				dequeue(t_queue *queue);
-t_list			*bfs(t_graph *graph);
-void			free_queue(t_queue *queue);
+t_bfs			*create_queue(size_t capacity);
+int 			isFull(t_bfs *queue);
+int 			isEmpty(t_bfs *queue);
+void 			enqueue(t_bfs *queue, int data);
+int				dequeue(t_bfs *queue);
+t_bfs			*bfs(t_graph *graph);
+void			free_queue(t_bfs *queue);
 
 #endif

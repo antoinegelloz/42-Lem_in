@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:01:34 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/09/27 14:54:45 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/09/27 18:27:59 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,52 +25,52 @@ static void		fill_tab(ssize_t *tab, size_t size)
 	return ;
 }
 
-t_queue			*create_queue(size_t capacity) 
+t_bfs			*create_queue(size_t capacity) 
 { 
-	t_queue *queue;
-	queue = (t_queue*) malloc(sizeof(t_queue)); 
-	queue->capacity = capacity; 
-	queue->front = 0;
-	queue->size = 0;  
-	queue->rear = capacity - 1;
-	queue->array = (int*) malloc(queue->capacity * sizeof(int));
-	queue->out = (ssize_t*) malloc(queue->capacity * sizeof(ssize_t));
-	queue->prev = (ssize_t*) malloc(queue->capacity * sizeof(ssize_t));
-	fill_tab(queue->out, queue->capacity);
-	fill_tab(queue->prev, queue->capacity);
-	queue->best_path = NULL;
-	return queue; 
+	t_bfs *bfs;
+	bfs = (t_bfs*) malloc(sizeof(t_bfs)); 
+	bfs->capacity = capacity; 
+	bfs->front = 0;
+	bfs->size = 0;  
+	bfs->rear = capacity - 1;
+	bfs->array = (int*) malloc(bfs->capacity * sizeof(int));
+	bfs->out = (ssize_t*) malloc(bfs->capacity * sizeof(ssize_t));
+	bfs->prev = (ssize_t*) malloc(bfs->capacity * sizeof(ssize_t));
+	fill_tab(bfs->out, bfs->capacity);
+	fill_tab(bfs->prev, bfs->capacity);
+	bfs->best_path = NULL;
+	return bfs; 
 } 
 
-int				isFull(t_queue *queue) 
+int				isFull(t_bfs *bfs) 
 {
-	return (queue->size == queue->capacity);
+	return (bfs->size == bfs->capacity);
 } 
 
-int				isEmpty(t_queue *queue) 
+int				isEmpty(t_bfs *bfs) 
 {
-	return (queue->size == 0);
+	return (bfs->size == 0);
 } 
 
-void			enqueue(t_queue *queue, int data) 
+void			enqueue(t_bfs *bfs, int data) 
 { 
-	if (isFull(queue)) 
+	if (isFull(bfs)) 
 		return; 
-	queue->rear = (queue->rear + 1)%queue->capacity; 
-	queue->array[queue->rear] = data; 
-	queue->size = queue->size + 1; 
+	bfs->rear = (bfs->rear + 1)%bfs->capacity; 
+	bfs->array[bfs->rear] = data; 
+	bfs->size = bfs->size + 1; 
 	printf("%d enqueued to queue\n", data); 
 } 
 
-int				dequeue(t_queue *queue) 
+int				dequeue(t_bfs *bfs) 
 { 
 	int		data;
 
-	if (isEmpty(queue)) 
+	if (isEmpty(bfs)) 
 		return (FAILURE);
-	data = queue->array[queue->front];	
-	queue->front = (queue->front + 1)%queue->capacity; 
-	queue->size = queue->size - 1;
+	data = bfs->array[bfs->front];	
+	bfs->front = (bfs->front + 1)%bfs->capacity; 
+	bfs->size = bfs->size - 1;
 	printf("%d dequeued from queue\n", data);
 	return SUCCESS; 
 }
