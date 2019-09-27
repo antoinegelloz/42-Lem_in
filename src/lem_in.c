@@ -52,6 +52,7 @@ int		main(void)
 {
 	t_parsing	p;
 	t_graph		*graph;
+	t_list		*best_path;
 
 	init_parsing(&p);
 	if (parse_file(&p) == FAILURE)
@@ -62,9 +63,16 @@ int		main(void)
 //print_edges(&p);
 	if ((graph = build_graph(&p)) == NULL)
 		return (EXIT_FAILURE);
-  	get_queue(graph);
+  	best_path = bfs(graph);
+	//while (best_path != NULL)
+	//{
+	//	printf("%zu  ", *(ssize_t*)best_path->content);
+	//	best_path = best_path->next;
+	//}
+	ft_lstdel(&best_path, ft_delcontent);
 	//if (edmonds_karp(graph) == FAILURE)
 		//return (EXIT_FAILURE);
+
 	print_file(&p);
 	free_p(&p);
 	free_graph(graph);
