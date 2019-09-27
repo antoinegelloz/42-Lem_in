@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 13:55:38 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/27 14:42:49 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		main(void)
 //print_edges(&p);
 	if ((graph = build_graph(&p)) == NULL)
 		return (EXIT_FAILURE);
-  get_queue(graph);
+  	bfs(graph);
 	if (edmonds_karp(graph) == FAILURE)
 		return (EXIT_FAILURE);
 	print_file(&p);
