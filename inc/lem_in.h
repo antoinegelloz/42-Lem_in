@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 12:20:34 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/27 13:52:47 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int8_t			is_edge(char *line);
 int8_t			is_comment_or_false_command(char *line);
 int8_t			check_int(char *nb, int8_t pos);
 
-t_graph			*create_graph(size_t size);
+t_graph			*create_graph(t_parsing *p);
 int8_t			create_edge(t_graph *graph, size_t src, size_t dest);
 
 void			print_graph(t_graph *graph);
