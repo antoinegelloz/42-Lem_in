@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 15:46:04 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/27 16:37:30 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int8_t	create_edge(t_graph *graph, size_t src, size_t dest)
 	if ((forward_edge = (t_edge *)malloc(sizeof(t_edge))) == NULL)
 		return (FAILURE);
 	forward_edge->dest = dest;
+	forward_edge->capacity = 1;
 	forward_edge->next = graph->array[src].head;
 	graph->array[src].head = forward_edge;
 	if ((backward_edge = (t_edge *)malloc(sizeof(t_edge))) == NULL)
