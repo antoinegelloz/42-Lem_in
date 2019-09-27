@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/26 17:47:47 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/09/27 12:25:58 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,10 @@ int		main(void)
 	//	return (EXIT_FAILURE);
 	graph = create_graph(5);
 	create_edge(graph, 0, 1);
-	create_edge(graph, 1, 3);
-	create_edge(graph, 3, 4);
+	create_edge(graph, 0 ,2);
+	create_edge(graph, 1, 4);
 	create_edge(graph, 2, 3);
+	create_edge(graph, 3, 4);
 	graph->array[0].source = 1;
 	graph->array[4].sink = 1;
 	print_graph(graph);
