@@ -51,7 +51,7 @@ typedef struct	s_graph
 
 typedef struct	s_parsing
 {
-	size_t	node_index;
+	size_t	index;
 	size_t	ants;
 	ssize_t	source;
 	ssize_t	sink;
