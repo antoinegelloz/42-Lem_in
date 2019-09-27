@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 12:21:15 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/27 13:31:00 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int8_t	process_command(char *line, t_parsing *p)
 		return (exit_parsing_error(p, line, NULL));
 	p->is_prev_command = TRUE;
 	if (ft_strequ("##start", line))
-		p->source = p->node_index;
+		p->source = p->index;
 	if (ft_strequ("##end", line))
-		p->sink = p->node_index;
+		p->sink = p->index;
 	return (SUCCESS);
 }
 
@@ -32,7 +32,7 @@ int8_t	process_node(char *line, t_parsing *p)
 		return (exit_parsing_error(p, line, NULL));
 	if (p->is_prev_command == TRUE)
 		p->is_prev_command = FALSE;
-	p->node_index++;
+	p->index++;
 	return (save_node(p, line));
 }
 
