@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 13:29:45 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/27 13:55:38 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_graph	*build_graph(t_parsing *p)
 	t_list	*curr_from;
 	t_list	*curr_to;
 
-	if ((graph = create_graph(ft_lstgetsize(p->nodes))) == NULL)
+	if ((graph = create_graph(p)) == NULL)
 		return (NULL);
 	curr_from = p->from;
 	curr_to = p->to;
