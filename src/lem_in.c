@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 12:10:45 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/27 13:29:45 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_parsing(t_parsing *p)
 {
-	p->node_index = 0;
+	p->index = 0;
 	p->ants = 0;
 	p->is_prev_command = FALSE;
 	p->source = -1;
