@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 11:20:40 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/25 11:35:28 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/26 11:59:15 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int					ft_lstsorted(t_list *list, int size,
 									int (*cmp)(void *, void *));
 int					ft_lstgetmin(t_list *list, int size);
 int					ft_lstgetmax(t_list *list, int size);
+size_t				ft_lstgetsize(t_list *list);
 t_list				*ft_lstindex(t_list *list, int index);
 t_list				*ft_lstnew(void const *content, size_t content_size);
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));

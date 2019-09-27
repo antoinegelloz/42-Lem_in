@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agelloz <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/05 17:26:58 by agelloz           #+#    #+#             */
-/*   Updated: 2019/04/24 15:41:32 by agelloz          ###   ########.fr       */
+/*   Created: 2019/09/26 15:19:47 by agelloz           #+#    #+#             */
+/*   Updated: 2019/09/26 16:05:31 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,26 @@
 
 t_list	*ft_lstnew(const void *content, size_t content_size)
 {
-	t_list	*new_link;
+	t_list	*list;
 
-	if (!(new_link = malloc(sizeof(*new_link))))
+	if (!(list = (t_list *)malloc(sizeof(t_list))))
 		return (NULL);
-	if (content == NULL)
+	list->next = NULL;
+	if (!content)
 	{
-		new_link->content = NULL;
-		new_link->content_size = 0;
+		list->content = NULL;
+		list->content_size = 0;
 	}
 	else
 	{
-		new_link->content = (void*)malloc(sizeof(size_t) * content_size);
-		if (!(new_link->content))
+		if (!(list->content = malloc(content_size)))
 		{
-			free(new_link);
+			free(list);
+			list = NULL;
 			return (NULL);
 		}
-		ft_memcpy(new_link->content, content, content_size);
-		new_link->content_size = content_size;
+		list->content_size = content_size;
+		list->content = ft_memcpy(list->content, content, content_size);
 	}
-	new_link->next = NULL;
-	return (new_link);
+	return (list);
 }
