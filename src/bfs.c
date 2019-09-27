@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:32:38 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/09/27 14:23:17 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/09/27 16:29:24 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ static size_t	find_pindex(ssize_t data, ssize_t *prev, size_t len)
 
 void			reconstruct_path(t_queue *queue, t_graph *graph)
 {
-	t_list		*best_path;
 	t_list		*tmp;
 	size_t		i;
 
@@ -84,26 +83,26 @@ void			reconstruct_path(t_queue *queue, t_graph *graph)
 		i--;
 	if (graph->array[queue->out[i]].sink == FALSE)
 	   return ;	
-	best_path = ft_lstnew(&(queue->out[i]), sizeof(ssize_t));
+	queue->best_path = ft_lstnew(&(queue->out[i]), sizeof(ssize_t));
 	while (i > 0)
 	{
 		tmp = ft_lstnew(queue->prev + i, sizeof(ssize_t));
-		ft_lstappend(&best_path, tmp);
+		ft_lstappend(&queue->best_path, tmp);	
 		i = find_pindex(queue->prev[i], queue->out, graph->size);
 	}
-	ft_lstrev(&best_path);
-	printf("%zu", *(ssize_t*)best_path->content);
-	best_path = best_path->next;
-	while (best_path)
-	{
-		printf(" -> %zu", *(ssize_t*)best_path->content);
-		best_path = best_path->next;
-	}
-	printf("\n");
+	ft_lstrev(&(queue->best_path));
+	//printf("%zu", *(ssize_t*)queue->best_path->content);
+	//queue->best_path = queue->best_path->next;
+	//while (queue->best_path)
+	//{
+	//	printf(" -> %zu", *(ssize_t*)queue->best_path->content);
+	//	queue->best_path = queue->best_path->next;
+	//}
+	//printf("\n");
 	return ;
 }
 
-void			get_queue(t_graph *graph)
+t_list			*bfs(t_graph *graph)
 {
 	size_t		i;
 	size_t		j;
@@ -133,5 +132,6 @@ void			get_queue(t_graph *graph)
 	}
 	print_results(queue->out, queue->prev, graph->size);
 	reconstruct_path(queue, graph);
-	return ;
+	free_queue(queue);
+	return (queue->best_path);
 }

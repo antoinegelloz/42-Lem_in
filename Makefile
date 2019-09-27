@@ -31,6 +31,7 @@ SRC_FILES += exit.c
 #SRC_FILES += edmonds_karp.c
 SRC_FILES += queue.c
 SRC_FILES += bfs.c
+SRC_FILES += free_queue.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(SRC:%.c=%.o)
