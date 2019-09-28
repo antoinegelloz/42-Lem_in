@@ -6,40 +6,44 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:32:38 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/09/28 16:32:24 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/28 20:59:53 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void		print_results(ssize_t *out, ssize_t *prev, size_t size)
+static void		print_results(ssize_t *queue, ssize_t *prev, size_t size)
 {
 	size_t	i;
 
 	i = 0;
 	while (i < size)
 	{
-		printf("out[%zu] = %zd prev[%zu] = %zd\n", i, out[i], i, prev[i]);
+		printf("queue[%2zu] = %2zd prev[%2zu] = %2zd\n", i, queue[i], i, prev[i]);
 		i++;
 	}
 	return ;
 }
 
-static size_t	find_index(int data, t_node *array, size_t size)
+void			reconstruct_path(t_bfs *bfs, t_graph *graph)
 {
-	size_t	i;
+	t_list		*tmp;
+	ssize_t		i;
 
-	i = 0;
-	while (i < size)
+	i = graph->size - 1;
+	while (graph->nodes[i].sink == FALSE)
+		i--;
+	while (i != -1)
 	{
-		if (array[i].index == data)
-			break ;
-		i++;
+		tmp = ft_lstnew(&i, sizeof(ssize_t));
+		ft_lstappend(&bfs->best_path, tmp);	
+		i = bfs->prev[i];
 	}
-	return (i);
+	ft_lstrev(&bfs->best_path);
+	return ;
 }
 
-size_t			firstelt_queue(ssize_t *out, t_bfs *bfs, t_graph *graph)
+static int8_t	enqueue_first_elt(t_bfs *bfs, t_graph *graph)
 {
 	size_t	i;
 
@@ -48,82 +52,43 @@ size_t			firstelt_queue(ssize_t *out, t_bfs *bfs, t_graph *graph)
 	{
 		if (graph->nodes[i].source == TRUE)
 		{
-			bfs->queue[0] = graph->nodes[i].index;
-			enqueue(bfs, graph->nodes[i].index);
-			out[0]= bfs->queue[0];
-			break;
+			bfs->queue[0] = i;
+			bfs->queue_size = 1;
+			graph->nodes[i].bfs_marked = TRUE;
+			break ;
 		}
 		i++;
 	}
-	return (i);
-}
-
-static size_t	find_pindex(ssize_t data, ssize_t *prev, size_t len)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < len)
-	{
-		if (prev[i] == data)
-			break ;
-		i++;
-	}
-	return (i);
-}
-
-
-void			reconstruct_path(t_bfs *bfs, t_graph *graph)
-{
-	t_list		*tmp;
-	size_t		i;
-
-	i = graph->size - 1;
-	while (bfs->out[i] == -1)
-		i--;
-	if (graph->nodes[bfs->out[i]].sink == FALSE)
-		return ;	
-	bfs->best_path = ft_lstnew(&(bfs->out[i]), sizeof(ssize_t));
-	while (i > 0)
-	{
-		tmp = ft_lstnew(bfs->prev + i, sizeof(ssize_t));
-		ft_lstappend(&bfs->best_path, tmp);	
-		i = find_pindex(bfs->prev[i], bfs->out, graph->size);
-	}
-	ft_lstrev(&bfs->best_path);
-	return ;
+	return (SUCCESS);
 }
 
 t_bfs			*bfs(t_graph *graph)
 {
-	size_t		i;
-	size_t		j;
+	size_t		node;
 	t_bfs 		*bfs;
-	t_edge		*lst;
+	t_edge		*neighbours;
 
 	bfs = create_queue(graph->size);
-	j = 1;
-	i = firstelt_queue(bfs->out, bfs, graph);
+	enqueue_first_elt(bfs, graph);
 	while (is_queue_empty(bfs) == FALSE)
 	{
-		i = find_index(bfs->queue[bfs->front], graph->nodes, graph->size);
-		graph->nodes[i].bfs_marked = TRUE;
+		node = bfs->queue_front;
+		neighbours = graph->nodes[bfs->queue_front].head;
 		dequeue(bfs);
-		lst = graph->nodes[i].head;
-		while (lst)
+		while (neighbours)
 		{
-			if (graph->nodes[lst->dest].bfs_marked != TRUE)
+			if (graph->nodes[neighbours->dest].bfs_marked != TRUE)
 			{
-				enqueue(bfs, lst->dest);
-				ft_printf("j:%d\n", j);
-				bfs->out[j] = lst->dest;
-				bfs->prev[j] = graph->nodes[i].index;
-				j++;
+				enqueue(bfs, neighbours->dest);
+				bfs->prev[neighbours->dest] = node;
+				graph->nodes[neighbours->dest].bfs_marked = TRUE;
 			}
-			lst = lst->next;
-		}	
+			neighbours = neighbours->next;
+		}
 	}
-	print_results(bfs->out, bfs->prev, graph->size);
+	print_results(bfs->queue, bfs->prev, graph->size);
 	reconstruct_path(bfs, graph);
+	if (graph->nodes[*(ssize_t *)bfs->best_path->content].source != TRUE)
+		return (NULL);
 	return (bfs);
 }
