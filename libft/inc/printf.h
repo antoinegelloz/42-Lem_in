@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/11 11:44:18 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/18 09:34:28 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/28 11:57:58 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void			ft_print_address(t_sp *sp);
 void			ft_print_float(t_sp *sp);
 void			ft_print_percent(t_sp *sp);
 void			ft_signed(t_sp *sp);
-void			ft_unsigned(t_sp *sp, char specifier);
+void			ft_unsigned(t_sp *sp, char s);
 void			ft_print_unsigned(t_sp *sp, unsigned long n, char *base,
 									int base_size);
 void			ft_print_base(t_sp *sp, char specifier);

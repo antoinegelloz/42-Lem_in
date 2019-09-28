@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/28 17:03:50 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/05 12:30:06 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/28 11:45:33 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	ft_add_neg2power(char *ret, int exp)
 	char	*num;
 	char	*tmp;
 
+	tmp = NULL;
 	if (!(pos2power = ft_strnewu(5000)))
 		return ;
 	pos2power[0] = '1';
@@ -87,6 +88,7 @@ void	ft_calc(char *bin, int exp, char *ret)
 {
 	char	*p;
 
+	p = NULL;
 	while (*bin)
 	{
 		exp--;

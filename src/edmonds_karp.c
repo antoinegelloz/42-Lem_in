@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 11:38:50 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/28 09:41:57 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/28 12:06:43 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int8_t	change_capacity(t_graph *graph, t_list *u, t_list *v, int8_t order)
 	//printf("u:%d\n", *(int *)u->content);
 	//printf("v:%d\n", *(int *)v->content);
 	curr = graph->array[*(int *)u->content].head;
-	if (curr == NULL) 
+	if (curr == NULL)
 		return (FAILURE);
 	while (curr->dest != *(size_t *)v->content)
 		curr = curr->next;
-	if (curr == NULL || curr->dest != *(size_t *)v->content) 
+	if (curr == NULL || curr->dest != *(size_t *)v->content)
 		return (FAILURE);
 	if (curr->dest == *(size_t *)v->content)
 	{
@@ -45,8 +45,8 @@ t_list	*edmonds_karp(t_graph *graph)
 
 	aug_paths = NULL;
 	new_bfs = NULL;
-	//while (TRUE)
-	//{
+	while (TRUE)
+	{
 		if ((new_bfs = bfs(graph)) == NULL)
 			return (aug_paths);
 		ft_putendl("New aug_path:");
@@ -59,6 +59,6 @@ t_list	*edmonds_karp(t_graph *graph)
 			change_capacity(graph, curr->next, curr, DECREASE);
 			curr = curr->next;
 		}
-	//}
+	}
 	return (aug_paths);
 }
