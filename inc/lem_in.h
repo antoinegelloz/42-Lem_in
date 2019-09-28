@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 18:26:02 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/28 10:58:16 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int8_t			is_command(char *line);
 int8_t			is_node(char *line);
 int8_t			is_name_duplicate(t_parsing *p, char *new_name);
 int8_t			is_coord_duplicate(t_parsing *p, int x, int y);
+int8_t			is_edge_duplicate(t_parsing *p, t_list *new_from, t_list *new_to);
 int8_t			is_edge(char *line);
 int8_t			is_comment_or_false_command(char *line);
 int8_t			check_int(char *nb, int8_t pos);
@@ -98,20 +99,21 @@ void			print_coord_x(t_parsing *p);
 void			print_coord_y(t_parsing *p);
 void			print_edges(t_parsing *p);
 void			print_file(t_parsing *p);
-void			print_list(t_list *list);
+void			print_ssize_t(t_list *list);
 
 int8_t			exit_parsing_error(t_parsing *p, char *line, char **tab);
-int8_t			free_p(t_parsing *p);
-void			free_graph(t_graph *graph);
+void			free_p(t_parsing *p);
 void			free_tab(char **tab);
+void			free_graph(t_graph *graph);
 
 t_list			*edmonds_karp(t_graph *graph);
-t_bfs			*create_queue(size_t capacity);
-int 			isFull(t_bfs *queue);
-int 			isEmpty(t_bfs *queue);
-void 			enqueue(t_bfs *queue, int data);
-int				dequeue(t_bfs *queue);
+
 t_bfs			*bfs(t_graph *graph);
-void			free_queue(t_bfs *queue);
+t_bfs			*create_queue(size_t capacity);
+void 			enqueue(t_bfs *bfs, int data);
+int				dequeue(t_bfs *bfs);
+int 			isFull(t_bfs *bfs);
+int 			isEmpty(t_bfs *bfs);
+void			free_queue(t_bfs *bfs);
 
 #endif

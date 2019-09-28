@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:00:34 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 15:46:26 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/28 10:39:43 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	free_tab(char **tab)
 	tab = NULL;
 }
 
-int8_t	free_p(t_parsing *p)
+void	free_p(t_parsing *p)
 {
 	ft_lstdel(&p->nodes, ft_delcontent);
 	ft_lstdel(&p->x_coord, ft_delcontent);
@@ -51,7 +51,6 @@ int8_t	free_p(t_parsing *p)
 	ft_lstdel(&p->from, ft_delcontent);
 	ft_lstdel(&p->to, ft_delcontent);
 	ft_lstdel(&p->file, ft_delcontent);
-	return (SUCCESS);
 }
 
 void	edge_del(t_edge **edge)

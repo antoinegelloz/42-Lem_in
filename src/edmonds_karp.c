@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 11:38:50 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 18:35:15 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/28 09:41:57 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int8_t	change_capacity(t_graph *graph, t_list *u, t_list *v, int8_t order)
 {
 	t_edge *curr;
 
-	printf("nb:%d\n", *(int *)u->content);
+	//printf("u:%d\n", *(int *)u->content);
+	//printf("v:%d\n", *(int *)v->content);
 	curr = graph->array[*(int *)u->content].head;
 	if (curr == NULL) 
 		return (FAILURE);
@@ -49,10 +50,10 @@ t_list	*edmonds_karp(t_graph *graph)
 		if ((new_bfs = bfs(graph)) == NULL)
 			return (aug_paths);
 		ft_putendl("New aug_path:");
-		print_list(new_bfs->best_path);
+		print_ssize_t(new_bfs->best_path);
 		ft_lstappend(&aug_paths, new_bfs->best_path);
 		curr = new_bfs->best_path;
-		while (curr)
+		while (curr->next)
 		{
 			change_capacity(graph, curr, curr->next, INCREASE);
 			change_capacity(graph, curr->next, curr, DECREASE);

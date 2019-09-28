@@ -6,13 +6,13 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 13:31:00 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/28 11:09:10 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int8_t	process_command(char *line, t_parsing *p)
+static int8_t	process_command(char *line, t_parsing *p)
 {
 	if (p->is_prev_command == TRUE
 			|| (ft_strequ("##start", line) && p->source != -1)
@@ -26,7 +26,7 @@ int8_t	process_command(char *line, t_parsing *p)
 	return (SUCCESS);
 }
 
-int8_t	process_node(char *line, t_parsing *p)
+static int8_t	process_node(char *line, t_parsing *p)
 {
 	if (p->ants == 0 || p->from != NULL || p->to != NULL)
 		return (exit_parsing_error(p, line, NULL));
@@ -36,7 +36,7 @@ int8_t	process_node(char *line, t_parsing *p)
 	return (save_node(p, line));
 }
 
-int8_t	process_edge(char *line, t_parsing *p)
+static int8_t	process_edge(char *line, t_parsing *p)
 {
 	if (p->is_prev_command == TRUE || p->nodes == NULL
 			|| p->source == -1 || p->sink == -1 || p->ants == 0)
@@ -44,7 +44,7 @@ int8_t	process_edge(char *line, t_parsing *p)
 	return (save_edge(p, line));
 }
 
-int8_t	process_line(char *line, t_parsing *p)
+static int8_t	process_line(char *line, t_parsing *p)
 {
 	if (line == NULL)
 		return (exit_parsing_error(p, line, NULL));
@@ -70,7 +70,7 @@ int8_t	process_line(char *line, t_parsing *p)
 	return (exit_parsing_error(p, line, NULL));
 }
 
-int8_t	parse_file(t_parsing *p)
+int8_t			parse_file(t_parsing *p)
 {
 	int			ret;
 	char		*line;
