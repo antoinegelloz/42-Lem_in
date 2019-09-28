@@ -1,17 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_print.c                                    :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 18:39:17 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/28 11:20:59 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include <stdio.h>
+
+void	print_graph(t_graph *graph)
+{
+	size_t	i;
+	t_edge	*temp;
+
+	if (graph == NULL)
+		return ;
+	ft_putendl("\n  Graph:");
+	i = 0;
+	while (i < graph->size)
+	{
+		temp = graph->array[i].head;
+		if (graph->array[i].source == 1)
+			ft_printf("s ");
+		else if (graph->array[i].sink == 1)
+			ft_printf("e ");
+		else
+			ft_printf("  ");
+		ft_printf("Node|%d| Name|%s| x|%d| y|%d|", i, graph->array[i].name, graph->array[i].x_coord, graph->array[i].y_coord);
+		while (temp)
+		{
+			ft_printf(" -> %d", temp->dest);
+			temp = temp->next;
+		}
+		ft_printf("\n");
+		i++;
+	}
+	ft_printf("\n");
+}
 
 void	print_nodes_names(t_parsing *p)
 {
@@ -82,11 +112,11 @@ void	print_file(t_parsing *p)
 	}
 }
 
-void	print_list(t_list *list)
+void	print_ssize_t(t_list *list)
 {
 	t_list		*curr;
 
-	ft_putendl("print list");
+	ft_putstr("print ssize_t list: ");
 	curr = list;
 	while (curr)
 	{

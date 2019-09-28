@@ -6,13 +6,13 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 17:05:53 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/28 10:47:41 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	init_parsing(t_parsing *p)
+static void		init_parsing(t_parsing *p)
 {
 	p->index = 0;
 	p->ants = 0;
@@ -27,7 +27,7 @@ void	init_parsing(t_parsing *p)
 	p->file = NULL;
 }
 
-t_graph	*build_graph(t_parsing *p)
+static t_graph	*build_graph(t_parsing *p)
 {
 	t_graph *graph;
 	t_list	*curr_from;
@@ -48,7 +48,7 @@ t_graph	*build_graph(t_parsing *p)
 	return (graph);
 }
 
-int		main(void)
+int				main(void)
 {
 	t_parsing	p;
 	t_graph		*graph;

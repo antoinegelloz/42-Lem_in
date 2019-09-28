@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 12:08:25 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/28 11:22:06 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ int8_t	is_name_duplicate(t_parsing *p, char *new_name)
 	while (names)
 	{
 		if (ft_strequ((char *)names->content, new_name))
-			return (FAILURE);
+			return (TRUE);
 		names = names->next;
 	}
-	return (SUCCESS);
+	return (FALSE);
 }
 
 int8_t	is_coord_duplicate(t_parsing *p, int x, int y)
@@ -63,9 +63,29 @@ int8_t	is_coord_duplicate(t_parsing *p, int x, int y)
 	while (xs && ys)
 	{
 		if (x == *(int *)xs->content && y == *(int *)ys->content)
-			return (FAILURE);
+			return (TRUE);
 		xs = xs->next;
 		ys = ys->next;
 	}
-	return (SUCCESS);
+	return (FALSE);
+}
+
+int8_t	is_edge_duplicate(t_parsing *p, t_list *new_f, t_list *new_t)
+{
+	t_list *f;
+	t_list *t;
+
+	f = p->from;
+	t = p->to;
+	while (f && t)
+	{
+		if ((*(size_t *)new_f->content == *(size_t *)f->content
+			&& *(size_t *)new_t->content == *(size_t *)t->content)
+			|| (*(size_t *)new_f->content == *(size_t *)t->content
+			&& *(size_t *)new_t->content == *(size_t *)f->content))
+			return (TRUE);
+		f = f->next;
+		t = t->next;
+	}
+	return (FALSE);
 }

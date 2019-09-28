@@ -6,7 +6,7 @@
 #    By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/19 11:32:25 by agelloz           #+#    #+#              #
-#    Updated: 2019/09/27 18:02:44 by agelloz          ###   ########.fr        #
+#    Updated: 2019/09/28 10:56:45 by agelloz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,10 @@ SRC_DIR = src/
 SRC_FILES += lem_in.c 
 SRC_FILES += parsing.c 
 SRC_FILES += parsing2.c 
-SRC_FILES += parsing_print.c 
 SRC_FILES += parsing_tests.c 
 SRC_FILES += parsing_tests2.c 
 SRC_FILES += graph.c 
+SRC_FILES += print.c 
 SRC_FILES += exit.c 
 SRC_FILES += edmonds_karp.c
 SRC_FILES += queue.c
