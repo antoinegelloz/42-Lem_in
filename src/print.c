@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/28 11:20:59 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/28 16:34:44 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void	print_graph(t_graph *graph)
 	i = 0;
 	while (i < graph->size)
 	{
-		temp = graph->array[i].head;
-		if (graph->array[i].source == 1)
+		temp = graph->nodes[i].head;
+		if (graph->nodes[i].source == 1)
 			ft_printf("s ");
-		else if (graph->array[i].sink == 1)
+		else if (graph->nodes[i].sink == 1)
 			ft_printf("e ");
 		else
 			ft_printf("  ");
-		ft_printf("Node|%d| Name|%s| x|%d| y|%d|", i, graph->array[i].name, graph->array[i].x_coord, graph->array[i].y_coord);
+		ft_printf("Node|%d| Name|%s| x|%d| y|%d|", i, graph->nodes[i].name, graph->nodes[i].x_coord, graph->nodes[i].y_coord);
 		while (temp)
 		{
 			ft_printf(" -> %d", temp->dest);

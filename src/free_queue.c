@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 14:47:25 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/09/27 18:29:16 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/28 16:18:03 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void		free_queue(t_bfs *bfs)
 {
 	free(bfs->prev);
 	free(bfs->out);
-	free(bfs->array);
+	free(bfs->queue);
 	free(bfs);
-	return ;
 }

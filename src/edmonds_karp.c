@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 11:38:50 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/28 12:06:43 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/28 16:35:28 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int8_t	change_capacity(t_graph *graph, t_list *u, t_list *v, int8_t order)
 
 	//printf("u:%d\n", *(int *)u->content);
 	//printf("v:%d\n", *(int *)v->content);
-	curr = graph->array[*(int *)u->content].head;
+	curr = graph->nodes[*(int *)u->content].head;
 	if (curr == NULL)
 		return (FAILURE);
 	while (curr->dest != *(size_t *)v->content)
