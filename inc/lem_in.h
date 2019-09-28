@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/28 10:58:16 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/28 12:05:24 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ int8_t			is_command(char *line);
 int8_t			is_node(char *line);
 int8_t			is_name_duplicate(t_parsing *p, char *new_name);
 int8_t			is_coord_duplicate(t_parsing *p, int x, int y);
-int8_t			is_edge_duplicate(t_parsing *p, t_list *new_from, t_list *new_to);
+int8_t			is_edge_duplicate(t_parsing *p, t_list *new_from,
+									t_list *new_to);
 int8_t			is_edge(char *line);
 int8_t			is_comment_or_false_command(char *line);
 int8_t			check_int(char *nb, int8_t pos);
@@ -110,10 +111,10 @@ t_list			*edmonds_karp(t_graph *graph);
 
 t_bfs			*bfs(t_graph *graph);
 t_bfs			*create_queue(size_t capacity);
-void 			enqueue(t_bfs *bfs, int data);
+void			enqueue(t_bfs *bfs, int data);
 int				dequeue(t_bfs *bfs);
-int 			isFull(t_bfs *bfs);
-int 			isEmpty(t_bfs *bfs);
+int				isFull(t_bfs *bfs);
+int				isEmpty(t_bfs *bfs);
 void			free_queue(t_bfs *bfs);
 
 #endif

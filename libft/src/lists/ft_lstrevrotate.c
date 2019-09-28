@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 09:30:40 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/05 09:31:24 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/28 11:58:50 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void		ft_lstrevrotate(t_list **alst)
 
 	first = *alst;
 	current = first;
+	before_last = NULL;
 	while (current->next)
 	{
 		before_last = current;
@@ -27,5 +28,6 @@ void		ft_lstrevrotate(t_list **alst)
 	}
 	current->next = first;
 	*alst = current;
-	before_last->next = NULL;
+	if (before_last && before_last->next)
+		before_last->next = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/28 11:15:32 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/28 12:07:08 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int8_t			create_edge(t_graph *graph, size_t src, size_t dest)
 
 static t_graph	*init_graph(t_parsing *p, t_graph *graph)
 {
-	size_t i;
+	size_t	i;
 	t_list	*curr_nodes;
 	t_list	*curr_x_coord;
 	t_list	*curr_y_coord;
