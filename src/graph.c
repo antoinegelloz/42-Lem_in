@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/28 16:34:02 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/29 11:13:20 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int8_t			create_edge(t_graph *graph, size_t src, size_t dest)
 		return (FAILURE);
 	}
 	backward_edge->dest = src;
+	backward_edge->capacity = 1;
 	backward_edge->next = graph->nodes[dest].head;
 	graph->nodes[dest].head = backward_edge;
 	return (SUCCESS);
