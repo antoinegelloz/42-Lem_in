@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:01:34 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/09/28 21:00:29 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/29 10:30:00 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int8_t	enqueue(t_bfs *bfs, size_t index)
 	if (is_queue_full(bfs) == TRUE)
 		return (FAILURE);
 	bfs->queue_rear = bfs->queue_rear + 1;
-	//printf("node %zd enqueued\n", index);
 	bfs->queue[bfs->queue_rear] = index;
 	bfs->queue_size = bfs->queue_size + 1;
+	//printf("node %zd enqueued\n", index);
 	return (SUCCESS);
 }
 
@@ -46,13 +46,13 @@ int8_t	dequeue(t_bfs *bfs)
 	return (SUCCESS);
 }
 
-t_bfs	*create_queue(size_t capacity)
+t_bfs	*create_queue(t_graph *graph)
 {
 	t_bfs	*bfs;
 	size_t	i;
 
 	bfs = (t_bfs *)malloc(sizeof(t_bfs));
-	bfs->queue_capacity = capacity;
+	bfs->queue_capacity = graph->size;
 	bfs->queue_front = 0;
 	bfs->queue_size = 0;
 	bfs->queue_rear = 0;
@@ -61,8 +61,18 @@ t_bfs	*create_queue(size_t capacity)
 	i = 0;
 	while (i < bfs->queue_capacity)
 	{
-		bfs->queue[i] = -1;
-		bfs->prev[i] = -1;
+		if (graph->nodes[i].source == TRUE)
+		{
+			bfs->queue[0] = i;
+			bfs->queue_size = 1;
+			graph->nodes[i].bfs_marked = TRUE;
+			bfs->prev[i] = -1;
+		}
+		else
+		{
+			bfs->queue[i] = -1;
+			bfs->prev[i] = -1;
+		}
 		i++;
 	}
 	bfs->best_path = NULL;
