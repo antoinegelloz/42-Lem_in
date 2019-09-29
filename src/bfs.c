@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:32:38 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/09/29 11:54:20 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/29 12:06:54 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,18 @@ static void		print_results(ssize_t *queue, ssize_t *prev, size_t size)
 	return ;
 }
 
+void			reset_marks(t_graph *graph)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < graph->size)
+	{
+		graph->nodes[i].bfs_marked = 0;
+		i++;
+	}
+}
+
 static t_bfs	*reconstruct_path(t_bfs *bfs, t_graph *graph)
 {
 	t_list		*tmp;
@@ -42,6 +54,7 @@ static t_bfs	*reconstruct_path(t_bfs *bfs, t_graph *graph)
 		i = bfs->prev[i];
 	}
 	print_ssize_t(bfs->best_path);
+	reset_marks(graph);
 	if (graph->nodes[*(ssize_t *)bfs->best_path->content].source != TRUE)
 		return (NULL);
 	return (bfs);
