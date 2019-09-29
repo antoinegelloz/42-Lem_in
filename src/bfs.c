@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:32:38 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/09/28 20:59:53 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/29 10:27:58 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ static void		print_results(ssize_t *queue, ssize_t *prev, size_t size)
 	return ;
 }
 
-void			reconstruct_path(t_bfs *bfs, t_graph *graph)
+static t_bfs	*reconstruct_path(t_bfs *bfs, t_graph *graph)
 {
 	t_list		*tmp;
 	ssize_t		i;
 
+	tmp = NULL;
 	i = graph->size - 1;
 	while (graph->nodes[i].sink == FALSE)
 		i--;
@@ -40,26 +41,9 @@ void			reconstruct_path(t_bfs *bfs, t_graph *graph)
 		i = bfs->prev[i];
 	}
 	ft_lstrev(&bfs->best_path);
-	return ;
-}
-
-static int8_t	enqueue_first_elt(t_bfs *bfs, t_graph *graph)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < graph->size)
-	{
-		if (graph->nodes[i].source == TRUE)
-		{
-			bfs->queue[0] = i;
-			bfs->queue_size = 1;
-			graph->nodes[i].bfs_marked = TRUE;
-			break ;
-		}
-		i++;
-	}
-	return (SUCCESS);
+	if (graph->nodes[*(ssize_t *)bfs->best_path->content].source != TRUE)
+		return (NULL);
+	return (bfs);
 }
 
 t_bfs			*bfs(t_graph *graph)
@@ -68,8 +52,9 @@ t_bfs			*bfs(t_graph *graph)
 	t_bfs 		*bfs;
 	t_edge		*neighbours;
 
-	bfs = create_queue(graph->size);
-	enqueue_first_elt(bfs, graph);
+	node = 0;
+	neighbours = NULL;
+	bfs = create_queue(graph);
 	while (is_queue_empty(bfs) == FALSE)
 	{
 		node = bfs->queue_front;
@@ -87,8 +72,5 @@ t_bfs			*bfs(t_graph *graph)
 		}
 	}
 	print_results(bfs->queue, bfs->prev, graph->size);
-	reconstruct_path(bfs, graph);
-	if (graph->nodes[*(ssize_t *)bfs->best_path->content].source != TRUE)
-		return (NULL);
-	return (bfs);
+	return (reconstruct_path(bfs, graph));
 }
