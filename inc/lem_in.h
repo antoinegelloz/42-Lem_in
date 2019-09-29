@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/29 10:28:37 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/29 11:53:52 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ t_list			*edmonds_karp(t_graph *graph);
 t_bfs			*bfs(t_graph *graph);
 t_bfs			*create_queue(t_graph *graph);
 int8_t			enqueue(t_bfs *bfs, size_t index);
-int8_t			dequeue(t_bfs *bfs);
+size_t			dequeue(t_bfs *bfs);
 int8_t			is_queue_full(t_bfs *bfs);
 int8_t			is_queue_empty(t_bfs *bfs);
 void			free_queue(t_bfs *bfs);

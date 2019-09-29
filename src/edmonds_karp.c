@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 11:38:50 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/28 17:04:26 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/29 11:16:00 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,9 @@ int8_t	change_capacity(t_graph *graph, t_list *u, t_list *v, int8_t order)
 {
 	t_edge *curr;
 
-	//printf("u:%d\n", *(int *)u->content);
-	//printf("v:%d\n", *(int *)v->content);
 	curr = graph->nodes[*(int *)u->content].head;
-	if (curr == NULL)
-		return (FAILURE);
 	while (curr->dest != *(size_t *)v->content)
 		curr = curr->next;
-	if (curr == NULL || curr->dest != *(size_t *)v->content)
-		return (FAILURE);
 	if (curr->dest == *(size_t *)v->content)
 	{
 		if (order == INCREASE)
@@ -34,6 +28,7 @@ int8_t	change_capacity(t_graph *graph, t_list *u, t_list *v, int8_t order)
 		if (order == DECREASE)
 			curr->capacity--;
 	}
+	printf("new cap %zd->%zd: %zd\n", *(size_t *)u->content, *(size_t *)v->content, curr->capacity);
 	return (SUCCESS);
 }
 
@@ -43,20 +38,20 @@ t_list	*edmonds_karp(t_graph *graph)
 	t_list	*curr;
 	t_bfs	*new_bfs;
 
+	curr = NULL;
 	aug_paths = NULL;
 	new_bfs = NULL;
 	while (TRUE)
 	{
 		if ((new_bfs = bfs(graph)) == NULL)
 			return (aug_paths);
-		ft_putendl("New aug_path:");
-		print_ssize_t(new_bfs->best_path);
+		ft_putendl("New aug_path found");
 		ft_lstappend(&aug_paths, new_bfs->best_path);
 		curr = new_bfs->best_path;
 		while (curr->next)
 		{
-			change_capacity(graph, curr, curr->next, INCREASE);
-			change_capacity(graph, curr->next, curr, DECREASE);
+			change_capacity(graph, curr, curr->next, DECREASE);
+			change_capacity(graph, curr->next, curr, INCREASE);
 			curr = curr->next;
 		}
 	}
