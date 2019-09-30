@@ -6,7 +6,7 @@
 #    By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/19 11:32:25 by agelloz           #+#    #+#              #
-#    Updated: 2019/09/28 10:56:45 by agelloz          ###   ########.fr        #
+#    Updated: 2019/09/29 15:19:05 by agelloz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,9 +29,8 @@ SRC_FILES += graph.c
 SRC_FILES += print.c 
 SRC_FILES += exit.c 
 SRC_FILES += edmonds_karp.c
-SRC_FILES += queue.c
+SRC_FILES += bfs_tools.c
 SRC_FILES += bfs.c
-SRC_FILES += free_queue.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(SRC:%.c=%.o)
