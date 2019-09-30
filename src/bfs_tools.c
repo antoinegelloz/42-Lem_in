@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   queue.c                                            :+:      :+:    :+:   */
+/*   bfs_tools.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:01:34 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/09/29 11:53:36 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/29 15:19:25 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ size_t	dequeue(t_bfs *bfs)
 	return (index);
 }
 
-t_bfs	*create_queue(t_graph *graph)
+t_bfs	*init_bfs(t_graph *graph)
 {
 	t_bfs	*bfs;
 	size_t	i;
@@ -71,6 +71,6 @@ t_bfs	*create_queue(t_graph *graph)
 		}
 		i++;
 	}
-	bfs->best_path = NULL;
+	bfs->paths = NULL;
 	return (bfs);
 }

@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/29 11:53:52 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/29 15:21:01 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct	s_bfs
 	size_t		queue_capacity;
 	ssize_t		*queue;
 	ssize_t		*prev;
-	t_list		*best_path;
+	t_list		*paths;
 }				t_bfs;
 
 int8_t			parse_file(t_parsing *p);
@@ -109,11 +109,11 @@ void			free_graph(t_graph *graph);
 t_list			*edmonds_karp(t_graph *graph);
 
 t_bfs			*bfs(t_graph *graph);
-t_bfs			*create_queue(t_graph *graph);
+t_bfs			*init_bfs(t_graph *graph);
 int8_t			enqueue(t_bfs *bfs, size_t index);
 size_t			dequeue(t_bfs *bfs);
 int8_t			is_queue_full(t_bfs *bfs);
 int8_t			is_queue_empty(t_bfs *bfs);
-void			free_queue(t_bfs *bfs);
+void			free_bfs(t_bfs *bfs);
 
 #endif

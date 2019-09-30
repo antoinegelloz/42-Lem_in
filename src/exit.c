@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:00:34 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/28 16:33:34 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/29 15:20:42 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,20 @@ void	free_graph(t_graph *graph)
 	free(graph->nodes);
 	free(graph);
 	graph = NULL;
+}
+
+void	free_bfs(t_bfs *bfs)
+{
+	t_list	*curr;
+
+	free(bfs->prev);
+	free(bfs->queue);
+	curr = bfs->paths;
+	while (curr)
+	{
+		ft_lstdel(&curr->path);
+		curr = curr->next;
+	}
+	ft_lstdel(&bfs->paths);
+	free(bfs);
 }
