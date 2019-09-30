@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:32:38 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/09/29 12:06:54 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/30 16:45:51 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ static t_bfs	*reconstruct_path(t_bfs *bfs, t_graph *graph)
 	while (i != -1)
 	{
 		tmp = ft_lstnew(&i, sizeof(ssize_t));
-		ft_lstadd(&bfs->best_path, tmp);	
+		ft_lstadd(&bfs->shortest_path, tmp);
 		i = bfs->prev[i];
 	}
-	print_ssize_t(bfs->best_path);
+	print_ssize_t(bfs->shortest_path);
 	reset_marks(graph);
-	if (graph->nodes[*(ssize_t *)bfs->best_path->content].source != TRUE)
+	if (graph->nodes[*(ssize_t *)bfs->shortest_path->content].source != TRUE)
 		return (NULL);
 	return (bfs);
 }
@@ -68,7 +68,7 @@ t_bfs			*bfs(t_graph *graph)
 
 	node = 0;
 	neighbours = NULL;
-	bfs = create_queue(graph);
+	bfs = init_bfs(graph);
 	while (is_queue_empty(bfs) == FALSE)
 	{
 		node = dequeue(bfs);

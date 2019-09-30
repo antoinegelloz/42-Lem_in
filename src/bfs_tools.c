@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:01:34 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/09/29 15:19:25 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/30 16:34:46 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ t_bfs	*init_bfs(t_graph *graph)
 		}
 		i++;
 	}
-	bfs->paths = NULL;
+	bfs->shortest_path = NULL;
 	return (bfs);
 }
