@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 11:38:50 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/30 16:44:40 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/30 18:17:28 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,20 @@ int8_t	change_capacity(t_graph *graph, t_list *u, t_list *v, int8_t order)
 t_list	*find_disjoint_paths(t_graph *graph, t_list *aug_paths)
 {
 	(void)graph;
+
+	print_ssize_t(aug_paths);
 	return (aug_paths);
 }
 
 t_list	*edmonds_karp(t_graph *graph)
 {
 	t_list	*aug_paths;
+	t_list	*curr_path;
 	t_bfs	*new_bfs;
 	t_list	*curr_path_node;
 
 	aug_paths = NULL;
+	curr_path = NULL;
 	new_bfs = NULL;
 	curr_path_node = NULL;
 	while (TRUE)
@@ -52,7 +56,16 @@ t_list	*edmonds_karp(t_graph *graph)
 		if ((new_bfs = bfs(graph)) == NULL)
 			return (find_disjoint_paths(graph, aug_paths));
 		ft_putendl("New shortest path found");
-		ft_lstappend(&aug_paths, new_bfs->shortest_path);
+		if (curr_path == NULL)
+		{
+			ft_lstappend(&aug_paths, new_bfs->shortest_path);
+			curr_path = aug_paths;
+
+		}
+		else
+		{
+			
+		}
 		curr_path_node = new_bfs->shortest_path;
 		while (curr_path_node->next != NULL)
 		{
@@ -60,6 +73,7 @@ t_list	*edmonds_karp(t_graph *graph)
 			change_capacity(graph, curr_path_node->next, curr_path_node, INCREASE);
 			curr_path_node = curr_path_node->next;
 		}
+		free_bfs(new_bfs);
 	}
 	return (aug_paths);
 }

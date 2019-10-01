@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:00:34 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/30 16:43:20 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/09/30 17:14:03 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,5 @@ void	free_bfs(t_bfs *bfs)
 {
 	free(bfs->prev);
 	free(bfs->queue);
-	ft_lstdel(&bfs->shortest_path, ft_delcontent);
 	free(bfs);
 }
