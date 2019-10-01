@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:32:38 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/01 16:02:51 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/01 17:34:08 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,8 @@ void			reset_marks(t_graph *graph, t_bfs *bfs)
 		curr = bfs->shortest_path;
 		while (curr != NULL)
 		{
-			printf("res:%zd\n", *(size_t *)curr->content);
 			if (i == *(size_t *)curr->content)
 			{
-				ft_putendl("je rentre");
 				found = TRUE;
 				break ;
 			}
@@ -95,7 +93,6 @@ t_bfs	*reconstruct_path(t_bfs *bfs, t_graph *graph)
 		ft_lstadd(&bfs->shortest_path, tmp);
 		i = bfs->prev[i];
 	}
-	print_ssize_t(bfs->shortest_path);
 	if (graph->nodes[*(ssize_t *)bfs->shortest_path->content].source != TRUE)
 	{
 		reset_marks_fail(graph, bfs);
@@ -104,6 +101,7 @@ t_bfs	*reconstruct_path(t_bfs *bfs, t_graph *graph)
 		return (NULL);
 	}
 	reset_marks(graph, bfs);
+	print_graph(graph);
 	return (bfs);
 }
 
@@ -113,6 +111,7 @@ t_bfs			*bfs(t_graph *graph)
 	t_bfs 		*bfs;
 	t_edge		*neighbours;
 
+	ft_putendl("\n***************** normal BFS *********************");
 	neighbours = NULL;
 	bfs = init_bfs(graph);
 	while (is_queue_empty(bfs) == FALSE)
@@ -121,19 +120,18 @@ t_bfs			*bfs(t_graph *graph)
 		neighbours = graph->nodes[node].head;
 		while (neighbours)
 		{
-			printf("node:%zd, neig:%zd, cap:%zu, mark:%zd\n", node, neighbours->dest, neighbours->capacity, graph->nodes[neighbours->dest].bfs_marked);
-			print_graph(graph);
+			//printf("node:%zd, neig:%zd, cap:%zu, mark:%zd\n", node, neighbours->dest, neighbours->capacity, graph->nodes[neighbours->dest].bfs_marked);
+			//print_graph(graph);
 			if (graph->nodes[neighbours->dest].bfs_marked != TRUE && neighbours->capacity > 0)
 			{
 				enqueue(bfs, neighbours->dest);
 				bfs->prev[neighbours->dest] = node;
 				graph->nodes[neighbours->dest].bfs_marked = TRUE;
-				//printf("mark:%zd\n", graph->nodes[1].bfs_marked);
 			}
-			print_results(bfs, graph->size);
+			//print_results(bfs, graph->size);
 			neighbours = neighbours->next;
 		}
 	}
-	print_results(bfs, graph->size);
+	//print_results(bfs, graph->size);
 	return (reconstruct_path(bfs, graph));
 }
