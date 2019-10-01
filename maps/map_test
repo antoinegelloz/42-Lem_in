@@ -1,0 +1,28 @@
+10
+##start
+salle0 0 0
+salle1 1 1
+salle2 2 2
+##end
+salle3 3 3
+salle4 4 4
+salle5 5 5
+salle6 6 6
+salle7 7 7
+salle8 8 8
+salle9 9 9
+salle10 10 10
+salle11 11 11
+salle0-salle4
+salle4-salle5
+salle5-salle6
+salle6-salle7
+salle7-salle2
+salle0-salle1
+salle1-salle2
+salle2-salle3
+salle1-salle8
+salle8-salle9
+salle9-salle10
+salle10-salle11
+salle11-salle3
