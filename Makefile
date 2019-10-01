@@ -6,7 +6,7 @@
 #    By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/19 11:32:25 by agelloz           #+#    #+#              #
-#    Updated: 2019/09/30 17:13:14 by agelloz          ###   ########.fr        #
+#    Updated: 2019/10/01 18:20:11 by ekelkel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC_FILES += exit.c
 SRC_FILES += edmonds_karp.c
 SRC_FILES += bfs_tools.c
 SRC_FILES += bfs.c
+SRC_FILES += flow_ants.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(SRC:%.c=%.o)

@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/29 14:46:52 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/01 18:25:07 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ static t_graph	*init_graph(t_parsing *p, t_graph *graph)
 		graph->nodes[i].index = i;
 		graph->nodes[i].name = ft_strdup(curr_nodes->content);
 		graph->nodes[i].source = ((size_t)p->source == i) ? 1 : 0;
+		((size_t)p->source == i) ? graph->source = i : 1;
 		graph->nodes[i].sink = ((size_t)p->sink == i) ? 1 : 0;
+		((size_t)p->sink == i) ? graph->sink = i : 1;
 		graph->nodes[i].x_coord = *(int *)curr_x_coord->content;
 		graph->nodes[i].y_coord = *(int *)curr_y_coord->content;
 		graph->nodes[i].bfs_marked = 0;

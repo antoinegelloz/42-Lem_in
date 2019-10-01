@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/01 17:33:45 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/01 18:11:30 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int				main(void)
 		return (EXIT_FAILURE);
 	print_file(&p);
 	free_p(&p);
+	flow_ants(graph);
 	free_graph(graph);
 	ft_lstdel(&aug_paths, ft_delcontent);
 	return (EXIT_SUCCESS);
