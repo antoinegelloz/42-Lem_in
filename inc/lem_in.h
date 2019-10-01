@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/01 12:57:38 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/01 18:19:11 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct	s_graph
 {
 	size_t	ants;
 	size_t	size;
+	int8_t	source;
+	int8_t	sink;
 	t_node	*nodes;
 }				t_graph;
 
@@ -117,5 +119,6 @@ int8_t			is_queue_full(t_bfs *bfs);
 int8_t			is_queue_empty(t_bfs *bfs);
 void			free_bfs(t_bfs *bfs);
 void			print_results(t_bfs *bfs, size_t size);
+int8_t			flow_ants(t_graph *graph);
 
 #endif
