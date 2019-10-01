@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/28 16:34:44 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/01 15:38:39 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	print_graph(t_graph *graph)
 			ft_printf("e ");
 		else
 			ft_printf("  ");
-		ft_printf("Node|%d| Name|%s| x|%d| y|%d|", i, graph->nodes[i].name, graph->nodes[i].x_coord, graph->nodes[i].y_coord);
+		ft_printf("Node|%d| Name|%s| x|%d| y|%d| mark|%d|", i, graph->nodes[i].name, graph->nodes[i].x_coord, graph->nodes[i].y_coord, graph->nodes[i].bfs_marked);
 		while (temp)
 		{
 			ft_printf(" -> %d", temp->dest);
