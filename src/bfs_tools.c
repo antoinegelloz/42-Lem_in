@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:01:34 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/09/30 16:34:46 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/01 17:13:05 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int8_t	enqueue(t_bfs *bfs, size_t index)
 	bfs->queue_rear = bfs->queue_rear + 1;
 	bfs->queue[bfs->queue_rear] = index;
 	bfs->queue_size = bfs->queue_size + 1;
-	printf("node %zd enqueued\n", index);
+	//printf("node %zd enqueued\n", index);
 	return (SUCCESS);
 }
 
@@ -42,7 +42,7 @@ size_t	dequeue(t_bfs *bfs)
 	index = bfs->queue[bfs->queue_front];
 	bfs->queue_front = bfs->queue_front + 1;
 	bfs->queue_size = bfs->queue_size - 1;
-	printf("node %zd dequeued\n", index);
+	//printf("node %zd dequeued\n", index);
 	return (index);
 }
 
