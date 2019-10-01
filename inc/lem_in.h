@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/30 16:43:04 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/01 12:57:38 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,13 @@ void			free_graph(t_graph *graph);
 t_list			*edmonds_karp(t_graph *graph);
 
 t_bfs			*bfs(t_graph *graph);
+t_bfs			*reconstruct_path(t_bfs *bfs, t_graph *graph);
 t_bfs			*init_bfs(t_graph *graph);
 int8_t			enqueue(t_bfs *bfs, size_t index);
 size_t			dequeue(t_bfs *bfs);
 int8_t			is_queue_full(t_bfs *bfs);
 int8_t			is_queue_empty(t_bfs *bfs);
 void			free_bfs(t_bfs *bfs);
+void			print_results(t_bfs *bfs, size_t size);
 
 #endif
