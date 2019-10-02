@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:32:38 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/02 11:02:52 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/02 11:56:31 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void			reset_marks_fail(t_graph *graph, t_bfs *bfs)
 		}
 		i++;
 	}
-	print_graph(graph);
 }
 
 void			reset_marks(t_graph *graph, t_bfs *bfs)

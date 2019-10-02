@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:51:16 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/02 10:19:20 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/02 13:39:49 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int8_t	flow_ants(t_graph *graph)
 	i = 0;
 	node = graph->source;
 	neighbours = graph->nodes[node].head;
-	if ((ants = (size_t *)ft_memalloc(graph->ants)) == NULL)
+	if ((ants = (size_t *)malloc(graph->ants * sizeof(size_t))) == NULL)
 		return (FAILURE);
 	while (i < graph->ants)
 		ants[i++] = node;
