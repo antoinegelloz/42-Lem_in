@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:32:38 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/01 17:34:08 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/02 11:02:52 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void			reset_marks_fail(t_graph *graph, t_bfs *bfs)
 		}
 		i++;
 	}
+	print_graph(graph);
 }
 
 void			reset_marks(t_graph *graph, t_bfs *bfs)
@@ -55,9 +56,11 @@ void			reset_marks(t_graph *graph, t_bfs *bfs)
 	size_t	i;
 	int8_t	found;
 	t_list	*curr;
+	t_edge	*neighbours;
 
 	i = 0;
 	curr = NULL;
+	neighbours = NULL;
 	found = FALSE;
 	while (i < graph->size)
 	{
@@ -70,6 +73,16 @@ void			reset_marks(t_graph *graph, t_bfs *bfs)
 				break ;
 			}
 			curr = curr->next;
+		}
+		neighbours = graph->nodes[i].head;
+		while (neighbours)
+		{
+			if (neighbours->capacity == 2)
+			{
+				found = TRUE;
+				break ;
+			}
+			neighbours = neighbours->next;
 		}
 		if (found == FALSE || graph->nodes[i].sink == TRUE || graph->nodes[i].source == TRUE)
 			graph->nodes[i].bfs_marked = FALSE;
@@ -101,7 +114,6 @@ t_bfs	*reconstruct_path(t_bfs *bfs, t_graph *graph)
 		return (NULL);
 	}
 	reset_marks(graph, bfs);
-	print_graph(graph);
 	return (bfs);
 }
 

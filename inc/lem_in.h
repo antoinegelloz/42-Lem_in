@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/01 18:19:11 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/02 10:15:34 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ typedef struct	s_graph
 {
 	size_t	ants;
 	size_t	size;
-	int8_t	source;
-	int8_t	sink;
+	size_t	source;
+	size_t	sink;
 	t_node	*nodes;
 }				t_graph;
 
