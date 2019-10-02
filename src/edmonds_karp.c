@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 11:38:50 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/02 10:46:18 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/02 12:30:07 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,23 +47,23 @@ t_bfs			*bfs_disjoint_paths(t_graph *graph)
 	backward = FALSE;
 	while (is_queue_empty(bfs) == FALSE)
 	{
-		//print_graph(graph);
 		node = dequeue(bfs);
 		neighbours = graph->nodes[node].head;	
 		while (neighbours != NULL && graph->nodes[node].sink == FALSE)
 		{
-			//printf("node: %zd, neigh:%zd, mark:%d, cap:%zd\n", node, neighbours->dest, graph->nodes[neighbours->dest].bfs_marked, neighbours->capacity);
 			if (backward == FALSE)
 			{
 				if (graph->nodes[neighbours->dest].bfs_marked != TRUE && neighbours->capacity > 0)
 				{
+					//printf("NOT MARKED %zd -> %zd mark:%d cap:%zd\n", node, neighbours->dest, graph->nodes[neighbours->dest].bfs_marked, neighbours->capacity);
 					enqueue(bfs, neighbours->dest);
 					bfs->prev[neighbours->dest] = node;
 					graph->nodes[neighbours->dest].bfs_marked = TRUE;
 					neighbours = NULL;
 				}
-				else if (graph->nodes[neighbours->dest].bfs_marked == TRUE && neighbours->capacity > 0)
+				else if (graph->nodes[neighbours->dest].bfs_marked == TRUE && neighbours->capacity > 0 && neighbours->dest != graph->source)
 				{
+					//printf("MARKED %zd -> %zd mark:%d cap:%zd\n", node, neighbours->dest, graph->nodes[neighbours->dest].bfs_marked, neighbours->capacity);
 					enqueue(bfs, neighbours->dest);
 					bfs->prev[neighbours->dest] = node;
 					backward = TRUE;
@@ -74,11 +74,19 @@ t_bfs			*bfs_disjoint_paths(t_graph *graph)
 			}
 			else
 			{
+				//printf("BACK %zd -> %zd mark:%d cap:%zd\n", node, neighbours->dest, graph->nodes[neighbours->dest].bfs_marked, neighbours->capacity);
 				neighbours2 = graph->nodes[node].head;
-				while (neighbours2 != NULL && (graph->nodes[neighbours2->dest].bfs_marked == FALSE || neighbours2->capacity != 2))
+				while (neighbours2 != NULL)
+				{
+					if (neighbours2->dest != graph->source
+							&& graph->nodes[neighbours2->dest].bfs_marked == TRUE
+							&& neighbours2->capacity == 2)
+					{
+						enqueue(bfs, neighbours2->dest);
+						bfs->prev[neighbours2->dest] = node;
+					}
 					neighbours2 = neighbours2->next;
-				enqueue(bfs, neighbours2->dest);
-				bfs->prev[neighbours2->dest] = node;
+				}
 				backward = FALSE;
 				neighbours = NULL;
 			}
@@ -92,12 +100,22 @@ t_bfs			*bfs_disjoint_paths(t_graph *graph)
 t_list	*find_disjoint_paths(t_graph *graph, t_list *aug_paths)
 {
 	t_bfs *new_bfs;
+	t_list	*curr_path_node;
 
 	if ((new_bfs = bfs_disjoint_paths(graph)) == NULL)
 		return (aug_paths);
 	ft_putendl("\nNew modified bfs path found:");
 	print_ssize_t(new_bfs->shortest_path);
+	ft_lstappend(&aug_paths, new_bfs->shortest_path);
+	curr_path_node = new_bfs->shortest_path;
+	while (curr_path_node->next != NULL)
+	{
+		change_capacity(graph, curr_path_node, curr_path_node->next, DECREASE);
+		change_capacity(graph, curr_path_node->next, curr_path_node, INCREASE);
+		curr_path_node = curr_path_node->next;
+	}
 	free_bfs(new_bfs);
+	print_graph(graph);
 	return (aug_paths);
 }
 
