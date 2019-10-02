@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:51:16 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/02 13:39:49 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/02 13:45:48 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,21 @@ int8_t	goal_achieved(size_t *ants, t_graph *graph)
 	return (TRUE);
 }
 
+t_path	*init_paths(t_bfs *bfs)
+{
+	t_path		*paths;
+
+
+	return (paths);
+}
+
 int8_t	flow_ants(t_graph *graph)
 {
 	size_t		*ants;
 	size_t		node;
 	size_t		i;
 	t_edge		*neighbours;
+	//t_path		*paths;
 
 	i = 0;
 	node = graph->source;
