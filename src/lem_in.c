@@ -61,7 +61,7 @@ int				main(void)
 		return (EXIT_FAILURE);
 	if ((aug_paths = edmonds_karp(graph)) == NULL)
 		return (EXIT_FAILURE);
-	printf("aug_paths = \n");
+	ft_putendl("\n**************** aug_paths ********************");
 	print_ssize_t(aug_paths);
 	print_file(&p);
 	free_p(&p);
