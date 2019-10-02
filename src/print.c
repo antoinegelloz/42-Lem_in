@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/01 18:33:04 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/02 09:31:48 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	print_graph(t_graph *graph)
 		ft_printf("\n");
 		i++;
 	}
-	ft_printf("Source|%d| Sink|%d|", graph->source, graph->sink);
+	ft_printf("Source|%d| Sink|%d|\n", graph->source, graph->sink);
 }
 
 void	print_nodes_names(t_parsing *p)
@@ -110,6 +110,7 @@ void	print_file(t_parsing *p)
 		ft_putendl(curr->content);
 		curr = curr->next;
 	}
+	printf("\n");
 }
 
 void	print_ssize_t(t_list *list)
