@@ -1,9 +1,9 @@
-23445
-B 1 2
+25
 ##start
 A 3 4
 ##end
 C 5 7
+B 1 2
 A-C
 A-B
 B-C
