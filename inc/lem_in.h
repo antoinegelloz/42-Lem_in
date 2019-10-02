@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/02 10:15:34 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/02 12:37:22 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ typedef struct	s_edge
 
 typedef struct	s_path
 {
-	size_t			value;
+	size_t			index_node;
+	size_t			capacity;
 	struct s_path	*next;
 }				t_path;
 
