@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/02 12:37:22 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/02 17:07:25 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,10 @@ typedef struct	s_edge
 	struct s_edge	*next;
 }				t_edge;
 
-typedef struct	s_path
+typedef struct	s_paths
 {
-	size_t			index_node;
-	size_t			capacity;
-	struct s_path	*next;
-}				t_path;
+	t_list		**array;
+}				t_paths;
 
 typedef struct	s_node
 {
@@ -49,6 +47,7 @@ typedef struct	s_graph
 	size_t	size;
 	size_t	source;
 	size_t	sink;
+	size_t	paths_count;
 	t_node	*nodes;
 }				t_graph;
 
