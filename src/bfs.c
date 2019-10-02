@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:32:38 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/02 11:56:31 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/02 15:00:20 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ t_bfs	*reconstruct_path(t_bfs *bfs, t_graph *graph)
 		free_bfs(bfs);
 		return (NULL);
 	}
+	graph->paths_count++;
 	reset_marks(graph, bfs);
 	return (bfs);
 }

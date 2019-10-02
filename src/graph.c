@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/01 18:25:07 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/02 15:01:48 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_graph			*create_graph(t_parsing *p)
 		return (NULL);
 	graph->ants = p->ants;
 	graph->size = size;
+	graph->paths_count = 0;
 	if ((graph->nodes = (t_node *)malloc(size * sizeof(t_node))) == NULL)
 	{
 		free(graph);
