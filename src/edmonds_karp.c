@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 11:38:50 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/01 17:37:49 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/02 10:46:18 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ t_list	*edmonds_karp(t_graph *graph)
 			curr_path_node = curr_path_node->next;
 		}
 		free_bfs(new_bfs);
+		print_graph(graph);
 	}
 	return (aug_paths);
 }
