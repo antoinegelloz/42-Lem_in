@@ -1,31 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flow_ants.c                                        :+:      :+:    :+:   */
+/*   init_output.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:51:16 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/07 18:38:35 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/07 21:23:07 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int8_t	goal_achieved(size_t *ants, t_graph *graph)
+t_paths	*init_paths(t_graph *graph, t_paths *paths)
 {
-	size_t		i;
-
-	i = 0;
-	while (i < graph->ants)
-		if (ants[i++] != graph->sink)
-			return (FALSE);	
-	return (TRUE);
-}
-
-t_paths	*init_paths(t_graph *graph)
-{
-	t_paths		*paths;
 	t_list		*tmp;
 	t_edge		*neighbours;
 	t_edge		*neighbours2;
@@ -74,25 +62,25 @@ t_paths	*init_paths(t_graph *graph)
 	return (paths);
 }
 
-void	init_output(t_graph *graph)
+t_paths	*init_output(t_graph *graph, t_paths *paths)
 {	
 	size_t		i;
-	t_paths		*paths;
 
-	i = 0;		
-	paths = init_paths(graph);
+	i = 0;
+	if ((paths = init_paths(graph, paths)) == NULL)
+		return (NULL);
 	while (i < graph->paths_count)
 	{
-		printf("Path %zd :\n", i);
+		printf("Path %zd count %zd:\n", i, graph->paths_count);
 		print_ssize_t(paths->array[i]);
 		i++;
 	}
 	if ((paths->ants_to_paths = (size_t*)malloc(graph->ants * sizeof(size_t))) == NULL)
-		return ;
+		return (NULL);
 	if ((paths->n = (size_t*)malloc(graph->paths_count * sizeof(size_t))) == NULL)
-		return ;
+		return (NULL);
 	if ((paths->len = (size_t*)malloc(graph->paths_count * sizeof(size_t))) == NULL)
-		return ;
+		return (NULL);
 	i = 0;
 	while (i < graph->paths_count)
 	{
@@ -103,4 +91,6 @@ void	init_output(t_graph *graph)
 	i = 0;
 	while (i < graph->ants)
 		paths->ants_to_paths[i++] = 0;
+	paths->output_lines = 0;
+	return (paths);
 }

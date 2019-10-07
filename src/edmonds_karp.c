@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 11:38:50 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/02 12:30:07 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/07 19:22:52 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_bfs			*bfs_disjoint_paths(t_graph *graph)
 
 t_list	*find_disjoint_paths(t_graph *graph, t_list *aug_paths)
 {
-	t_bfs *new_bfs;
+	t_bfs	*new_bfs;
 	t_list	*curr_path_node;
 
 	if ((new_bfs = bfs_disjoint_paths(graph)) == NULL)
