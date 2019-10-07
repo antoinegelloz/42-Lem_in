@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:51:16 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/07 18:02:57 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/07 18:38:35 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,33 @@ t_paths	*init_paths(t_graph *graph)
 	return (paths);
 }
 
-int8_t	flow_ants(t_graph *graph)
+void	init_output(t_graph *graph)
 {	
 	size_t		i;
 	t_paths		*paths;
 
-	i = 0;
-	if ((paths = init_paths(graph)) == NULL)
-		return (FAILURE);
+	i = 0;		
+	paths = init_paths(graph);
 	while (i < graph->paths_count)
 	{
 		printf("Path %zd :\n", i);
 		print_ssize_t(paths->array[i]);
 		i++;
-	}	
-	return (SUCCESS);
+	}
+	if ((paths->ants_to_paths = (size_t*)malloc(graph->ants * sizeof(size_t))) == NULL)
+		return ;
+	if ((paths->n = (size_t*)malloc(graph->paths_count * sizeof(size_t))) == NULL)
+		return ;
+	if ((paths->len = (size_t*)malloc(graph->paths_count * sizeof(size_t))) == NULL)
+		return ;
+	i = 0;
+	while (i < graph->paths_count)
+	{
+		paths->len[i] = 0;
+		paths->n[i] = 0;
+		i++;
+	}
+	i = 0;
+	while (i < graph->ants)
+		paths->ants_to_paths[i++] = 0;
 }
