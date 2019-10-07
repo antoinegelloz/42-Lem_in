@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:32:38 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/02 15:00:20 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/07 21:09:08 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void			reset_marks_fail(t_graph *graph, t_bfs *bfs)
 	ssize_t	j;
 
 	i = 0;
-	j = 0;
 	while (i < (ssize_t)graph->size)
 	{
 		j = 0;

@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/07 18:37:18 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/07 21:23:29 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct	s_paths
 	size_t		*ants_to_paths;
 	size_t		*n;
 	size_t		*len;
+	size_t		output_lines;
 }				t_paths;
 
 typedef struct	s_node
@@ -122,6 +123,8 @@ int8_t			is_queue_full(t_bfs *bfs);
 int8_t			is_queue_empty(t_bfs *bfs);
 void			free_bfs(t_bfs *bfs);
 void			print_results(t_bfs *bfs, size_t size);
-void			init_output(t_graph *graph);
+
+int8_t			solver(t_graph *graph);
+t_paths			*init_output(t_graph *graph, t_paths *paths);
 
 #endif

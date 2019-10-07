@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/07 18:40:11 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/07 19:08:47 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int				main(void)
 	print_ssize_t(aug_paths);
 	print_file(&p);
 	free_p(&p);
-	init_output(graph);
+	solver(graph);
 	free_graph(graph);
 	ft_lstdel(&aug_paths, ft_delcontent);
 	return (EXIT_SUCCESS);
