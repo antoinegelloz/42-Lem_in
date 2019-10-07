@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:51:16 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/02 17:17:22 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/07 18:02:57 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,46 +75,18 @@ t_paths	*init_paths(t_graph *graph)
 }
 
 int8_t	flow_ants(t_graph *graph)
-{
-	size_t		*ants;
-	size_t		node;
+{	
 	size_t		i;
-	t_edge		*neighbours;
 	t_paths		*paths;
 
 	i = 0;
-	paths = init_paths(graph);
+	if ((paths = init_paths(graph)) == NULL)
+		return (FAILURE);
 	while (i < graph->paths_count)
 	{
 		printf("Path %zd :\n", i);
 		print_ssize_t(paths->array[i]);
 		i++;
 	}	
-	i = 0;
-	node = graph->source;
-	neighbours = graph->nodes[node].head;
-	if ((ants = (size_t *)malloc(graph->ants * sizeof(size_t))) == NULL)
-		return (FAILURE);
-	while (i < graph->ants)
-		ants[i++] = node;
-	i = 0;
-	while (goal_achieved(ants, graph) == FALSE)
-	{
-		while (neighbours != NULL && ants[i] != graph->sink)
-		{
-			if (neighbours->capacity == 0)
-			{
-				ants[i] = neighbours->dest;
-				node = neighbours->dest;
-				neighbours = graph->nodes[node].head;
-				printf("L%zd-%zd\n", i + 1, ants[i]); 
-			}
-			else
-				neighbours = neighbours->next;
-		}
-		node = graph->source;
-		neighbours = graph->nodes[node].head;
-		i++;
-	}
 	return (SUCCESS);
 }
