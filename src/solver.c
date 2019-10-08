@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:13:33 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/08 16:46:17 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/08 17:15:38 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ int8_t	flow_ants(t_graph *graph, t_paths *paths)
 			paths_used++;
 		i++;
 	}
+	printf("paths_used = %zd\n", paths_used);
 	paths->available = (int8_t *)malloc(sizeof(int8_t) * paths_used);
 	i = 0;
 	while (i < paths_used)
@@ -165,13 +166,16 @@ int8_t	flow_ants(t_graph *graph, t_paths *paths)
 			reset_availability(paths, paths_used);
 		while (j < paths_used)
 		{
+			//printf("paths->available[%zd] = %d & paths->n[%zd] = %zd\n", j, paths->available[j], j, paths->n[j]);
+			if (paths->n[j] == 0)
+				paths->available[j] = FALSE;
 			if (paths->available[j] == TRUE && paths->n[j] > 0)
 			{
 				paths->ants_to_paths[i] = j;
 				ft_printf("ants_to_paths[%d] = %d\n", i, paths->ants_to_paths[i]);
 				paths->n[j]--;
 				paths->available[j] = FALSE;
-				break;
+				break ;
 			}
 			j++;
 		}
