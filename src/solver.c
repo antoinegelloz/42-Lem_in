@@ -6,11 +6,22 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:13:33 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/08 14:50:56 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/08 16:42:48 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+int8_t	all_paths_available(t_paths *paths, size_t paths_used)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < paths_used)
+		if (paths->available[i++] == 0)
+			return (FALSE);
+	return (TRUE);
+}
 
 int8_t	all_paths_used(t_paths *paths, size_t paths_used)
 {
@@ -75,7 +86,7 @@ int8_t	print_lines(size_t paths_used, t_paths *paths, t_graph *graph)
 		ant++;
 	}
 	round = 0;
-	//ft_printf("output_lines:%d\n\n", paths->output_lines);
+	ft_printf("output_lines:%d\n\n", paths->output_lines);
 	while (round < paths->output_lines)
 	{
 		//ft_printf("--round:%d\n", round);
@@ -98,7 +109,7 @@ int8_t	print_lines(size_t paths_used, t_paths *paths, t_graph *graph)
 			}
 			//ft_printf("ants_to_path:%d last_path_used:%d\n", paths->ants_to_paths[ant], last_path_used);
 			//printf("ant = %zu\n", ant);
-			if (all_paths_used(paths, paths_used) == TRUE || (ant == graph->ants - 1 && round + 1 != paths->output_lines))
+			if (all_paths_used(paths, paths_used) == TRUE || (all_paths_available(paths, paths_used) && ant == graph->ants - 1))
 			{
 				//ft_putendl("break");
 				reset_availability(paths, paths_used);
@@ -109,7 +120,7 @@ int8_t	print_lines(size_t paths_used, t_paths *paths, t_graph *graph)
 		}
 		round++;
 	}
-	ft_putchar('\n');
+	//ft_putchar('\n');
 	return (SUCCESS);
 }
 
@@ -123,7 +134,7 @@ int8_t	flow_ants(t_graph *graph, t_paths *paths)
 	paths_used = 0;
 	while (i < graph->paths_count)
 	{
-		//ft_printf("n[%d] = %d\n", paths_used, paths->n[paths_used]);
+		ft_printf("n[%d] = %d\n", paths_used, paths->n[paths_used]);
 		if (paths->n[paths_used] != 0)
 			paths_used++;
 		i++;
@@ -143,7 +154,7 @@ int8_t	flow_ants(t_graph *graph, t_paths *paths)
 			if (paths->available[j] == TRUE && paths->n[j] > 0)
 			{
 				paths->ants_to_paths[i] = j;
-				//ft_printf("ants_to_paths[%d] = %d\n", i, paths->ants_to_paths[i]);
+				ft_printf("ants_to_paths[%d] = %d\n", i, paths->ants_to_paths[i]);
 				paths->n[j]--;
 				paths->available[j] = FALSE;
 				break;
