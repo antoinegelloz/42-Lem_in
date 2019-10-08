@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:13:33 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/08 14:29:09 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/08 15:18:53 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,20 @@ int8_t	reset_availability(t_paths *paths, size_t paths_used)
 	while (i < paths_used)
 		paths->available[i++] = 1;
 	return (SUCCESS);
+}
+
+int8_t	all_ants_arrived(t_list	**ants_pos, t_graph *graph)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < graph->ants)
+	{
+		if (ants_pos[i] != NULL)
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
 }
 
 int8_t	reset_n(t_paths *paths, t_graph *graph)
@@ -78,10 +92,10 @@ int8_t	print_lines(size_t paths_used, t_paths *paths, t_graph *graph)
 	//ft_printf("output_lines:%d\n\n", paths->output_lines);
 	while (round < paths->output_lines)
 	{
-		//ft_printf("--round:%d\n", round);
+		//ft_printf("--round:%d\n", round);	
 		ant = 0;
 		while (ant < graph->ants)
-		{
+		{	
 			if (ants_pos[ant] != NULL)
 			{
 				//ft_printf("ant:%d node:%d\n", ant, *(size_t *)ants_pos[ant]->content);
@@ -97,7 +111,9 @@ int8_t	print_lines(size_t paths_used, t_paths *paths, t_graph *graph)
 				ants_pos[ant] = ants_pos[ant]->next;
 			}
 			//ft_printf("ants_to_path:%d last_path_used:%d\n", paths->ants_to_paths[ant], last_path_used);
-			//printf("ant = %zu\n", ant);
+			//printf("ant = %zu and round = %zu\n", ant, round);
+			if (all_ants_arrived(ants_pos, graph) == TRUE)
+				break ;
 			if (all_paths_used(paths, paths_used) == TRUE || (ant == graph->ants - 1 && round + 1 != paths->output_lines))
 			{
 				//ft_putendl("break");
