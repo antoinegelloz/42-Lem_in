@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/08 12:14:42 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/08 15:00:29 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	print_file(t_parsing *p)
 {
 	t_list		*curr;
 
-	ft_putendl("\nFile:");
+	//ft_putendl("\nFile:");
 	curr = p->file;
 	while (curr)
 	{

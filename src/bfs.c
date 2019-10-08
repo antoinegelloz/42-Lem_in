@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:32:38 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/07 21:09:08 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/08 14:59:04 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ t_bfs			*bfs(t_graph *graph)
 	t_bfs 		*bfs;
 	t_edge		*neighbours;
 
-	ft_putendl("\n***************** normal BFS *********************");
+	//ft_putendl("\n***************** normal BFS *********************");
 	neighbours = NULL;
 	bfs = init_bfs(graph);
 	while (is_queue_empty(bfs) == FALSE)

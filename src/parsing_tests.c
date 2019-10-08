@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/27 12:07:51 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/08 15:15:04 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,11 @@ int8_t	is_node(char *line)
 	if (line[i] == 'L')
 		return (FAILURE);
 	while (line[i] != '\0' && line[i] != ' ')
-		if (!ft_isalnum(line[i++]))
+	{
+		if (!ft_isalnum(line[i]) && line[i] != '_')
 			return (FAILURE);
+		i++;
+	}
 	if (line[i++] != ' ')
 		return (FAILURE);
 	while (line[i] != '\0' && line[i] != ' ')
@@ -58,13 +61,19 @@ int8_t	is_edge(char *line)
 		return (FAILURE);
 	i = 0;
 	while (line[i] != '\0' && line[i] != '-')
-		if (!ft_isalnum(line[i++]))
+	{
+		if (!ft_isalnum(line[i]) && line[i] != '_')
 			return (FAILURE);
+		i++;
+	}
 	if (line[i++] != '-')
 		return (FAILURE);
 	while (line[i] != '\0')
-		if (!ft_isalnum(line[i++]))
+	{
+		if (!ft_isalnum(line[i]) && line[i] != '_')
 			return (FAILURE);
+		i++;
+	}
 	return (SUCCESS);
 }
 
