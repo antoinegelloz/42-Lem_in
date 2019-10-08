@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/02 15:04:16 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/08 12:14:42 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	print_ssize_t(t_list *list)
 {
 	t_list		*curr;
 
-	ft_putstr("print ssize_t list: ");
+	//ft_putstr("print ssize_t list: ");
 	curr = list;
 	while (curr)
 	{
