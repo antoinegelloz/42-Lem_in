@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:13:33 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/08 12:12:28 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/08 14:29:09 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ int8_t	init_lines(t_paths *paths, t_graph *graph)
 	size_t	i;
 	size_t	tmp;
 
-	paths->output_lines = ft_lstgetsize(paths->array[0]);
+	paths->output_lines = ft_lstgetsize(paths->array[0]) - 1;
 	i = 1;
 	while (i < graph->paths_count)
 	{
-		tmp = ft_lstgetsize(paths->array[i]);
+		tmp = ft_lstgetsize(paths->array[i]) - 1;
 		if (tmp < paths->output_lines)
 			paths->output_lines = tmp;
 		i++;
@@ -75,7 +75,7 @@ int8_t	print_lines(size_t paths_used, t_paths *paths, t_graph *graph)
 		ant++;
 	}
 	round = 0;
-	ft_printf("output_lines:%d\n\n", paths->output_lines);
+	//ft_printf("output_lines:%d\n\n", paths->output_lines);
 	while (round < paths->output_lines)
 	{
 		//ft_printf("--round:%d\n", round);
@@ -123,7 +123,7 @@ int8_t	flow_ants(t_graph *graph, t_paths *paths)
 	paths_used = 0;
 	while (i < graph->paths_count)
 	{
-		ft_printf("n[%d] = %d\n", paths_used, paths->n[paths_used]);
+		//ft_printf("n[%d] = %d\n", paths_used, paths->n[paths_used]);
 		if (paths->n[paths_used] != 0)
 			paths_used++;
 		i++;
@@ -143,7 +143,7 @@ int8_t	flow_ants(t_graph *graph, t_paths *paths)
 			if (paths->available[j] == TRUE && paths->n[j] > 0)
 			{
 				paths->ants_to_paths[i] = j;
-				ft_printf("ants_to_paths[%d] = %d\n", i, paths->ants_to_paths[i]);
+				//ft_printf("ants_to_paths[%d] = %d\n", i, paths->ants_to_paths[i]);
 				paths->n[j]--;
 				paths->available[j] = FALSE;
 				break;
@@ -175,9 +175,11 @@ int8_t	is_solution_found(t_paths *paths, t_graph *graph)
 	sum = 0;
 	while (i < graph->paths_count)
 	{
+		//ft_printf("paths->n[%d]=%d\n", i, paths->n[i]);
 		sum = sum + paths->n[i];
 		i++;
 	}
+	//ft_printf("sum=%d\n", sum);
 	if (sum >= graph->ants)
 		return (TRUE);
 	return (FALSE);
@@ -196,6 +198,7 @@ int8_t	solver(t_graph *graph)
 		reset_n(paths, graph);
 		paths->output_lines++;
 	}
+	//ft_printf("output=%d\n", paths->output_lines);
 	flow_ants(graph, paths);
 	return (SUCCESS);
 }
