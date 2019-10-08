@@ -97,7 +97,8 @@ int8_t	print_lines(size_t paths_used, t_paths *paths, t_graph *graph)
 				ants_pos[ant] = ants_pos[ant]->next;
 			}
 			//ft_printf("ants_to_path:%d last_path_used:%d\n", paths->ants_to_paths[ant], last_path_used);
-			if (all_paths_used(paths, paths_used) == TRUE)
+			//printf("ant = %zu\n", ant);
+			if (all_paths_used(paths, paths_used) == TRUE || (ant == graph->ants - 1 && round + 1 != paths->output_lines))
 			{
 				//ft_putendl("break");
 				reset_availability(paths, paths_used);
@@ -112,7 +113,7 @@ int8_t	print_lines(size_t paths_used, t_paths *paths, t_graph *graph)
 	return (SUCCESS);
 }
 
-int8_t	flow_ants(t_graph *graph, t_paths *paths)
+int8_t	flow_ants(t_graph *graph, t_paths *paths) 
 {
 	size_t	i;
 	size_t	j;
