@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:51:16 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/07 21:23:07 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/08 12:14:07 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_paths	*init_output(t_graph *graph, t_paths *paths)
 		return (NULL);
 	while (i < graph->paths_count)
 	{
-		printf("Path %zd count %zd:\n", i, graph->paths_count);
+		ft_printf("path %d: ", i);
 		print_ssize_t(paths->array[i]);
 		i++;
 	}
@@ -84,7 +84,7 @@ t_paths	*init_output(t_graph *graph, t_paths *paths)
 	i = 0;
 	while (i < graph->paths_count)
 	{
-		paths->len[i] = 0;
+		paths->len[i] = ft_lstgetsize(paths->array[i]) - 1;
 		paths->n[i] = 0;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/07 21:23:29 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/08 10:45:09 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct	s_paths
 	size_t		*n;
 	size_t		*len;
 	size_t		output_lines;
+	int8_t		*available;
 }				t_paths;
 
 typedef struct	s_node
