@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/07 19:08:47 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/08 14:57:08 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static t_graph	*build_graph(t_parsing *p)
 		curr_from = curr_from->next;
 		curr_to = curr_to->next;
 	}
-	print_graph(graph);
+	//print_graph(graph);
 	return (graph);
 }
 
@@ -57,12 +57,13 @@ int				main(void)
 	init_parsing(&p);
 	if (parse_file(&p) == FAILURE)
 		return (EXIT_FAILURE);
+	//ft_putendl("\n**************** end of parsing ********************");
 	if ((graph = build_graph(&p)) == NULL)
 		return (EXIT_FAILURE);
 	if ((aug_paths = edmonds_karp(graph)) == NULL)
 		return (EXIT_FAILURE);
-	ft_putendl("\n**************** aug_paths ********************");
-	print_ssize_t(aug_paths);
+	//ft_putendl("\n**************** aug_paths ********************");
+	//print_ssize_t(aug_paths);
 	print_file(&p);
 	free_p(&p);
 	solver(graph);
