@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 11:38:50 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/08 15:40:31 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/09 14:23:45 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_bfs			*bfs_disjoint_paths(t_graph *graph)
 	t_edge		*neighbours2;
 	int8_t		backward;
 
-	ft_putendl("\n**************** modified BFS ********************");
+	//ft_putendl("\n**************** modified BFS ********************");
 	neighbours = NULL;
 	neighbours2 = NULL;
 	bfs = init_bfs(graph);
@@ -104,8 +104,8 @@ t_list	*find_disjoint_paths(t_graph *graph, t_list *aug_paths)
 
 	if ((new_bfs = bfs_disjoint_paths(graph)) == NULL)
 		return (aug_paths);
-	ft_putendl("\nNew modified bfs path found:");
-	print_ssize_t(new_bfs->shortest_path);
+	//ft_putendl("\nNew modified bfs path found:");
+	//print_ssize_t(new_bfs->shortest_path);
 	ft_lstappend(&aug_paths, new_bfs->shortest_path);
 	curr_path_node = new_bfs->shortest_path;
 	while (curr_path_node->next != NULL)
@@ -115,7 +115,7 @@ t_list	*find_disjoint_paths(t_graph *graph, t_list *aug_paths)
 		curr_path_node = curr_path_node->next;
 	}
 	free_bfs(new_bfs);
-	print_graph(graph);
+	//print_graph(graph);
 	return (aug_paths);
 }
 
@@ -132,8 +132,8 @@ t_list	*edmonds_karp(t_graph *graph)
 	{
 		if ((new_bfs = bfs(graph)) == NULL)
 			return (find_disjoint_paths(graph, aug_paths));
-		ft_putendl("\nNew shortest path found:");
-		print_ssize_t(new_bfs->shortest_path);
+		//ft_putendl("\nNew shortest path found:");
+		//print_ssize_t(new_bfs->shortest_path);
 		ft_lstappend(&aug_paths, new_bfs->shortest_path);
 		curr_path_node = new_bfs->shortest_path;
 		while (curr_path_node->next != NULL)
@@ -143,7 +143,7 @@ t_list	*edmonds_karp(t_graph *graph)
 			curr_path_node = curr_path_node->next;
 		}
 		free_bfs(new_bfs);
-		print_graph(graph);
+		//print_graph(graph);
 	}
 	return (aug_paths);
 }
