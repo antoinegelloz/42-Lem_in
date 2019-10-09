@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:13:33 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/08 17:15:38 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/09 12:13:33 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,51 +90,60 @@ int8_t	print_lines(size_t paths_used, t_paths *paths, t_graph *graph)
 	t_list	**ants_pos;
 	size_t	ant;
 	size_t	round;
+	size_t	j;
 
 	if ((ants_pos = (t_list **)malloc(sizeof(t_list *) * graph->ants)) == NULL)
 		return (FAILURE);
 	ant = 0;
 	while (ant < graph->ants)
 	{	
-		ants_pos[ant] = paths->array[paths->ants_to_paths[ant]]->next;
+		ants_pos[ant] = paths->array[paths->ants_to_paths[ant]];
 		ant++;
 	}
 	round = 0;
 	ft_printf("output_lines:%d\n\n", paths->output_lines);
-	while (round < paths->output_lines)
+	while (ants_pos[graph->ants - 1] != NULL)
 	{
-		//ft_printf("--round:%d\n", round);	
 		ant = 0;
 		while (ant < graph->ants)
-		{	
-			if (ants_pos[ant] != NULL)
+		{
+			j = 0;
+			if (ants_pos[ant] == paths->array[paths->ants_to_paths[ant]])
 			{
-				//ft_printf("ant:%d node:%d\n", ant, *(size_t *)ants_pos[ant]->content);
-				ft_printf("L%d-%s ", ant + 1, graph->nodes[*(size_t *)ants_pos[ant]->content].name);
-				//ft_printf("paths[%d]\n", paths->ants_to_paths[ant]);
-				//ft_printf("paths->available[%d]\n", *(size_t *)paths->array[paths->ants_to_paths[ant]]->content);
-				//ft_printf("ants_pos[%d] = %d paths->array[%d]->next = %d\n", ant, *(size_t *)ants_pos[ant]->content, paths->ants_to_paths[ant], *(size_t *)paths->array[paths->ants_to_paths[ant]]->next->content);
-				if (*(size_t *)ants_pos[ant]->content == *(size_t *)paths->array[paths->ants_to_paths[ant]]->next->content)
+				if (paths->available[paths->ants_to_paths[ant]] == TRUE)
 				{
-					//ft_putendl("available false");
+					ants_pos[ant] = ants_pos[ant]->next;
+					ft_printf("L%d-%s", ant + 1, graph->nodes[*(size_t *)ants_pos[ant]->content].name);
 					paths->available[paths->ants_to_paths[ant]] = FALSE;
+					if (ant == graph->ants - 1)
+						ft_putchar('\n');
+					else
+						ft_putchar(' ');
 				}
-				ants_pos[ant] = ants_pos[ant]->next;
+				else
+				{
+					ft_putchar('\n');
+					break ;
+				}
 			}
-			//ft_printf("ants_to_path:%d last_path_used:%d\n", paths->ants_to_paths[ant], last_path_used);
-			//printf("ant = %zu\n", ant);
-			if (all_paths_used(paths, paths_used) == TRUE || (all_paths_available(paths, paths_used) && ant == graph->ants - 1))
+			else if (ants_pos[ant] != NULL)
 			{
-				//ft_putendl("break");
-				reset_availability(paths, paths_used);
-				ft_putchar('\n');
-				break ;
+				if (ants_pos[ant] == paths->array[paths->ants_to_paths[ant]]->next)
+					paths->available[paths->ants_to_paths[ant]] = TRUE;
+				ants_pos[ant] = ants_pos[ant]->next;
+				if (ants_pos[ant] != NULL)
+					ft_printf("L%d-%s", ant + 1, graph->nodes[*(size_t *)ants_pos[ant]->content].name);
+				if (ant == graph->ants - 1)
+				{
+					if (ants_pos[ant] != NULL)
+						ft_putchar('\n');
+				}
+				else if (ants_pos[ant] != NULL)
+					ft_putchar(' ');
 			}
 			ant++;
 		}
-		round++;
 	}
-	//ft_putchar('\n');
 	return (SUCCESS);
 }
 
