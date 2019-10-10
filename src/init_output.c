@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:51:16 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/09 17:09:19 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/10 13:15:06 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ t_paths	*init_output(t_graph *graph, t_paths *paths)
 		return (NULL);
 	while (i < graph->paths_count)
 	{
-		//ft_printf("path %d: ", i);
-		//print_ssize_t(paths->array[i]);
+		ft_printf("path %d: ", i);
+		print_ssize_t(paths->array[i]);
 		i++;
 	}
 	if ((paths->ants_to_paths = (size_t*)malloc(graph->ants * sizeof(size_t))) == NULL)
