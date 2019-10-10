@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:13:33 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/09 17:09:59 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/10 09:50:19 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,23 @@ int8_t	all_ants_almost_arrived(t_list	**ants_pos, t_graph *graph)
 
 	i = 0;
 	while (i < graph->ants)
-	{
-		if (ants_pos[i] != NULL) 
-			if (ants_pos[i]->next != NULL)
-				return (FALSE);
-		i++;
+	{	
+		if (ants_pos[i] == NULL)
+		   i++;
+		else 
+		{
+			if (ants_pos[i]->next == NULL)
+				i++;
+			else 
+			{
+				if (ants_pos[i]->next->next == NULL)
+					i++;
+				else 
+					return (FALSE);
+			}
+		}
 	}
+	//ft_putendl("almost arrived");
 	return (TRUE);
 }
 
@@ -100,13 +111,15 @@ int8_t	init_lines(t_paths *paths, t_graph *graph)
 	return (SUCCESS);
 }
 
-int8_t	print_lines(size_t paths_used, t_paths *paths, t_graph *graph)
+int8_t	print_lines(t_paths *paths, t_graph *graph)
 {
 	t_list	**ants_pos;
 	size_t	ant;
 	size_t	round;
 	size_t	j;
+	int8_t	almost_arrived;
 
+	almost_arrived = FALSE;
 	if ((ants_pos = (t_list **)malloc(sizeof(t_list *) * graph->ants)) == NULL)
 		return (FAILURE);
 	ant = 0;
@@ -129,18 +142,9 @@ int8_t	print_lines(size_t paths_used, t_paths *paths, t_graph *graph)
 				if (paths->available[paths->ants_to_paths[ant]] == TRUE)
 				{
 					ants_pos[ant] = ants_pos[ant]->next;
-					ft_printf("L%d-%s", ant + 1, graph->nodes[*(size_t *)ants_pos[ant]->content].name);
+					ft_printf("L%d-%s ", ant + 1, graph->nodes[*(size_t *)ants_pos[ant]->content].name);
 					if (ants_pos[ant]->next != NULL)
 						paths->available[paths->ants_to_paths[ant]] = FALSE;
-					if (ant == graph->ants - 1)
-						ft_putchar('\n');
-					else
-						ft_putchar(' ');
-				}
-				else
-				{
-					ft_putchar('\n');
-					break ;
 				}
 			}
 			else if (ants_pos[ant] != NULL)
@@ -151,15 +155,20 @@ int8_t	print_lines(size_t paths_used, t_paths *paths, t_graph *graph)
 						paths->available[paths->ants_to_paths[ant]] = TRUE;
 					ants_pos[ant] = ants_pos[ant]->next;
 					if (ants_pos[ant] != NULL)
-						ft_printf("L%d-%s", ant + 1, graph->nodes[*(size_t *)ants_pos[ant]->content].name);
-					if ((ant == graph->ants - 1 && ants_pos[ant] != NULL) || all_ants_almost_arrived(ants_pos, graph) == TRUE)
-						ft_putchar('\n');
-					else if (ants_pos[ant] != NULL)
-						ft_putchar(' ');
+						ft_printf("L%d-%s ", ant + 1, graph->nodes[*(size_t *)ants_pos[ant]->content].name);
+					if (all_ants_almost_arrived(ants_pos, graph) == TRUE)
+						almost_arrived = TRUE;
 				}
 				else if (ants_pos[ant]->next == NULL)
 					ants_pos[ant] = ants_pos[ant]->next;
 			}
+			if (all_ants_arrived(ants_pos, graph))
+			{
+				ft_putchar('\n');
+				break ;
+			}
+			else
+				//ft_putchar(' ');
 			ant++;
 		}
 	}
@@ -222,7 +231,7 @@ int8_t	flow_ants(t_graph *graph, t_paths *paths)
 			break;
 	}
 	reset_availability(paths, graph);
-	print_lines(paths_used, paths, graph);
+	print_lines(paths, graph);
 	return (SUCCESS);
 }
 
