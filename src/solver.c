@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:13:33 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/11 12:04:15 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/11 15:49:12 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,5 +294,6 @@ int8_t	solver(t_graph *graph)
 		paths->output_lines++;
 	}
 	flow_ants(graph, paths);
+	free_paths(paths, graph);
 	return (SUCCESS);
 }
