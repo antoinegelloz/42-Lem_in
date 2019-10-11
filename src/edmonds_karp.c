@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 11:38:50 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/09 14:23:45 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/11 13:33:52 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_bfs			*bfs_disjoint_paths(t_graph *graph)
 	{
 		node = dequeue(bfs);
 		neighbours = graph->nodes[node].head;	
-		while (neighbours != NULL && graph->nodes[node].sink == FALSE)
+		while (neighbours != NULL && graph->nodes[node].sink == FALSE && graph->nodes[node].source == FALSE)
 		{
 			if (backward == FALSE)
 			{
