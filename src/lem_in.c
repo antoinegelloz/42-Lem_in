@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/09 14:22:59 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/11 14:22:57 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ int				main(void)
 	if ((graph = build_graph(&p)) == NULL)
 		return (EXIT_FAILURE);
 	if ((aug_paths = edmonds_karp(graph)) == NULL)
-		return (EXIT_FAILURE);
-	//ft_putendl("\n**************** aug_paths ********************");
-	//print_ssize_t(aug_paths);
+		return (exit_bfs_error(&p, graph));
+	ft_putendl("\n**************** aug_paths ********************");
+	print_ssize_t(aug_paths);
 	print_file(&p);
 	free_p(&p);
 	solver(graph);
