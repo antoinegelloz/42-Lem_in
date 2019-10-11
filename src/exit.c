@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:00:34 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/11 14:23:00 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/11 14:26:22 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int8_t	exit_parsing_error(t_parsing *p, char *line, char **tab)
 		ft_strdel(&line);
 	free(p);
 	free_tab(tab);
-	ft_putendl_fd("PARSING ERROR", 2);
+	ft_putendl_fd("ERROR", 2);
 	return (FAILURE);
 }
 
