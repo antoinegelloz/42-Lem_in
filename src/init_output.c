@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:51:16 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/10 23:39:46 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/11 10:50:17 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ t_paths	*init_paths(t_graph *graph, t_paths *paths)
 
 	if ((paths = (t_paths*)malloc(sizeof(t_paths))) == NULL)
 		return (NULL);
-	paths->array = (t_list**)malloc(graph->paths_count * sizeof(t_list*));
+	if (!(paths->array = (t_list**)malloc(graph->paths_count*sizeof(t_list*))))
+		return (NULL);
 	i = 0;
 	tmp = NULL;
 	while (i < graph->paths_count)
