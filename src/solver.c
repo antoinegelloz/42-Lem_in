@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:13:33 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/11 15:49:12 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/11 17:20:54 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ ssize_t	*save_ants_pos(t_list **ants_pos, ssize_t ants)
 	if (!(tmp_pos = (ssize_t *)malloc(sizeof(ssize_t) * ants)))
 		return (NULL);
 	while (i < ants)
-	{	
+	{
 		if (ants_pos[i] != NULL)
 			tmp_pos[i] = *(ssize_t *)ants_pos[i]->content;
 		else
@@ -101,7 +101,6 @@ int8_t	all_moved(t_list **pos, ssize_t *tmp, t_graph *graph, t_paths *paths)
 			all_ants_launched = FALSE;
 		i++;
 	}
-	//ft_printf("|occ:%d all=%d|", paths_occupied, all_ants_launched);
 	if (paths_occupied < paths->paths_used && all_ants_launched == FALSE)
 	{
 		ft_putstr(" ");
@@ -125,16 +124,8 @@ int8_t	print_lines(t_paths *paths, t_graph *graph)
 	size_t	round;
 	size_t	i;
 
-	if ((ants_pos = (t_list**)malloc(sizeof(t_list*)*graph->ants)) == NULL)
+	if ((ants_pos = (t_list**)malloc(sizeof(t_list*) * graph->ants)) == NULL)
 		return (FAILURE);
-	i = 0;
-	while (i < graph->paths_count)
-	{
-		//ft_printf("path %d: ", i);
-		//print_ssize_t(paths->array[i]);
-		i++;
-	}
-	//ft_printf("paths_count=%d paths_used=%d output=%d ants:%d\n\n", graph->paths_count, paths->paths_used, paths->output_lines, graph->ants);
 	i = 0;
 	while (i < graph->ants)
 	{
@@ -145,7 +136,7 @@ int8_t	print_lines(t_paths *paths, t_graph *graph)
 	while (round < paths->output_lines)
 	{
 		if (!(tmp_pos = save_ants_pos(ants_pos, graph->ants)))
-				return (FAILURE);
+			return (FAILURE);
 		i = 0;
 		while (i < graph->ants)
 		{
@@ -191,7 +182,7 @@ int8_t	print_lines(t_paths *paths, t_graph *graph)
 	return (SUCCESS);
 }
 
-int8_t	flow_ants(t_graph *graph, t_paths *paths) 
+int8_t	flow_ants(t_graph *graph, t_paths *paths)
 {
 	size_t	i;
 	size_t	j;
@@ -201,13 +192,12 @@ int8_t	flow_ants(t_graph *graph, t_paths *paths)
 	paths->paths_used = 0;
 	while (i < graph->paths_count)
 	{
-		//ft_printf("init n[%d] = %d\n", i, paths->n[i]);
 		if (paths->n[i] > 0)
 			paths->paths_used++;
 		tmp[i] = paths->n[i];
 		i++;
 	}
-	if (!(paths->available = (int8_t*)malloc(sizeof(int8_t)*graph->paths_count)))
+	if (!(paths->available = (int8_t*)malloc(sizeof(int8_t) * graph->paths_count)))
 		return (FAILURE);
 	reset_availability(graph, paths, paths->n);
 	i = 0;
@@ -218,13 +208,11 @@ int8_t	flow_ants(t_graph *graph, t_paths *paths)
 			reset_availability(graph, paths, tmp);
 		while (j < graph->paths_count)
 		{
-			//ft_printf("paths->available[%d]=%d tmp[%d]=%d paths->n[%d] = %d\n", j, paths->available[j], j, tmp[j], j, paths->n[j]);
 			if (tmp[j] == 0)
 				paths->available[j] = FALSE;
 			if (paths->available[j] == TRUE && tmp[j] > 0)
 			{
 				paths->ants_to_paths[i] = j;
-				//ft_printf("ants_to_paths[%d] = %d\n", i, paths->ants_to_paths[i]);
 				tmp[j]--;
 				paths->available[j] = FALSE;
 				break ;
@@ -243,7 +231,6 @@ int8_t	flow_ants(t_graph *graph, t_paths *paths)
 	while (i < graph->paths_count)
 	{
 		paths->n[i] = paths->n[i] - tmp[i];
-		//ft_printf("final n[%d] = %d\n", i, paths->n[i]);
 		i++;
 	}
 	reset_availability(graph, paths, paths->n);
@@ -259,7 +246,7 @@ int8_t	is_solution_found(t_paths *paths, t_graph *graph)
 	i = 0;
 	while (i < graph->paths_count)
 	{
-		if (paths->output_lines < paths->len[i] - 1) 
+		if (paths->output_lines < paths->len[i] - 1)
 			paths->n[i] = 0;
 		else if (paths->len[i] == 1)
 			paths->n[i] = graph->ants;
