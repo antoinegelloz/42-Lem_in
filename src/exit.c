@@ -6,11 +6,29 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:00:34 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/11 14:26:22 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/11 16:26:02 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void	free_paths(t_paths *paths, t_graph *graph)
+{
+	size_t		i;
+
+	i = 0;
+	while (i < graph->paths_count)
+	{
+		ft_lstdel(&paths->array[i], ft_delcontent);
+		i++;
+	}
+	free(paths->array);
+	free(paths->ants_to_paths);
+	free(paths->n);
+	free(paths->len);
+	free(paths->available);
+	free(paths);
+}
 
 void	free_p(t_parsing *p)
 {
@@ -25,7 +43,7 @@ void	free_p(t_parsing *p)
 int	exit_bfs_error(t_parsing *p, t_graph *graph)
 {
 	free_p(p);
-	free(graph);
+	free_graph(graph);	
 	ft_putendl_fd("ERROR", 2);
 	return (EXIT_SUCCESS);
 }

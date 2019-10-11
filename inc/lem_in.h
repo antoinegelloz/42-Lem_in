@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/11 14:21:20 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/11 15:49:54 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void			free_p(t_parsing *p);
 void			free_tab(char **tab);
 void			free_graph(t_graph *graph);
 int			exit_bfs_error(t_parsing *p, t_graph *graph);
+void			free_paths(t_paths *paths, t_graph *graph);
 
 t_list			*edmonds_karp(t_graph *graph);
 
