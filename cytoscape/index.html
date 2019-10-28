@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Lem_in</title>
+        <style>
+            #cy {
+            width: 90vw;
+            height: 90vh;
+            }
+        </style>
+        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.9.4/cytoscape.min.js" integrity="sha256-yvhiWj8VRHJV4JL+RmFcz3U2E2tu0bdjJ175tlvhSnE=" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/layout-base/layout-base.js"></script>
+        <script src="https://unpkg.com/cose-base/cose-base.js"></script>
+	    <script src="https://cytoscape.org/cytoscape.js-cose-bilkent/cytoscape-cose-bilkent.js"></script>
+    </head>
+    <body>
+        <div id='cy'></div>
+        <script>
+            var cy;
+            var data;
+
+            $(document).ready(function() {
+                $.getJSON("data.json", function(data) 
+                {
+                    cy = cytoscape({
+                        container: $("#cy"),
+                        elements: data,
+                        layout: {name: 'cose-bilkent'},
+                        style: [
+                            {
+                                selector: 'node',
+                                style: {
+                                    'background-color': '#666',
+                                    'label': 'data(id)'
+                                }
+                            },
+                            {
+                                selector: 'edge',
+                                style: {
+                                    'width': 3,
+                                    'line-color': '#ccc',
+                                    'target-arrow-color': '#ccc',
+                                    'target-arrow-shape': 'triangle'
+                                }
+                            }
+                        ]
+                    });
+            })});
+        </script>
+    </body>
+</html>
