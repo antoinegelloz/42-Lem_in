@@ -6,14 +6,14 @@
 #    By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/19 11:32:25 by agelloz           #+#    #+#              #
-#    Updated: 2019/10/28 14:39:50 by agelloz          ###   ########.fr        #
+#    Updated: 2019/10/29 14:53:59 by agelloz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 NAME = lem_in
-CFLAGS = -Wall -Wextra -g3
-#CFLAGS = -Wall -Wextra -g3 -fsanitize=address,undefined -Wpadded
+#CFLAGS = -Wall -Wextra -g3
+CFLAGS = -Wall -Wextra -g3 -fsanitize=address,undefined -Wpadded
 LIBH = libft/inc
 INC = inc/
 HEAD = $(INC)lem_in.h
@@ -33,6 +33,7 @@ SRC_FILES += bfs_tools.c
 SRC_FILES += bfs.c
 SRC_FILES += init_output.c
 SRC_FILES += solver.c
+SRC_FILES += cytoscape.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(SRC:%.c=%.o)
