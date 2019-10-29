@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/11 16:26:04 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/29 19:57:51 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static t_graph	*build_graph(t_parsing *p)
 	return (graph);
 }
 
-int				main(void)
+int				main(int ac, char **av)
 {
 	t_parsing	p;
 	t_graph		*graph;
@@ -57,16 +57,15 @@ int				main(void)
 	init_parsing(&p);
 	if (parse_file(&p) == FAILURE)
 		return (EXIT_FAILURE);
-	//ft_putendl("\n**************** end of parsing ********************");
 	if ((graph = build_graph(&p)) == NULL)
 		return (EXIT_FAILURE);
 	if ((aug_paths = edmonds_karp(graph)) == NULL)
 		return (exit_bfs_error(&p, graph));
-	//ft_putendl("\n**************** aug_paths ********************");
-	//print_ssize_t(aug_paths);
 	print_file(&p);
 	free_p(&p);
 	solver(graph);
+	if (ac == 2 && ft_strcmp(av[1], "-v") == 0)
+		cytoscape_visualizer(graph);
 	free_graph(graph);
 	ft_lstdel(&aug_paths, ft_delcontent);
 	return (EXIT_SUCCESS);

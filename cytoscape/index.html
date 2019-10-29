@@ -5,8 +5,8 @@
         <title>Lem_in</title>
         <style>
             #cy {
-            width: 90vw;
-            height: 90vh;
+            width: 98vw;
+            height: 98vh;
             }
         </style>
         <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
@@ -23,10 +23,9 @@
 
             $(document).ready(function() {
                 $.getJSON("data.json", function(data) 
-                {
-                    cy = cytoscape({
-                        container: $("#cy"),
-                        elements: data,
+                {	cy = cytoscape({
+                    	container: $("#cy"),
+                    	elements: data,
                         layout: {name: 'cose-bilkent'},
                         style: [
                             {
@@ -47,6 +46,8 @@
                             }
                         ]
                     });
+				cy.elements('node[color = "green"]').style('background-color', 'green');
+        		cy.elements('node[color = "red"]').style('background-color', 'red');
             })});
         </script>
     </body>
