@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 12:01:09 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/29 20:26:47 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/31 17:21:51 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 
-int8_t	cytoscape_visualizer(t_graph *graph)
+int8_t	cytoscape_visualizer(t_graph *graph, t_paths *paths)
 {
 	FILE	*file;
 	size_t	i;
@@ -35,9 +35,9 @@ int8_t	cytoscape_visualizer(t_graph *graph)
 		fprintf(file, "%s", prefix);
 		fprintf(file, "%s", graph->nodes[i].name);
 		if (graph->nodes[i].source == 1)
-			fprintf(file, "\", \"start\": \"yes\", \"color\": \"green");
+			fprintf(file, "\", \"start\": \"yes\", \"type\": \"start");
 		else if (graph->nodes[i].sink == 1)
-			fprintf(file, "\", \"end\": \"yes\", \"color\": \"red");
+			fprintf(file, "\", \"end\": \"yes\", \"type\": \"end");
 		fprintf(file, "%s", suffix);
 		curr_edge = graph->nodes[i].head;
 		while (curr_edge)
