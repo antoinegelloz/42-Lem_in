@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:13:33 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/31 17:13:39 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/01 21:44:16 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,15 @@ int8_t	all_moved(t_list **pos, ssize_t *tmp, t_graph *graph, t_paths *paths)
 	int8_t	all_ants_launched;
 
 	i = 0;
-	paths_occupied = 0;
-	while (i < graph->ants)
+	paths_occupied = paths->paths_used;
+	//ft_putstr("***<");
+	while (i < graph->paths_count)
 	{
-		if (pos[i] == paths->array[paths->ants_to_paths[i]]->next
-			&& pos[i]->next->next != NULL)
-			paths_occupied++;
+		if (paths->available[i] == TRUE)
+				paths_occupied--;
 		i++;
 	}
+	//ft_putstr(">***\n");
 	all_ants_launched = TRUE;
 	i = 0;
 	while (i < graph->paths_count)
@@ -101,9 +102,16 @@ int8_t	all_moved(t_list **pos, ssize_t *tmp, t_graph *graph, t_paths *paths)
 			all_ants_launched = FALSE;
 		i++;
 	}
-	//ft_printf("|occ:%d all=%d|", paths_occupied, all_ants_launched);
+	//ft_printf("|occ:%d all=%d|\n", paths_occupied, all_ants_launched);
 	if (paths_occupied < paths->paths_used && all_ants_launched == FALSE)
 	{
+		i = 0;
+		while (i < graph->ants)
+		{
+			//if (pos[i] != NULL)
+			//ft_printf("i:%d, pos:%d, first_node:%d\n", i, *(ssize_t *)pos[i]->content, *(ssize_t *)paths->array[paths->ants_to_paths[i]]->next->content);
+			i++;
+		}
 		ft_putstr(" ");
 		return (TRUE);
 	}
@@ -111,7 +119,7 @@ int8_t	all_moved(t_list **pos, ssize_t *tmp, t_graph *graph, t_paths *paths)
 	while (i < graph->ants)
 	{
 		if (pos[i] != NULL && *(ssize_t *)pos[i]->content == tmp[i]
-			&& pos[i] != paths->array[paths->ants_to_paths[i]])
+				&& pos[i] != paths->array[paths->ants_to_paths[i]])
 			return (FALSE);
 		i++;
 	}
@@ -145,24 +153,24 @@ int8_t	print_lines(t_paths *paths, t_graph *graph)
 	while (round < paths->output_lines)
 	{
 		if (!(tmp_pos = save_ants_pos(ants_pos, graph->ants)))
-				return (FAILURE);
+			return (FAILURE);
 		i = 0;
 		while (i < graph->ants)
 		{
 			if (ants_pos[i] == paths->array[paths->ants_to_paths[i]])
 			{
+				//ft_printf("ant_start:%d: path:%d\n", i, paths->ants_to_paths[i]);
 				if (paths->available[paths->ants_to_paths[i]] == TRUE)
 				{
+					//ft_printf("n[%d]:%d\n", paths->ants_to_paths[i], paths->n[paths->ants_to_paths[i]]);
 					ants_pos[i] = ants_pos[i]->next;
 					if (ants_pos[i] != NULL && ants_pos[i]->next != NULL)
-					{
 						paths->available[paths->ants_to_paths[i]] = FALSE;
-						paths->n[paths->ants_to_paths[i]]--;
-					}
+					paths->n[paths->ants_to_paths[i]]--;
 					ft_printf("L%d-%s", i + 1, graph->nodes[*(size_t *)ants_pos[i]->content].name);
 				}
 			}
-			else if (ants_pos[i] != NULL && ants_pos[i]->next != NULL)
+			else if (ants_pos[i] != NULL && ants_pos[i]->next != NULL) 
 			{
 				if (ants_pos[i] == paths->array[paths->ants_to_paths[i]]->next && paths->n[paths->ants_to_paths[i]] > 0)
 					paths->available[paths->ants_to_paths[i]] = TRUE;
@@ -177,11 +185,11 @@ int8_t	print_lines(t_paths *paths, t_graph *graph)
 				if (ants_pos[i]->next == NULL)
 					ants_pos[i] = ants_pos[i]->next;
 				if (all_moved(ants_pos, tmp_pos, graph, paths) == FALSE)
-					ft_putchar(' ');
+					ft_putstr(" ");
 			}
 			i++;
 		}
-		ft_putchar('\n');
+		ft_putstr("\n");
 		free(tmp_pos);
 		tmp_pos = NULL;
 		round++;
