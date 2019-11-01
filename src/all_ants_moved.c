@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 19:11:25 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/14 19:14:26 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/01 21:59:25 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@ static size_t	count_paths_occupied(t_graph *graph,
 	size_t	paths_occupied;
 
 	i = 0;
-	paths_occupied = 0;
-	while (i < graph->ants)
+	paths_occupied = paths->paths_used;
+	while (i < graph->paths_count)
 	{
-		if (pos[i] == paths->array[paths->ants_to_paths[i]]->next
-				&& pos[i]->next->next != NULL)
-			paths_occupied++;
+		if (paths->available[i] == TRUE)
+			paths_occupied--;
 		i++;
 	}
 	return (paths_occupied);
@@ -58,7 +57,7 @@ int8_t			all_moved(t_list **pos, ssize_t *tmp,
 	i = 0;
 	if (paths_occupied < paths->paths_used && all_ants_launched == FALSE)
 	{
-		ft_putstr(" ");
+		ft_putcahr(' ');
 		return (TRUE);
 	}
 	while (i < graph->ants)
