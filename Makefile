@@ -6,14 +6,14 @@
 #    By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/19 11:32:25 by agelloz           #+#    #+#              #
-#    Updated: 2019/10/28 14:39:50 by agelloz          ###   ########.fr        #
+#    Updated: 2019/11/01 18:51:26 by agelloz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 NAME = lem_in
-CFLAGS = -Wall -Wextra -g3
-#CFLAGS = -Wall -Wextra -g3 -fsanitize=address,undefined -Wpadded
+#CFLAGS = -Wall -Wextra -g3
+CFLAGS = -Wall -Wextra -g3 -fsanitize=address,undefined -Wpadded
 LIBH = libft/inc
 INC = inc/
 HEAD = $(INC)lem_in.h
