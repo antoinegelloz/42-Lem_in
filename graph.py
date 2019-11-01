@@ -72,15 +72,9 @@ def draw_graph_edges(G, paths, col_path, draw_grey):
             break
 
 class Parse:
-    def __init__(self, name=None, G=None, draw_grey=None):
-        if name is None:
-            self.name = "Graph"
-        else:
-            self.name = name
-        if G is None:
-            self.G = nx.Graph(name=self.name)
-        else:
-            self.G = G
+    def __init__(self, draw_grey=None):
+        self.name = "Graph"
+        self.G = nx.Graph(name=self.name)
         if draw_grey is None:
             self.draw_grey = False
         else:
