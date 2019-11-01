@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/29 16:00:21 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/31 17:17:17 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int8_t			exit_parsing_error(t_parsing *p, char *line, char **tab);
 void			free_p(t_parsing *p);
 void			free_tab(char **tab);
 void			free_graph(t_graph *graph);
-int			exit_bfs_error(t_parsing *p, t_graph *graph);
+int				exit_bfs_error(t_parsing *p, t_graph *graph);
 void			free_paths(t_paths *paths, t_graph *graph);
 
 t_list			*edmonds_karp(t_graph *graph);
@@ -128,9 +128,9 @@ int8_t			is_queue_empty(t_bfs *bfs);
 void			free_bfs(t_bfs *bfs);
 void			print_results(t_bfs *bfs, size_t size);
 
-int8_t			solver(t_graph *graph);
+int8_t			solver(t_graph *graph, int8_t visual);
 t_paths			*init_output(t_graph *graph, t_paths *paths);
 
-int8_t			cytoscape_visualizer(t_graph *graph);
+int8_t			cytoscape_visualizer(t_graph *graph, t_paths *paths);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/29 19:57:51 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/10/31 17:16:24 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,10 @@ int				main(int ac, char **av)
 		return (exit_bfs_error(&p, graph));
 	print_file(&p);
 	free_p(&p);
-	solver(graph);
 	if (ac == 2 && ft_strcmp(av[1], "-v") == 0)
-		cytoscape_visualizer(graph);
+		solver(graph, TRUE);
+	else
+		solver(graph, FALSE);
 	free_graph(graph);
 	ft_lstdel(&aug_paths, ft_delcontent);
 	return (EXIT_SUCCESS);
