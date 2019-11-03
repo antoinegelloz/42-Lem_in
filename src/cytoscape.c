@@ -6,13 +6,29 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 12:01:09 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/03 14:11:28 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/03 18:00:49 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include <stdio.h>
-#include <sys/types.h>
+
+int8_t	dump_path(FILE *file, t_paths *paths, size_t path_id, t_graph *graph)
+{
+	t_list *curr;
+
+	fprintf(file, "{ \"id\": %zd, \"ants\": %zd, \"path_nodes\": [", path_id, paths->n[path_id]);
+	curr = paths->array[path_id];
+	while (curr)
+	{
+		fprintf(file, "\"%s\"", graph->nodes[*(size_t *)curr->content].name);
+		curr = curr->next;
+		if (curr)
+			fprintf(file, ", ");
+	}
+	fprintf(file, "] },\n");
+	return (SUCCESS);
+}
 
 int8_t	cytoscape_visualizer(t_graph *graph, t_paths *paths)
 {
@@ -26,7 +42,7 @@ int8_t	cytoscape_visualizer(t_graph *graph, t_paths *paths)
 
 	i = 0;
 	file = fopen("cytoscape/data.json", "w");
-	fprintf(file, "{ \"nodes\": [\n");
+	fprintf(file, "{\n\"nodes\": \n[");
 	prefix = "{ \"data\": { \"id\": \"";
 	suffix = "\" } },\n";
 	while (i < graph->size)
@@ -43,7 +59,7 @@ int8_t	cytoscape_visualizer(t_graph *graph, t_paths *paths)
 	fseeko(file, -2, SEEK_END);
 	position = ftello(file);
 	ftruncate(fileno(file), position);
-	fprintf(file, "\n], \"edges\": [\n");
+	fprintf(file, "],\n\"edges\":\n[");
 	i = 0;
 	j = 0;
 	while (i < graph->size)
@@ -60,7 +76,19 @@ int8_t	cytoscape_visualizer(t_graph *graph, t_paths *paths)
 	fseeko(file, -2, SEEK_END);
 	position = ftello(file);
 	ftruncate(fileno(file), position);
-	fprintf(file, "\n] }\n");
+	fprintf(file, "],\n\"paths\":\n[");
+	i = 0;
+	while (i < graph->paths_count)
+	{
+		if (paths->n[i] > 0)
+			dump_path(file, paths, i, graph);
+		i++;
+	}
+	fseeko(file, -2, SEEK_END);
+	position = ftello(file);
+	ftruncate(fileno(file), position);
+	fprintf(file, "]\n");
+	fprintf(file, "}\n");
 	system("if ! ps aux | grep -v grep | grep 'php -S localhost:8000' &>/dev/null; then php -S localhost:8000 &>/dev/null & fi");
 	system("open -a \"Google Chrome\" http://localhost:8000/cytoscape/");
 	return (SUCCESS);
