@@ -1,5 +1,6 @@
-{ "nodes": [
-{ "data": { "id": "start", "start": "yes", "type": "start" } },
+{
+"nodes": 
+[{ "data": { "id": "start", "start": "yes", "type": "start" } },
 { "data": { "id": "end", "end": "yes", "type": "end" } },
 { "data": { "id": "A0" } },
 { "data": { "id": "A1" } },
@@ -20,9 +21,9 @@
 { "data": { "id": "E1" } },
 { "data": { "id": "E2" } },
 { "data": { "id": "E3" } },
-{ "data": { "id": "E4" } }
-], "edges": [
-{ "data": { "id": "e0", "source": "start", "target": "B0" } },
+{ "data": { "id": "E4" } }],
+"edges":
+[{ "data": { "id": "e0", "source": "start", "target": "B0" } },
 { "data": { "id": "e1", "source": "start", "target": "A0" } },
 { "data": { "id": "e2", "source": "end", "target": "E4" } },
 { "data": { "id": "e3", "source": "end", "target": "D5" } },
@@ -71,5 +72,8 @@
 { "data": { "id": "e46", "source": "E3", "target": "E4" } },
 { "data": { "id": "e47", "source": "E3", "target": "E2" } },
 { "data": { "id": "e48", "source": "E4", "target": "end" } },
-{ "data": { "id": "e49", "source": "E4", "target": "E3" } }
-] }
+{ "data": { "id": "e49", "source": "E4", "target": "E3" } }],
+"paths":
+[{ "id": 0, "ants": 3, "path_nodes": ["start", "B0", "B1", "B2", "B3", "C4", "C5", "C6", "C7", "end"] },
+{ "id": 1, "ants": 7, "path_nodes": ["start", "A0", "A1", "A2", "A3", "end"] }]
+}

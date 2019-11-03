@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:13:33 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/01 21:52:49 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/03 17:26:59 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,9 +285,9 @@ int8_t	solver(t_graph *graph, int8_t visual)
 			paths->n[i++] = 0;
 		paths->output_lines++;
 	}
-	flow_ants(graph, paths);
 	if (visual == TRUE)
 		cytoscape_visualizer(graph, paths);
+	flow_ants(graph, paths);
 	free_paths(paths, graph);
 	return (SUCCESS);
 }
