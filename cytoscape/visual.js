@@ -6,7 +6,7 @@
 //   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2019/11/01 11:38:14 by agelloz           #+#    #+#             //
-//   Updated: 2019/11/03 19:36:58 by agelloz          ###   ########.fr       //
+//   Updated: 2019/11/03 19:43:20 by agelloz          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -50,13 +50,19 @@ $(document).ready(
 				cy.elements('node[type = "start"]').style('border-style', 'solid');
 				cy.elements('node[type = "start"]').style('border-color', '#00ff00');
 				cy.elements('node[type = "start"]').style('border-width', '5px');
-				cy.elements('node[type = "start"]').style('color', '#317256');
+				cy.elements('node[type = "start"]').style('color', '#000000');
 				cy.elements('node[type = "start"]').style('opacity', '1');
 				cy.elements('node[type = "end"]').style('background-color', '#ffffff');
 				cy.elements('node[type = "end"]').style('border-style', 'solid');
 				cy.elements('node[type = "end"]').style('border-color', '#ff0000');
 				cy.elements('node[type = "end"]').style('border-width', '5px');
-				cy.elements('node[type = "end"]').style('color', '#a70000');
+				cy.elements('node[type = "end"]').style('color', '#000000');
+				var width = cy.nodes('node[type = "start"]').style().width;
+				var new_width = width.substr(0, width.length-2) * 1.3 + 'px';
+				cy.nodes('node[type = "start"]').style('width', new_width);
+				cy.nodes('node[type = "start"]').style('height', new_width);
+				cy.nodes('node[type = "end"]').style('width', new_width);
+				cy.nodes('node[type = "end"]').style('height', new_width);
 				var i = 0;
 				data.paths.forEach(function(p) {
 					print_path(p.path_nodes, i);
