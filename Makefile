@@ -6,14 +6,14 @@
 #    By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/19 11:32:25 by agelloz           #+#    #+#              #
-#    Updated: 2019/11/01 18:51:26 by agelloz          ###   ########.fr        #
+#    Updated: 2019/11/06 14:48:47 by ekelkel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 NAME = lem_in
-#CFLAGS = -Wall -Wextra -g3
-CFLAGS = -Wall -Wextra -g3 -fsanitize=address,undefined -Wpadded
+CFLAGS = -Wall -Wextra -g3
+#CFLAGS = -Wall -Wextra -g3 -fsanitize=address,undefined -Wpadded
 LIBH = libft/inc
 INC = inc/
 HEAD = $(INC)lem_in.h
@@ -27,12 +27,19 @@ SRC_FILES += parsing_tests.c
 SRC_FILES += parsing_tests2.c 
 SRC_FILES += graph.c 
 SRC_FILES += print.c 
-SRC_FILES += exit.c 
+SRC_FILES += exit.c
+SRC_FILES += exit_parsing.c
+SRC_FILES += edmonds_karp_tool.c
 SRC_FILES += edmonds_karp.c
 SRC_FILES += bfs_tools.c
 SRC_FILES += bfs.c
 SRC_FILES += init_output.c
 SRC_FILES += solver.c
+SRC_FILES += flow_ants.c
+SRC_FILES += bfs_reset_tools.c
+SRC_FILES += print_result.c
+SRC_FILES += all_ants_moved.c
+
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(SRC:%.c=%.o)
