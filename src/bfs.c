@@ -6,93 +6,16 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:32:38 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/11 12:05:29 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/14 15:17:28 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void		print_results(t_bfs *bfs, size_t size)
+t_bfs			*reconstruct_path(t_bfs *bfs, t_graph *graph)
 {
-	size_t	i;
-	ssize_t *currq;
-	ssize_t *currp;
-
-	i = 0;
-	currq = bfs->queue;
-	currp = bfs->prev;
-	while (i < size)
-	{
-		printf("queue[%2zu] = %2zd prev[%2zu] = %2zd\n", i, currq[i], i, currp[i]);
-		i++;
-	}
-	ft_putchar('\n');
-	return ;
-}
-
-void			reset_marks_fail(t_graph *graph, t_bfs *bfs)
-{
+	t_list	*tmp;
 	ssize_t	i;
-	ssize_t	j;
-
-	i = 0;
-	while (i < (ssize_t)graph->size)
-	{
-		j = 0;
-		while (bfs->queue[j] != -1)
-		{
-			if (i == bfs->queue[j])
-				graph->nodes[i].bfs_marked = FALSE;
-			j++;
-		}
-		i++;
-	}
-}
-
-void			reset_marks(t_graph *graph, t_bfs *bfs)
-{
-	size_t	i;
-	int8_t	found;
-	t_list	*curr;
-	t_edge	*neighbours;
-
-	i = 0;
-	curr = NULL;
-	neighbours = NULL;
-	found = FALSE;
-	while (i < graph->size)
-	{
-		curr = bfs->shortest_path;
-		while (curr != NULL)
-		{
-			if (i == *(size_t *)curr->content)
-			{
-				found = TRUE;
-				break ;
-			}
-			curr = curr->next;
-		}
-		neighbours = graph->nodes[i].head;
-		while (neighbours)
-		{
-			if (neighbours->capacity == 2)
-			{
-				found = TRUE;
-				break ;
-			}
-			neighbours = neighbours->next;
-		}
-		if (found == FALSE || graph->nodes[i].sink == TRUE || graph->nodes[i].source == TRUE)
-			graph->nodes[i].bfs_marked = FALSE;
-		found = FALSE;
-		i++;
-	}
-}
-
-t_bfs	*reconstruct_path(t_bfs *bfs, t_graph *graph)
-{
-	t_list		*tmp;
-	ssize_t		i;
 
 	tmp = NULL;
 	i = graph->size - 1;
@@ -118,11 +41,10 @@ t_bfs	*reconstruct_path(t_bfs *bfs, t_graph *graph)
 
 t_bfs			*bfs(t_graph *graph)
 {
-	size_t		node;
-	t_bfs 		*bfs;
-	t_edge		*neighbours;
+	size_t	node;
+	t_bfs	*bfs;
+	t_edge	*neighbours;
 
-	//ft_putendl("\n***************** normal BFS *********************");
 	neighbours = NULL;
 	bfs = init_bfs(graph);
 	while (is_queue_empty(bfs) == FALSE)
@@ -131,18 +53,15 @@ t_bfs			*bfs(t_graph *graph)
 		neighbours = graph->nodes[node].head;
 		while (neighbours)
 		{
-			//printf("node:%zd, neig:%zd, cap:%zu, mark:%zd\n", node, neighbours->dest, neighbours->capacity, graph->nodes[neighbours->dest].bfs_marked);
-			//print_graph(graph);
-			if (graph->nodes[neighbours->dest].bfs_marked != TRUE && neighbours->capacity > 0)
+			if (graph->nodes[neighbours->dest].bfs_marked != TRUE
+					&& neighbours->capacity > 0)
 			{
 				enqueue(bfs, neighbours->dest);
 				bfs->prev[neighbours->dest] = node;
 				graph->nodes[neighbours->dest].bfs_marked = TRUE;
 			}
-			//print_results(bfs, graph->size);
 			neighbours = neighbours->next;
 		}
 	}
-	//print_results(bfs, graph->size);
 	return (reconstruct_path(bfs, graph));
 }
