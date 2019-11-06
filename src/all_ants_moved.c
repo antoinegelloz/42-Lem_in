@@ -6,14 +6,14 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 19:11:25 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/01 21:59:25 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/06 14:52:54 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 static size_t	count_paths_occupied(t_graph *graph,
-		t_paths *paths, t_list **pos)
+		t_paths *paths)
 {
 	size_t	i;
 	size_t	paths_occupied;
@@ -52,12 +52,12 @@ int8_t			all_moved(t_list **pos, ssize_t *tmp,
 	size_t	paths_occupied;
 	int8_t	all_ants_launched;
 
-	paths_occupied = count_paths_occupied(graph, paths, pos);
+	paths_occupied = count_paths_occupied(graph, paths);
 	all_ants_launched = ants_launched(graph, paths);
 	i = 0;
 	if (paths_occupied < paths->paths_used && all_ants_launched == FALSE)
 	{
-		ft_putcahr(' ');
+		ft_putchar(' ');
 		return (TRUE);
 	}
 	while (i < graph->ants)
