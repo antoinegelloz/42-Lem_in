@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 18:58:06 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/14 19:16:19 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/06 18:19:24 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,8 @@ static void		print_first_ant(t_list **ants_pos, t_paths *paths,
 	{
 		ants_pos[i] = ants_pos[i]->next;
 		if (ants_pos[i] != NULL && ants_pos[i]->next != NULL)
-		{
 			paths->available[paths->ants_to_paths[i]] = FALSE;
-			paths->n[paths->ants_to_paths[i]]--;
-		}
+		paths->n[paths->ants_to_paths[i]]--;
 		ft_printf("L%d-%s", i + 1,
 				graph->nodes[*(size_t *)ants_pos[i]->content].name);
 	}
@@ -76,7 +74,7 @@ static void		print_round(t_paths *paths, t_graph *graph,
 			if (ants_pos[i]->next == NULL)
 				ants_pos[i] = ants_pos[i]->next;
 			if (all_moved(ants_pos, tmp_pos, graph, paths) == FALSE)
-				ft_putchar(' ');
+				ft_putstr("+");
 		}
 		i++;
 	}
