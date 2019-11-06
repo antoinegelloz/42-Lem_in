@@ -161,8 +161,8 @@ class Parse:
         plt.show()
 
 def main():
-    parser = argparse.ArgumentParser(description="Visualize the output of a lem-in binary using GraphViz and NetworkX")
-    parser.add_argument("-a", "--draw-all", help="Draw unused nodes and edges", action="store_true")
+    parser = argparse.ArgumentParser(description="Visu")
+    parser.add_argument("-g", "--draw-all", help="Draw unused paths", action="store_true")
     args = parser.parse_args()
     loops = Parse(draw_grey=args.draw_all)
     loops.read_input(sys.stdin)
