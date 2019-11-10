@@ -1,4 +1,4 @@
-# lem_in
+# Lem_in
 Lem_in is an algorithm project about solving a special case of a maximun flow problem in network optimization.</br>
 The goal is to find a feasible flow of ants through an anthill that minimizes the number of movement rounds.</br>
 An anthill is described as a network composed of 'rooms' (graph nodes) and 'tunnels' (graph edges) linking the rooms together.</br>
