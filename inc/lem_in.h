@@ -16,6 +16,9 @@
 # include "libft.h"
 # include <stdio.h>
 
+# define INCREASE 1
+# define DECREASE -1
+
 typedef struct	s_edge
 {
 	size_t			dest;
@@ -32,6 +35,9 @@ typedef struct	s_paths
 	size_t		paths_used;
 	size_t		output_lines;
 	int8_t		*available;
+	t_edge		*neighbours;
+	t_edge		*neighbours2;
+	size_t		round;
 }				t_paths;
 
 typedef struct	s_node
@@ -82,6 +88,9 @@ typedef struct	s_bfs
 	ssize_t		*queue;
 	ssize_t		*prev;
 	t_list		*shortest_path;
+	int8_t		backward;
+	t_edge		*neighbours;
+	t_edge		*neighbours2;
 }				t_bfs;
 
 int8_t			parse_file(t_parsing *p);
@@ -116,10 +125,10 @@ void			free_graph(t_graph *graph);
 int				exit_bfs_error(t_parsing *p, t_graph *graph);
 void			free_paths(t_paths *paths, t_graph *graph);
 
-t_list			*edmonds_karp(t_graph *graph);
-
 t_bfs			*bfs(t_graph *graph);
 t_bfs			*reconstruct_path(t_bfs *bfs, t_graph *graph);
+void			reset_marks_fail(t_graph *graph, t_bfs *bfs);
+void			reset_marks(t_graph *graph, t_bfs *bfs);
 t_bfs			*init_bfs(t_graph *graph);
 int8_t			enqueue(t_bfs *bfs, size_t index);
 size_t			dequeue(t_bfs *bfs);
@@ -129,7 +138,20 @@ void			free_bfs(t_bfs *bfs);
 void			print_results(t_bfs *bfs, size_t size);
 
 int8_t			solver(t_graph *graph, int8_t visual);
+t_list			*edmonds_karp(t_graph *graph);
+t_bfs			*bfs_disjoint_paths(t_graph *graph);
+int8_t			change_capacity(t_graph *graph,
+			  t_list *u, t_list *v, int8_t order);
 t_paths			*init_output(t_graph *graph, t_paths *paths);
+int8_t			flow_ants(t_graph *graph, t_paths *paths);
+int8_t			reset_availability(t_graph *graph,
+				t_paths *paths, size_t *capacity);
+int8_t			all_paths_used(t_paths *paths, t_graph *graph);
+int8_t			print_lines(t_paths *paths, t_graph *graph);
+int8_t			all_moved(t_list **pos, ssize_t *tmp,
+				t_graph *graph, t_paths *paths);
+ssize_t			*save_ants_pos(t_list **ants_pos, ssize_t ants);
+int8_t			init_lines(t_paths *paths, t_graph *graph);
 
 int8_t			cytoscape_visualizer(t_graph *graph, t_paths *paths);
 

@@ -44,7 +44,6 @@ static t_graph	*build_graph(t_parsing *p)
 		curr_from = curr_from->next;
 		curr_to = curr_to->next;
 	}
-	//print_graph(graph);
 	return (graph);
 }
 
