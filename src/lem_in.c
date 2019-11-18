@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/14 17:19:36 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/10/31 17:16:24 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static t_graph	*build_graph(t_parsing *p)
 	return (graph);
 }
 
-int				main(void)
+int				main(int ac, char **av)
 {
 	t_parsing	p;
 	t_graph		*graph;
@@ -62,7 +62,10 @@ int				main(void)
 		return (exit_bfs_error(&p, graph));
 	print_file(&p);
 	free_p(&p);
-	solver(graph);
+	if (ac == 2 && ft_strcmp(av[1], "-v") == 0)
+		solver(graph, TRUE);
+	else
+		solver(graph, FALSE);
 	free_graph(graph);
 	ft_lstdel(&aug_paths, ft_delcontent);
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 #    By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/19 11:32:25 by agelloz           #+#    #+#              #
-#    Updated: 2019/11/06 14:48:47 by ekelkel          ###   ########.fr        #
+#    Updated: 2019/11/01 21:44:54 by agelloz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,11 +35,11 @@ SRC_FILES += bfs_tools.c
 SRC_FILES += bfs.c
 SRC_FILES += init_output.c
 SRC_FILES += solver.c
+SRC_FILES += cytoscape.c
 SRC_FILES += flow_ants.c
 SRC_FILES += bfs_reset_tools.c
 SRC_FILES += print_result.c
 SRC_FILES += all_ants_moved.c
-
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(SRC:%.c=%.o)
