@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/31 17:17:17 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/18 14:32:24 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define LEM_IN_H
 
 # include "libft.h"
-# include <stdio.h>
 
 # define INCREASE 1
 # define DECREASE -1
@@ -81,16 +80,17 @@ typedef struct	s_parsing
 
 typedef struct	s_bfs
 {
-	size_t		queue_front;
-	size_t		queue_rear;
-	size_t		queue_size;
-	size_t		queue_capacity;
-	ssize_t		*queue;
-	ssize_t		*prev;
-	t_list		*shortest_path;
-	int8_t		backward;
-	t_edge		*neighbours;
-	t_edge		*neighbours2;
+	t_list	*shortest_path;
+	t_edge	*neighbours;
+	t_edge	*neighbours2;
+	ssize_t	*queue;
+	ssize_t	*prev;
+	size_t	queue_front;
+	size_t	queue_rear;
+	size_t	queue_size;
+	size_t	queue_capacity;
+	int8_t	backward;
+	char	pad[7];
 }				t_bfs;
 
 int8_t			parse_file(t_parsing *p);
@@ -141,7 +141,7 @@ int8_t			solver(t_graph *graph, int8_t visual);
 t_list			*edmonds_karp(t_graph *graph);
 t_bfs			*bfs_disjoint_paths(t_graph *graph);
 int8_t			change_capacity(t_graph *graph,
-			  t_list *u, t_list *v, int8_t order);
+			  					t_list *u, t_list *v, int8_t order);
 t_paths			*init_output(t_graph *graph, t_paths *paths);
 int8_t			flow_ants(t_graph *graph, t_paths *paths);
 int8_t			reset_availability(t_graph *graph,
@@ -149,7 +149,7 @@ int8_t			reset_availability(t_graph *graph,
 int8_t			all_paths_used(t_paths *paths, t_graph *graph);
 int8_t			print_lines(t_paths *paths, t_graph *graph);
 int8_t			all_moved(t_list **pos, ssize_t *tmp,
-				t_graph *graph, t_paths *paths);
+						  t_graph *graph, t_paths *paths);
 ssize_t			*save_ants_pos(t_list **ants_pos, ssize_t ants);
 int8_t			init_lines(t_paths *paths, t_graph *graph);
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cytoscape.c                                        :+:      :+:    :+:   */
+/*   cytoscape_visualizer.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 12:01:09 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/03 18:00:49 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/18 14:29:39 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int8_t	dump_path(FILE *file, t_paths *paths, size_t path_id, t_graph *graph)
 {
 	t_list *curr;
 
-	fprintf(file, "{ \"id\": %zd, \"ants\": %zd, \"path_nodes\": [", path_id, paths->n[path_id]);
+	fprintf(file, "{ \"id\": %zd, \"ants\": %zd, \"path_nodes\": [",
+			path_id, paths->n[path_id]);
 	curr = paths->array[path_id];
 	while (curr)
 	{
@@ -67,7 +68,9 @@ int8_t	cytoscape_visualizer(t_graph *graph, t_paths *paths)
 		curr_edge = graph->nodes[i].head;
 		while (curr_edge)
 		{
-			fprintf(file, "%se%zd\", \"source\": \"%s\", \"target\": \"%s%s", prefix, j, graph->nodes[i].name, graph->nodes[curr_edge->dest].name, suffix);
+			fprintf(file, "%se%zd\", \"source\": \"%s\", \"target\": \"%s%s",
+					prefix, j, graph->nodes[i].name,
+					graph->nodes[curr_edge->dest].name, suffix);
 			curr_edge = curr_edge->next;
 			j++;
 		}
