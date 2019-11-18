@@ -6,12 +6,14 @@
 //   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2019/11/01 11:38:14 by agelloz           #+#    #+#             //
-//   Updated: 2019/11/18 15:14:20 by agelloz          ###   ########.fr       //
+//   Updated: 2019/11/18 19:47:49 by agelloz          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
 var cy;
 var data;
+var ants_out = 0;
+var ants_total = 0;
 
 $(document).ready(function() {
 	$.getJSON("data.json", function(data) {
@@ -24,14 +26,15 @@ $(document).ready(function() {
 					selector: "node",
 					style: {
 						content: "data(id)",
-						"font-size": "12px",
+						"font-size": "10px",
+						"font-family": "Monaco",
 						"text-valign": "center",
 						"text-halign": "center",
 						"background-color": "#232b2b",
 						color: "#fff",
 						"overlay-padding": "6px",
 						"z-index": "10",
-						opacity: "0.6"
+						opacity: "0.3"
 					}
 				},
 				{
@@ -62,52 +65,82 @@ $(document).ready(function() {
 		cy.nodes('node[type = "end"]').style("width", new_width);
 		cy.nodes('node[type = "end"]').style("height", new_width);
 		var i = 0;
-		data.paths.forEach(function(p) {
-			print_path(p.path_nodes, i);
+		data.paths.forEach(function(path) {
+			ants_total += path.ants;
+			color_path(path.nodes, i);
 			i++;
 		});
+
+		$("#next").click(function() {
+			if (ants_out < ants_total) {
+				data.paths.forEach(function(path) {
+					path.nodes.forEach(function(node, i) {
+						console.log(node);
+						console.log(i);
+						console.log(getComputedStyle(cy.elements('node[id = "' + node + '"]')).opacity);
+						if (i != 0 && cy.nodes('node[id = "' + node + '"]').style.opacity == 1) {
+							let_ant_pass(node, path.nodes[i + 1]);
+						}
+					});
+					if (path.ants > 0 && cy.nodes('node[id = "' + path.nodes[1] + '"]').style.opacity != 1) {
+						let_ant_pass(path.nodes[0], path.nodes[1]);
+						path.ants -= 1;
+					}
+				});
+			}
+		});
+
 	});
 });
 
+function let_ant_pass(node1, node2) {
+	cy.nodes('node[id = "' + node2 + '"]').style("opacity", 1);
+	cy.edges().filter(function(edge) {
+		var e1 =
+			edge.source().id() == node1 &&
+			edge.target().id() == node2;
+		var e2 =
+			edge.source().id() == node2 &&
+			edge.target().id() == node1;
+		return e1 || e2;
+	}).style("opacity", 1);
+}
 
-function print_path(path_nodes, i) {
-	var colors = [];
-	var color = "#000000";
-	color = getColor(i);
-	colors.push({ path: path_nodes, color: color });
+function color_path(nodes, i) {
 	var j;
-	for (j = 0; j < path_nodes.length; j++) {
+	var color;
+
+	color = get_path_color(i);
+	for (j = 0; j < nodes.length; j++) {
 		if (
-			path_nodes[j] != cy.nodes('node[type = "start"]').id() &&
-			path_nodes[j] != cy.nodes('node[type = "end"]').id()
+			nodes[j] != cy.nodes('node[type = "start"]').id() &&
+			nodes[j] != cy.nodes('node[type = "end"]').id()
 		) {
-			room = path_nodes[j];
-			cy.nodes('node[id = "' + path_nodes[j] + '"]').style(
+			room = nodes[j];
+			cy.nodes('node[id = "' + nodes[j] + '"]').style(
 				"background-color",
-				color[0]
+				color
 			);
 		}
-		tunnel = cy.edges().filter(function(edge) {
+		cy.edges().filter(function(edge) {
 			var e1 =
-				edge.source().id() == path_nodes[j] &&
-				edge.target().id() == path_nodes[j + 1];
+				edge.source().id() == nodes[j] &&
+				edge.target().id() == nodes[j + 1];
 			var e2 =
-				edge.source().id() == path_nodes[j + 1] &&
-				edge.target().id() == path_nodes[j];
+				edge.source().id() == nodes[j + 1] &&
+				edge.target().id() == nodes[j];
 			return e1 || e2;
-		});
-		tunnel.style("line-color", color[0]);
+		}).style("line-color", color).style("opacity", 0.03);
 	}
 }
 
-function getColor(i) {
-	var tmp_colors = [];
+function get_path_color(i) {
+	var color;
 
-	if (i % 5 == 0) tmp_colors[0] = "#00aba9";
-	else if (i % 5 == 1) tmp_colors[0] = "#ff0097";
-	else if (i % 5 == 2) tmp_colors[0] = "#a200ff";
-	else if (i % 5 == 3) tmp_colors[0] = "#1ba1e2";
-	else if (i % 5 == 4) tmp_colors[0] = "#f09609";
-	tmp_colors[1] = tmp_colors[0];
-	return tmp_colors;
+	if (i % 5 == 0) color = "#00aba9";
+	else if (i % 5 == 1) color= "#ff0097";
+	else if (i % 5 == 2) color = "#a200ff";
+	else if (i % 5 == 3) color = "#1ba1e2";
+	else if (i % 5 == 4) color = "#f09609";
+	return color;
 }

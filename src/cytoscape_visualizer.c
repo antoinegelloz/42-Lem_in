@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 12:01:09 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/18 14:29:39 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/18 16:25:46 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int8_t	dump_path(FILE *file, t_paths *paths, size_t path_id, t_graph *graph)
 {
 	t_list *curr;
 
-	fprintf(file, "{ \"id\": %zd, \"ants\": %zd, \"path_nodes\": [",
+	fprintf(file, "{ \"id\": %zd, \"ants\": %zd, \"nodes\": [",
 			path_id, paths->n[path_id]);
 	curr = paths->array[path_id];
 	while (curr)

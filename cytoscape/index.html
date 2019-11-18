@@ -2,10 +2,40 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>lem_in</title>
+		<title>Lem_in &#128028</title>
 		<style>
+			* { margin: 0, padding: 0 }
 			body {
+				margin: 0;
 				background-color: #222222;
+			}
+			.header {
+				overflow: hidden;
+				background-color: #555555;
+			}
+			.header button {
+				float: right;
+				background-color: #e7e7e7;
+				border: none;
+				color: black;
+				padding: 10px 25px;
+				text-align: center;
+				text-decoration: none;
+				display: inline-block;
+				font-size: 20px;
+				font-family: 'Monaco';
+				cursor: pointer;
+				border-radius: 4px;
+				margin: 0.5em;
+			  
+			}
+			.header h1 {
+				float: left;
+				color: white;
+				margin-block-start: 0.4em;
+				margin-block-end: 0.4em;
+				margin-inline-start: 0.3em;
+				font-family: 'Monaco';
 			}
 			#cy {
 				width: 98vw;
@@ -20,9 +50,9 @@
 		<script src="visual.js"></script>
 	</head>
 	<body>
-		<div class="buttons">
-			<button id="play_pause_button" type="button">Play</button>
-			<button id="reset_button" type="button">Reset</button>
+		<div class="header">
+			<h1>Lem_in &#128028</h1>
+			<button id="next" type="button">Next</button>
 		</div>
 		<div id='cy'></div>
 	</body>
