@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 16:20:51 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/14 16:22:35 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/19 14:18:59 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@ void	free_p(t_parsing *p)
 	ft_lstdel(&p->from, ft_delcontent);
 	ft_lstdel(&p->to, ft_delcontent);
 	ft_lstdel(&p->file, ft_delcontent);
-}
-
-int8_t	exit_parsing_error(t_parsing *p, char *line, char **tab)
-{
-	if (line)
-		ft_strdel(&line);
-	free_p(p);
-	free_tab(tab);
-	ft_putendl_fd("ERROR", 2);
-	return (FAILURE);
 }
 
 void	free_tab(char **tab)
@@ -46,4 +36,20 @@ void	free_tab(char **tab)
 	}
 	free(tab);
 	tab = NULL;
+}
+
+int8_t	exit_parsing_error(t_parsing *p, char *line, char **tab)
+{
+	if (p->ants > 0 && p->source > -1 && p->sink > -1
+		&& p->nodes != NULL && p->from != NULL && p->to != NULL)
+	{
+		free_tab(tab);
+		return (STOP);
+	}
+	if (line)
+		ft_strdel(&line);
+	free_p(p);
+	free_tab(tab);
+	ft_putendl_fd("ERROR", 2);
+	return (FAILURE);
 }

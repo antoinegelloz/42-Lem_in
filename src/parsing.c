@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/28 11:09:10 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/19 14:18:06 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,23 +72,27 @@ static int8_t	process_line(char *line, t_parsing *p)
 
 int8_t			parse_file(t_parsing *p)
 {
-	int			ret;
+	int			ret_gnl;
+	int			ret_process;
 	char		*line;
 	t_list		*new_line;
 
 	line = NULL;
 	new_line = NULL;
-	while ((ret = get_next_line(STDIN_FILENO, &line)) > 0)
+	while ((ret_gnl = get_next_line(STDIN_FILENO, &line)) > 0)
 	{
-		if (process_line(line, p) == FAILURE)
+		ret_process = process_line(line, p);
+		if (ret_process == FAILURE)
 			return (FAILURE);
+		else if (ret_process == STOP)
+			break ;
 		if ((new_line = ft_lstnew(line, (ft_strlen(line) + 1)
 						* sizeof(char))) == NULL)
 			return (exit_parsing_error(p, line, NULL));
 		ft_lstappend(&p->file, new_line);
 		ft_strdel(&line);
 	}
-	if (ret == FAILURE || p->from == NULL || p->to == NULL)
+	if (ret_gnl == FAILURE || p->from == NULL || p->to == NULL)
 		exit_parsing_error(p, NULL, NULL);
 	ft_strdel(&line);
 	get_next_line(CLEANUP, NULL);

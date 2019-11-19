@@ -6,14 +6,13 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 19:11:25 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/06 14:52:54 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/19 14:27:05 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static size_t	count_paths_occupied(t_graph *graph,
-		t_paths *paths)
+static size_t	count_paths_occupied(t_graph *graph, t_paths *paths)
 {
 	size_t	i;
 	size_t	paths_occupied;

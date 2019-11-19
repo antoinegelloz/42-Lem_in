@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:32:38 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/14 15:17:28 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/19 19:22:19 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@ t_bfs			*reconstruct_path(t_bfs *bfs, t_graph *graph)
 		ft_lstadd(&bfs->shortest_path, tmp);
 		i = bfs->prev[i];
 	}
+	i = 0;
+	/*ft_printf("BFS:\n");
+	while (i < (ssize_t)graph->size)
+	{
+		if (bfs->prev[i] != -1)
+			ft_printf("prev[%d]:%d\n", i, bfs->prev[i]);
+		i++;
+	}*/
 	if (graph->nodes[*(ssize_t *)bfs->shortest_path->content].source != TRUE)
 	{
 		reset_marks_fail(graph, bfs);

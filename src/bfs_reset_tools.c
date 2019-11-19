@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 15:12:29 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/14 15:13:42 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/19 18:12:06 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void			reset_marks_fail(t_graph *graph, t_bfs *bfs)
 		{
 			if (i == bfs->queue[j])
 				graph->nodes[i].bfs_marked = FALSE;
+				graph->nodes[i].tmp_marked = FALSE;
 			j++;
 		}
 		i++;

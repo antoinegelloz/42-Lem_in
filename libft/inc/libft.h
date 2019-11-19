@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 11:20:40 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/26 11:59:15 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/19 14:17:26 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define FALSE		0
 # define SUCCESS	0
 # define FAILURE	-1
+# define STOP		-42
 # define CLEANUP	-42
 # define BUFF_SIZE	4096
 

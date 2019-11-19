@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/18 14:32:24 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/19 19:13:23 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct	s_node
 	int8_t	source;
 	int8_t	sink;
 	int8_t	bfs_marked;
-	char	pad[1];
+	int8_t	tmp_marked;
 	char	*name;
 	t_edge	*head;
 }				t_node;
@@ -139,7 +139,7 @@ void			print_results(t_bfs *bfs, size_t size);
 
 int8_t			solver(t_graph *graph, int8_t visual);
 t_list			*edmonds_karp(t_graph *graph);
-t_bfs			*bfs_disjoint_paths(t_graph *graph);
+t_bfs			*bfs_disjoint_paths(t_graph *graph, t_list *aug_paths);
 int8_t			change_capacity(t_graph *graph,
 			  					t_list *u, t_list *v, int8_t order);
 t_paths			*init_output(t_graph *graph, t_paths *paths);
@@ -152,7 +152,10 @@ int8_t			all_moved(t_list **pos, ssize_t *tmp,
 						  t_graph *graph, t_paths *paths);
 ssize_t			*save_ants_pos(t_list **ants_pos, ssize_t ants);
 int8_t			init_lines(t_paths *paths, t_graph *graph);
+t_list			*find_disjoint_paths(t_graph *graph, t_list *aug_paths);
 
 int8_t			cytoscape_visualizer(t_graph *graph, t_paths *paths);
+
+void			print_ssize_t(t_list *list);
 
 #endif

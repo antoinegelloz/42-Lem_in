@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/10/31 17:16:24 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/19 19:26:38 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_graph	*build_graph(t_parsing *p)
 		return (NULL);
 	curr_from = p->from;
 	curr_to = p->to;
-	while (curr_from && curr_to)
+	while (curr_from != NULL && curr_to != NULL)
 	{
 		create_edge(graph, *(size_t *)curr_from->content,
 				*(size_t *)curr_to->content);
@@ -60,8 +60,10 @@ int				main(int ac, char **av)
 		return (EXIT_FAILURE);
 	if ((aug_paths = edmonds_karp(graph)) == NULL)
 		return (exit_bfs_error(&p, graph));
-	print_file(&p);
+	//print_file(&p);
 	free_p(&p);
+	//ft_putendl("PATHS:");
+	//print_ssize_t(aug_paths);
 	if (ac == 2 && ft_strcmp(av[1], "-v") == 0)
 		solver(graph, TRUE);
 	else
