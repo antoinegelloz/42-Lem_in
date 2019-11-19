@@ -25,7 +25,6 @@ void			reset_marks_fail(t_graph *graph, t_bfs *bfs)
 		{
 			if (i == bfs->queue[j])
 				graph->nodes[i].bfs_marked = FALSE;
-				graph->nodes[i].tmp_marked = FALSE;
 			j++;
 		}
 		i++;

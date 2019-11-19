@@ -47,7 +47,6 @@ typedef struct	s_node
 	int8_t	source;
 	int8_t	sink;
 	int8_t	bfs_marked;
-	int8_t	tmp_marked;
 	char	*name;
 	t_edge	*head;
 }				t_node;

@@ -61,8 +61,7 @@ t_paths		*init_paths(t_graph *graph, t_paths *paths)
 
 	if ((paths = (t_paths*)malloc(sizeof(t_paths))) == NULL)
 		return (NULL);
-	if (!(paths->array = (t_list**)
-				malloc(graph->paths_count * sizeof(t_list*))))
+	if (!(paths->array = (t_list**)malloc(graph->paths_count * sizeof(t_list*))))
 		return (NULL);
 	i = 0;
 	tmp = NULL;

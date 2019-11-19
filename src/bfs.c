@@ -27,14 +27,6 @@ t_bfs			*reconstruct_path(t_bfs *bfs, t_graph *graph)
 		ft_lstadd(&bfs->shortest_path, tmp);
 		i = bfs->prev[i];
 	}
-	i = 0;
-	/*ft_printf("BFS:\n");
-	while (i < (ssize_t)graph->size)
-	{
-		if (bfs->prev[i] != -1)
-			ft_printf("prev[%d]:%d\n", i, bfs->prev[i]);
-		i++;
-	}*/
 	if (graph->nodes[*(ssize_t *)bfs->shortest_path->content].source != TRUE)
 	{
 		reset_marks_fail(graph, bfs);

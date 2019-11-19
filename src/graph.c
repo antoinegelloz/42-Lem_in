@@ -70,7 +70,6 @@ static t_graph	*init_graph(t_parsing *p, t_graph *graph)
 		graph->nodes[i].sink = ((size_t)p->sink == i) ? 1 : 0;
 		((size_t)p->sink == i) ? graph->sink = i : 1;
 		graph->nodes[i].bfs_marked = FALSE;
-		graph->nodes[i].tmp_marked = FALSE;
 		graph->nodes[i].head = NULL;
 		curr_nodes = curr_nodes->next;
 		i++;

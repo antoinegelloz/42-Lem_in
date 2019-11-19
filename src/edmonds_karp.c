@@ -24,10 +24,7 @@ t_list		*edmonds_karp(t_graph *graph)
 	while (TRUE)
 	{
 		if ((new_bfs = bfs(graph)) == NULL)
-		{
-			ft_putendl("MODIF");
 			return (find_disjoint_paths(graph, aug_paths));
-		}
 		ft_lstappend(&aug_paths, new_bfs->shortest_path);
 		curr_path_node = new_bfs->shortest_path;
 		while (curr_path_node->next != NULL)
