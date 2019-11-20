@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:01:34 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/19 16:24:32 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/20 17:27:13 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void		fill_queue(t_graph *graph, t_bfs *bfs)
 			bfs->queue[0] = i;
 			bfs->queue_size = 1;
 			graph->nodes[i].bfs_marked = TRUE;
+			graph->nodes[i].already_enqueued = TRUE;
 		}
 		i++;
 	}

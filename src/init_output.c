@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:51:16 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/10/14 18:45:14 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/20 18:09:10 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	construct_paths(t_graph *graph, t_paths *paths, size_t node)
 		if (paths->neighbours->capacity == 0)
 		{
 			node = paths->neighbours->dest;
+
 			tmp = ft_lstnew(&node, sizeof(size_t));
 			ft_lstappend(&paths->array[i], tmp);
 			paths->neighbours2 = graph->nodes[node].head;

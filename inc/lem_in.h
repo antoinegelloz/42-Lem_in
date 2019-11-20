@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/19 19:13:23 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/20 16:04:45 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,15 @@ typedef struct	s_paths
 
 typedef struct	s_node
 {
+	t_edge	*head;
 	int		index;
 	int		x_coord;
 	int		y_coord;
 	int8_t	source;
 	int8_t	sink;
 	int8_t	bfs_marked;
+	int8_t	already_enqueued;
 	char	*name;
-	t_edge	*head;
 }				t_node;
 
 typedef struct	s_graph
@@ -68,13 +69,13 @@ typedef struct	s_parsing
 	ssize_t	source;
 	ssize_t	sink;
 	int8_t	is_prev_command;
-	char	pad[7];
 	t_list	*nodes;
 	t_list	*x_coord;
 	t_list	*y_coord;
 	t_list	*from;
 	t_list	*to;
 	t_list	*file;
+	char	*pad[7];
 }				t_parsing;
 
 typedef struct	s_bfs
@@ -89,7 +90,7 @@ typedef struct	s_bfs
 	size_t	queue_size;
 	size_t	queue_capacity;
 	int8_t	backward;
-	char	pad[7];
+	char	*pad[7];
 }				t_bfs;
 
 int8_t			parse_file(t_parsing *p);
