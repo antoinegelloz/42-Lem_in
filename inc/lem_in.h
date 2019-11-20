@@ -68,14 +68,14 @@ typedef struct	s_parsing
 	size_t	ants;
 	ssize_t	source;
 	ssize_t	sink;
-	int8_t	is_prev_command;
 	t_list	*nodes;
 	t_list	*x_coord;
 	t_list	*y_coord;
 	t_list	*from;
 	t_list	*to;
 	t_list	*file;
-	char	*pad[7];
+	int8_t	is_prev_command;
+	char    pad[7];
 }				t_parsing;
 
 typedef struct	s_bfs
@@ -90,7 +90,7 @@ typedef struct	s_bfs
 	size_t	queue_size;
 	size_t	queue_capacity;
 	int8_t	backward;
-	char	*pad[7];
+	char    pad[7];
 }				t_bfs;
 
 int8_t			parse_file(t_parsing *p);

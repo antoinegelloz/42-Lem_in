@@ -18,7 +18,7 @@ var ants_total = 0;
 $(document).ready(function() {
 	$.getJSON("data.json", function(data) {
 		cy = cytoscape({
-			container: $("#cy"),
+		        container: $("#cy"),
 			elements: data,
 			layout: { name: "cose-bilkent" },
 			style: [
@@ -26,15 +26,11 @@ $(document).ready(function() {
 					selector: "node",
 					style: {
 						"content": "data(id)",
-						"font-size": "10px",
-						"font-family": "Monaco",
-						"text-valign": "center",
-						"text-halign": "center",
-						"background-color": "#232b2b",
-						"color": "#fff",
-						"overlay-padding": "6px",
-						"z-index": "10",
-						"opacity": 0.3
+						"font-size": "10px", "font-family": "Monaco",
+						"text-valign": "center", "text-halign": "center",
+						"background-color": "#232b2b", "color": "#fff",
+						"overlay-padding": "6px", "z-index": "10",
+            "opacity": "0.3"
 					}
 				},
 				{
@@ -42,7 +38,8 @@ $(document).ready(function() {
 					style: {
 						"line-color": "#353839",
 						"overlay-padding": "3px",
-						"opacity": 0.1
+            "curve-style": "straight",
+						"opacity": "0.1"
 					}
 				}
 			]
@@ -66,43 +63,44 @@ $(document).ready(function() {
 			i++;
 		});
 
-		$("#ants_out").text(ants_out);
+		$("#ants_out").text('out:' + ants_out);
 
 		$("#next").click(function() {
-			if (ants_out < ants_total) 
-			{
-				data.paths.forEach(function(path, p) 
-				{
-					console.log(data.paths[p].ants)
-					for (i = 1; i < path.nodes.length; i++)
-					{
-						//console.log(data.paths[p].ants);
-						if (get_edge_opacity(path.nodes[i - 1], path.nodes[i]) == 1)
-						{
-							set_edge_opacity(path.nodes[i - 1], path.nodes[i], 0.1);
-						}
-					}
-					if (data.paths[p].ants > 0 && get_edge_opacity(path.nodes[0], path.nodes[1]) < 1) 
-					{
+			if (ants_out < ants_total) {
+        var all_started = true;
+				data.paths.forEach(function(path, p) {
+          for (i = path.nodes.length - 2; i > 0; i--) {
+            if (cy.getElementById(path.nodes[i]).style('opacity') == 1) {
+              move_ant(path.nodes[i], path.nodes[i + 1]);
+              for (i = 1; i < path.nodes.length; i++) {
+                if (get_edge_opacity(path.nodes[i - 1], path.nodes[i]) == 1) {
+                  cy.getElementById(path.nodes[i]).style('opacity', 0.3);
+                  set_edge_opacity(path.nodes[i - 1], path.nodes[i], 0.1);
+                  break;
+                }
+              }
+              break;
+            }
+          };
+          if (data.paths[p].ants > 0 && get_edge_opacity(path.nodes[0], path.nodes[1]) < 1) {
 						move_ant(path.nodes[0], path.nodes[1]);
 						data.paths[p].ants -= 1;
-					}
-					else
-					{
-						for (i = path.nodes.length - 2; i > 0; i--) 
-						{
-							if (cy.getElementById(path.nodes[i]).style('opacity') == 1)
-							{
-								move_ant(path.nodes[i], path.nodes[i + 1]);
-								break;
-							}
-						};
+            if (data.paths[p].ants > 0) {
+              all_started = false;
+					    console.log('false')
+            }
+					  console.log('ant started')
 					}
 				});
+        if (all_started == true) {
+		      cy.nodes('node[type = "start"]').style("opacity", 0.3);
+        }
+
 			}
 			else {
 				cy.nodes().style("opacity", 0.3);
 				cy.edges().style("opacity", 0.1);
+		    cy.nodes('node[type = "end"]').style("opacity", 1);
 			}
 		});
 	});
@@ -134,18 +132,11 @@ function get_edge_opacity(node1, node2) {
 
 function move_ant(node1, node2) {
 	cy.nodes('node[id = "' + node2 + '"]').style("opacity", 1);
-	cy.edges().filter(function(edge) {
-		var e1 =
-			edge.source().id() == node1 &&
-			edge.target().id() == node2;
-		var e2 =
-			edge.source().id() == node2 &&
-			edge.target().id() == node1;
-		return e1 || e2;
-	}).style("opacity", 1);
+	set_edge_opacity(node1, node2, 1);
+  console.log(node1 + '->' + node2);
 	if (node2 == cy.nodes('node[type = "end"]').id()) {
 		ants_out += 1;
-		$("#ants_out").text(ants_out);
+		$("#ants_out").text('out:' + ants_out);
 	}
 }
 
@@ -153,7 +144,11 @@ function color_path(nodes, i) {
 	var j;
 	var color;
 
-	color = get_path_color(i);
+  if (i % 5 == 0) color = "#00aba9";
+	else if (i % 5 == 1) color= "#ff0097";
+	else if (i % 5 == 2) color = "#a200ff";
+	else if (i % 5 == 3) color = "#1ba1e2";
+	else if (i % 5 == 4) color = "#f09609";
 	for (j = 0; j < nodes.length; j++) {
 		if (
 			nodes[j] != cy.nodes('node[type = "start"]').id() &&
@@ -175,15 +170,4 @@ function color_path(nodes, i) {
 			return e1 || e2;
 		}).style("line-color", color).style("opacity", 0.03);
 	}
-}
-
-function get_path_color(i) {
-	var color;
-
-	if (i % 5 == 0) color = "#00aba9";
-	else if (i % 5 == 1) color= "#ff0097";
-	else if (i % 5 == 2) color = "#a200ff";
-	else if (i % 5 == 3) color = "#1ba1e2";
-	else if (i % 5 == 4) color = "#f09609";
-	return color;
 }

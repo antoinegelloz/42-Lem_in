@@ -81,10 +81,14 @@ int8_t	cytoscape_visualizer(t_graph *graph, t_paths *paths)
 	ftruncate(fileno(file), position);
 	fprintf(file, "],\n\"paths\":\n[");
 	i = 0;
+        j = 0;
 	while (i < graph->paths_count)
 	{
 		if (paths->n[i] > 0)
-			dump_path(file, paths, i, graph);
+                {
+			dump_path(file, paths, j, graph);
+                        j++;
+                }
 		i++;
 	}
 	fseeko(file, -2, SEEK_END);
