@@ -6,13 +6,13 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 15:12:29 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/19 18:12:06 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/21 20:51:56 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void			reset_marks_fail(t_graph *graph, t_bfs *bfs)
+void			reset_marks_fail(t_graph *graph, t_bfs *bfs, int8_t full_bfs)
 {
 	ssize_t	i;
 	ssize_t	j;
@@ -24,7 +24,12 @@ void			reset_marks_fail(t_graph *graph, t_bfs *bfs)
 		while (bfs->queue[j] != -1)
 		{
 			if (i == bfs->queue[j])
-				graph->nodes[i].bfs_marked = FALSE;
+			{
+				if (full_bfs == TRUE)
+					graph->nodes[i].bfs_marked = FALSE;
+				else
+					graph->nodes[i].tmp_marked = FALSE;
+			}
 			j++;
 		}
 		i++;
@@ -64,7 +69,7 @@ static int8_t	find_neighbour(t_edge *neighbours, int8_t found)
 	return (found);
 }
 
-void			reset_marks(t_graph *graph, t_bfs *bfs)
+void			reset_marks(t_graph *graph, t_bfs *bfs, int8_t full_bfs)
 {
 	size_t	i;
 	int8_t	found;
@@ -80,7 +85,12 @@ void			reset_marks(t_graph *graph, t_bfs *bfs)
 		found = find_neighbour(neighbours, found);
 		if (found == FALSE || graph->nodes[i].sink == TRUE
 				|| graph->nodes[i].source == TRUE)
-			graph->nodes[i].bfs_marked = FALSE;
+		{
+			if (full_bfs == TRUE)
+				graph->nodes[i].bfs_marked = FALSE;
+			else
+				graph->nodes[i].tmp_marked = FALSE;
+		}
 		found = FALSE;
 		i++;
 	}

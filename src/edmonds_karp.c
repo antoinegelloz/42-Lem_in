@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 11:38:50 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/19 19:10:22 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/21 19:05:42 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_list		*edmonds_karp(t_graph *graph)
 	{
 		if ((new_bfs = bfs(graph)) == NULL)
 			return (find_disjoint_paths(graph, aug_paths));
+			//return (aug_paths);
 		ft_lstappend(&aug_paths, new_bfs->shortest_path);
 		curr_path_node = new_bfs->shortest_path;
 		while (curr_path_node->next != NULL)

@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/20 16:04:45 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/21 20:59:15 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ typedef struct	s_node
 	int8_t	source;
 	int8_t	sink;
 	int8_t	bfs_marked;
-	int8_t	already_enqueued;
+	int8_t	tmp_marked;
 	char	*name;
+	int8_t	already_enqueued;
+	char    pad[7];
 }				t_node;
 
 typedef struct	s_graph
@@ -90,7 +92,8 @@ typedef struct	s_bfs
 	size_t	queue_size;
 	size_t	queue_capacity;
 	int8_t	backward;
-	char    pad[7];
+	int8_t	backed;
+	char    pad[6];
 }				t_bfs;
 
 int8_t			parse_file(t_parsing *p);
@@ -127,22 +130,21 @@ void			free_paths(t_paths *paths, t_graph *graph);
 
 t_bfs			*bfs(t_graph *graph);
 t_bfs			*reconstruct_path(t_bfs *bfs, t_graph *graph);
-void			reset_marks_fail(t_graph *graph, t_bfs *bfs);
-void			reset_marks(t_graph *graph, t_bfs *bfs);
-t_bfs			*init_bfs(t_graph *graph);
+void			reset_marks_fail(t_graph *graph, t_bfs *bfs, int8_t full_bfs);
+void			reset_marks(t_graph *graph, t_bfs *bfs, int8_t full_bfs);
+t_bfs			*init_bfs(t_graph *graph, int8_t full_bfs);
 int8_t			enqueue(t_bfs *bfs, size_t index);
 size_t			dequeue(t_bfs *bfs);
 int8_t			is_queue_full(t_bfs *bfs);
 int8_t			is_queue_empty(t_bfs *bfs);
 void			free_bfs(t_bfs *bfs);
-void			print_results(t_bfs *bfs, size_t size);
 
-int8_t			solver(t_graph *graph, int8_t visual);
+int8_t			solver(t_graph *graph, int8_t visual, t_list *aug_paths);
 t_list			*edmonds_karp(t_graph *graph);
 t_bfs			*bfs_disjoint_paths(t_graph *graph, t_list *aug_paths);
 int8_t			change_capacity(t_graph *graph,
 			  					t_list *u, t_list *v, int8_t order);
-t_paths			*init_output(t_graph *graph, t_paths *paths);
+t_paths			*init_output(t_graph *graph, t_paths *paths, t_list *aug_paths);
 int8_t			flow_ants(t_graph *graph, t_paths *paths);
 int8_t			reset_availability(t_graph *graph,
 				t_paths *paths, size_t *capacity);
