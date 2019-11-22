@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/22 10:42:20 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/22 18:39:06 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int				main(int ac, char **av)
 	if ((aug_paths = edmonds_karp(graph)) == NULL)
 		return (exit_bfs_error(&p, graph));
 	//print_graph(graph);
-	//print_file(&p);
+	print_file(&p);
 	free_p(&p);
 	//ft_putendl("PATHS:");
 	//print_ssize_t(aug_paths);

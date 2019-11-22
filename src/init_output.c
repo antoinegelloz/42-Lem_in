@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:51:16 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/22 10:41:55 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/22 19:12:14 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_paths	*init_paths(t_graph *graph, t_paths *paths, t_list *aug_paths)
 		return (NULL);
 	i = 0;
 	tmp = NULL;
+	paths->round = 0;
 	curr = aug_paths;
 	while (i < graph->paths_count)
 	{
@@ -37,11 +38,7 @@ t_paths	*init_paths(t_graph *graph, t_paths *paths, t_list *aug_paths)
 		ft_lstappend(&paths->array[i], tmp);
 		curr = curr->next;
 		if (curr != NULL && *(size_t *)curr->content == graph->source)
-		{
-			//ft_printf("new path:\n");
-			//print_ssize_t(paths->array[i]);
 			i++;
-		}
 	}
 	return (paths);
 }
@@ -55,8 +52,8 @@ t_paths	*init_output(t_graph *graph, t_paths *paths, t_list *aug_paths)
 		return (NULL);
 	while (i < graph->paths_count)
 	{
-		ft_printf("path %d: ", i);
-		print_ssize_t(paths->array[i]);
+		//ft_printf("path %d: ", i);
+		//print_ssize_t(paths->array[i]);
 		i++;
 	}
 	if ((paths->ants_to_paths = (size_t*)malloc(graph->ants * sizeof(size_t))) == NULL)
