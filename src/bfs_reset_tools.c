@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 15:12:29 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/21 20:51:56 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/22 12:33:51 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void			reset_marks_fail(t_graph *graph, t_bfs *bfs, int8_t full_bfs)
 		}
 		i++;
 	}
+	if (bfs->paths_crossed == 1)
+		graph->paths_crossed = 0;
 }
 
 static int8_t	find_node(t_list *path, size_t i)
@@ -83,13 +85,15 @@ void			reset_marks(t_graph *graph, t_bfs *bfs, int8_t full_bfs)
 		found = find_node(bfs->shortest_path, i);
 		neighbours = graph->nodes[i].head;
 		found = find_neighbour(neighbours, found);
-		if (found == FALSE || graph->nodes[i].sink == TRUE
-				|| graph->nodes[i].source == TRUE)
+		if (full_bfs == TRUE && (found == FALSE
+								|| graph->nodes[i].sink == TRUE
+								|| graph->nodes[i].source == TRUE))
 		{
-			if (full_bfs == TRUE)
-				graph->nodes[i].bfs_marked = FALSE;
-			else
-				graph->nodes[i].tmp_marked = FALSE;
+			graph->nodes[i].bfs_marked = FALSE;
+		}
+		else
+		{
+			graph->nodes[i].tmp_marked = FALSE;
 		}
 		found = FALSE;
 		i++;

@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/21 13:49:42 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/22 10:42:20 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ int				main(int ac, char **av)
 	//print_graph(graph);
 	//print_file(&p);
 	free_p(&p);
-	ft_putendl("PATHS:");
-	print_ssize_t(aug_paths);
+	//ft_putendl("PATHS:");
+	//print_ssize_t(aug_paths);
 	if (ac == 2 && ft_strcmp(av[1], "-v") == 0)
 		solver(graph, TRUE, aug_paths);
 	else

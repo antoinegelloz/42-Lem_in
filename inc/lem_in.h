@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/21 20:59:15 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/22 12:32:04 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ typedef struct	s_graph
 	size_t	sink;
 	size_t	paths_count;
 	t_node	*nodes;
+	int8_t	paths_crossed;
+	char    pad[7];
 }				t_graph;
 
 typedef struct	s_parsing
@@ -91,9 +93,8 @@ typedef struct	s_bfs
 	size_t	queue_rear;
 	size_t	queue_size;
 	size_t	queue_capacity;
-	int8_t	backward;
-	int8_t	backed;
-	char    pad[6];
+	int8_t	paths_crossed;
+	char    pad[7];
 }				t_bfs;
 
 int8_t			parse_file(t_parsing *p);

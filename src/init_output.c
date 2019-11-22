@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:51:16 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/21 15:24:03 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/22 10:41:55 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ t_paths	*init_paths(t_graph *graph, t_paths *paths, t_list *aug_paths)
 		curr = curr->next;
 		if (curr != NULL && *(size_t *)curr->content == graph->source)
 		{
-			ft_printf("new path:\n");
-			print_ssize_t(paths->array[i]);
+			//ft_printf("new path:\n");
+			//print_ssize_t(paths->array[i]);
 			i++;
 		}
 	}

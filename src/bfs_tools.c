@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:01:34 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/21 20:59:46 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/22 12:32:33 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ t_bfs			*init_bfs(t_graph *graph, int8_t full_bfs)
 	bfs->queue_front = 0;
 	bfs->queue_size = 0;
 	bfs->queue_rear = 0;
-	bfs->backward = FALSE;
-	bfs->backed = 0;
+	bfs->paths_crossed = 0;
 	bfs->neighbours = NULL;
 	bfs->neighbours2 = NULL;
 	bfs->queue = (ssize_t *)malloc(bfs->queue_capacity * sizeof(ssize_t));
