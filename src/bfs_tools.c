@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:01:34 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/22 12:32:33 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/23 17:46:40 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,24 @@ size_t			dequeue(t_bfs *bfs)
 	return (index);
 }
 
-static void		fill_queue(t_graph *graph, t_bfs *bfs, int8_t full_bfs)
+t_bfs			*init_bfs(t_graph *graph)
 {
-	size_t		i;
+	size_t	i;
+	t_bfs	*bfs;
 
+	bfs = (t_bfs *)malloc(sizeof(t_bfs));
+	bfs->queue_capacity = graph->size;
+	bfs->queue_front = 0;
+	bfs->queue_size = 0;
+	bfs->queue_rear = 0;
+	bfs->queue = (ssize_t *)malloc(bfs->queue_capacity * sizeof(ssize_t));
+	bfs->prev = (ssize_t *)malloc(bfs->queue_capacity * sizeof(ssize_t));
 	i = 0;
 	while (i < bfs->queue_capacity)
 	{
 		bfs->prev[i] = -1;
 		bfs->queue[i] = -1;
-		if (full_bfs == TRUE && graph->nodes[i].source == TRUE)
+		if (graph->nodes[i].source == TRUE)
 		{
 			bfs->queue[0] = i;
 			bfs->queue_size = 1;
@@ -74,23 +82,6 @@ static void		fill_queue(t_graph *graph, t_bfs *bfs, int8_t full_bfs)
 		}
 		i++;
 	}
-}
-
-t_bfs			*init_bfs(t_graph *graph, int8_t full_bfs)
-{
-	t_bfs	*bfs;
-
-	bfs = (t_bfs *)malloc(sizeof(t_bfs));
-	bfs->queue_capacity = graph->size;
-	bfs->queue_front = 0;
-	bfs->queue_size = 0;
-	bfs->queue_rear = 0;
-	bfs->paths_crossed = 0;
-	bfs->neighbours = NULL;
-	bfs->neighbours2 = NULL;
-	bfs->queue = (ssize_t *)malloc(bfs->queue_capacity * sizeof(ssize_t));
-	bfs->prev = (ssize_t *)malloc(bfs->queue_capacity * sizeof(ssize_t));
-	fill_queue(graph, bfs, full_bfs);
 	bfs->shortest_path = NULL;
 	return (bfs);
 }

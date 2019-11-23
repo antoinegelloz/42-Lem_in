@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:32:38 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/22 18:32:37 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/23 19:51:42 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,29 @@ t_bfs			*reconstruct_path(t_bfs *bfs, t_graph *graph)
 {
 	t_list	*tmp;
 	ssize_t	i;
+	size_t	j;
 
 	tmp = NULL;
+	i = 0;
+	//ft_putendl("RECONSTRUCT PATH");
+	while (i < (ssize_t)graph->size)
+	{
+		//ft_printf("prev[%d]:%d\n", i, bfs->prev[i]);
+		i++;
+	}
 	i = graph->size - 1;
 	while (graph->nodes[i].sink == FALSE)
 		i--;
-	while (i != -1)
+	j = 0;
+	while (i != -1 && j < graph->size)
 	{
 		tmp = ft_lstnew(&i, sizeof(ssize_t));
 		ft_lstadd(&bfs->shortest_path, tmp);
 		i = bfs->prev[i];
+		j++;
 	}
+	if (j == graph->size)
+		ft_putendl("ERROR RECONSTRUCT PATH");
 	if (graph->nodes[*(ssize_t *)bfs->shortest_path->content].source != TRUE)
 	{
 		reset_marks_fail(graph, bfs, TRUE);
@@ -54,7 +66,7 @@ t_bfs			*bfs(t_graph *graph)
 	t_edge	*neighbours;
 
 	neighbours = NULL;
-	bfs = init_bfs(graph, TRUE);
+	bfs = init_bfs(graph);
 	while (is_queue_empty(bfs) == FALSE)
 	{
 		node = dequeue(bfs);

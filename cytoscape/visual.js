@@ -6,7 +6,7 @@
 //   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2019/11/01 11:38:14 by agelloz           #+#    #+#             //
-//   Updated: 2019/11/23 16:39:27 by agelloz          ###   ########.fr       //
+//   Updated: 2019/11/23 19:57:37 by agelloz          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -43,7 +43,7 @@ $(document).ready(function() {
             "line-color": "#353839",
             "overlay-padding": "3px",
             "curve-style": "straight",
-            opacity: "0.1"
+            opacity: "0.03"
           }
         }
       ]
@@ -76,8 +76,8 @@ $(document).ready(function() {
       i++;
     });
 
-    $("#ants_out").text("Ants out: " + ants_out + "/" + data.ants);
     $("#paths").text("Paths used: " + data.paths_used + "/" + data.paths_count);
+    $("#ants_out").text("Ants out: " + ants_out + "/" + data.ants);
 
     $("#next").click(function() {
       if (ants_out < ants_total) {
@@ -89,7 +89,7 @@ $(document).ready(function() {
               for (i = 1; i < path.nodes.length; i++) {
                 if (get_edge_opacity(path.nodes[i - 1], path.nodes[i]) == 1) {
                   cy.getElementById(path.nodes[i]).style("opacity", 0.3);
-                  set_edge_opacity(path.nodes[i - 1], path.nodes[i], 0.1);
+                  set_edge_opacity(path.nodes[i - 1], path.nodes[i], 0.03);
                   break;
                 }
               }
@@ -114,7 +114,7 @@ $(document).ready(function() {
         }
       } else {
         cy.nodes().style("opacity", 0.3);
-        cy.edges().style("opacity", 0.1);
+        cy.edges().style("opacity", 0.03);
         cy.nodes('node[type = "end"]').style("opacity", 1);
       }
     });
@@ -148,7 +148,7 @@ function move_ant(node1, node2, total_ants) {
   console.log(node1 + "->" + node2);
   if (node2 == cy.nodes('node[type = "end"]').id()) {
     ants_out += 1;
-    $("#ants_out").text("out: " + ants_out + "/" + total_ants);
+    $("#ants_out").text("Ants out: " + ants_out + "/" + total_ants);
   }
 }
 

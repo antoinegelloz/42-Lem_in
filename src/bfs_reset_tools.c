@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 15:12:29 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/22 12:33:51 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/23 17:52:04 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void			reset_marks_fail(t_graph *graph, t_bfs *bfs, int8_t full_bfs)
 		}
 		i++;
 	}
-	if (bfs->paths_crossed == 1)
-		graph->paths_crossed = 0;
 }
 
 static int8_t	find_node(t_list *path, size_t i)

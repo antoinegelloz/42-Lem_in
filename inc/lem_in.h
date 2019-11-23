@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/23 17:23:19 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/23 17:50:44 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ typedef struct	s_graph
 	size_t	source;
 	size_t	sink;
 	size_t	paths_count;
-	int8_t	paths_crossed;
-	char    pad[7];
 }				t_graph;
 
 typedef struct	s_parsing
@@ -133,7 +131,7 @@ t_bfs			*bfs(t_graph *graph);
 t_bfs			*reconstruct_path(t_bfs *bfs, t_graph *graph);
 void			reset_marks_fail(t_graph *graph, t_bfs *bfs, int8_t full_bfs);
 void			reset_marks(t_graph *graph, t_bfs *bfs, int8_t full_bfs);
-t_bfs			*init_bfs(t_graph *graph, int8_t full_bfs);
+t_bfs			*init_bfs(t_graph *graph);
 int8_t			enqueue(t_bfs *bfs, size_t index);
 size_t			dequeue(t_bfs *bfs);
 int8_t			is_queue_full(t_bfs *bfs);

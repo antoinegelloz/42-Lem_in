@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 18:15:53 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/23 15:56:15 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/23 19:01:33 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void		fill_n(t_graph *graph, t_paths *paths, size_t tmp[], int8_t visual)
 	reset_availability(graph, paths, paths->n);
 	if (visual == TRUE)
 		cytoscape_visualizer(graph, paths);
-	print_lines(paths, graph);
+	//print_lines(paths, graph);
 }
 
 static size_t	update_index(t_graph *graph,

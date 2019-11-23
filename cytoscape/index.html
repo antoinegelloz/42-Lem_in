@@ -3,62 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Lem_in &#128028</title>
-		<style>
-			* { margin: 0, padding: 0 }
-			body {
-				margin: 0;
-				background-color: #222222;
-			}
-			.header {
-				overflow: hidden;
-				background-color: #444444;
-			}
-			.header button {
-				float: right;
-				background-color: #e7e7e7;
-				border: none;
-				color: black;
-				padding: 1vw 3vw;
-				text-align: center;
-				text-decoration: none;
-				display: inline-block;
-				font-size: 3vw;
-				font-family: 'Monaco';
-				cursor: pointer;
-				border-radius: 4px;
-				margin: 0.3em;
-			  
-			}
-			.header h1 {
-				float: left;
-				color: white;
-				font-size: 4vw;
-				margin-block-start: 0.3em;
-				margin-block-end: 0.3em;
-				margin-inline-start: 0.5em;
-				font-family: 'Monaco';
-			}
-			.stats {
-				overflow: hidden;
-				background-color: #333333;
-			}
-			.stats h2 {
-				float: left;
-				color: white;
-				font-size: 2vw;
-				margin-block-start: 0.3em;
-				margin-block-end: 0.3em;
-				margin-inline-start: 0.5em;
-				font-family: 'Monaco';
-			}
-			.ants_div {
-				background-color: #222222;
-			}
-			#cy {
-				width: 98vw;
-				height: 93vh;
-			}
-		</style>
+		<link rel="stylesheet" type="text/css" href="style.css">
 		<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 		<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
 		<script src="https://unpkg.com/layout-base/layout-base.js"></script>
@@ -74,7 +19,7 @@
 			<button id="reset" type="button">Reset</button>
 		</div>
 		<div class="stats">
-			<h2 id="paths"></h2>
+			<div id="paths_div"><h2 id="paths"></h2></div>
 			<div id="ants_div"><h2 id="ants_out"></h2></div>
 		</div>
 		<div id='cy'></div>

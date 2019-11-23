@@ -6,11 +6,29 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 16:12:57 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/23 15:20:31 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/23 19:00:43 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+size_t			is_on_path(size_t node, t_list *aug_paths, t_graph *graph)
+{
+	t_list	*curr;
+
+	curr = aug_paths;
+	while (curr != NULL)
+	{
+		if (*(size_t *)curr->content == node
+			&& node != graph->source && node != graph->sink)
+		{
+			//ft_printf("node %s on path\n", graph->nodes[node].name);
+			return (TRUE);
+		}
+		curr = curr->next;
+	}
+	return (FALSE);
+}
 
 t_list			*rebuild_paths(t_graph *graph)
 {
@@ -18,12 +36,10 @@ t_list			*rebuild_paths(t_graph *graph)
 	t_list		*tmp;
 	t_edge		*neighbours;
 	t_edge		*neighbours2;
-	size_t		i;
 	size_t		node;
 
 	new_aug_paths = NULL;
 	tmp = NULL;
-	i = 0;
 	node = graph->source;
 	neighbours = graph->nodes[graph->source].head;
 	while (neighbours != NULL)
@@ -51,29 +67,10 @@ t_list			*rebuild_paths(t_graph *graph)
 		}
 		neighbours = neighbours->next;
 	}
-	graph->paths_crossed = 0;
-	//ft_putendl("reset graph paths crossed");
 	return (new_aug_paths);
 }
 
-size_t			is_on_path(size_t node, t_list *aug_paths)
-{
-	t_list	*curr;
-
-	curr = aug_paths;
-	while (curr != NULL)
-	{
-		if (*(size_t *)curr->content == node)
-		{
-			//ft_printf("node %s on path\n", graph->nodes[node].name);
-			return (TRUE);
-		}
-		curr = curr->next;
-	}
-	return (FALSE);
-}
-
-t_bfs			*reconstruct_path2(t_edge *from, t_bfs *bfs, t_graph *graph)
+t_bfs			*reconstruct_path_from(size_t node_from, t_bfs *bfs, t_graph *graph)
 {
 	t_list	*tmp;
 	ssize_t	i;
@@ -88,7 +85,7 @@ t_bfs			*reconstruct_path2(t_edge *from, t_bfs *bfs, t_graph *graph)
 		ft_lstadd(&bfs->shortest_path, tmp);
 		i = bfs->prev[i];
 	}
-	if (*(size_t *)bfs->shortest_path->content != from->dest)
+	if (*(size_t *)bfs->shortest_path->content != node_from)
 	{
 		reset_marks_fail(graph, bfs, FALSE);
 		ft_lstdel(&bfs->shortest_path, ft_delcontent);
@@ -99,17 +96,18 @@ t_bfs			*reconstruct_path2(t_edge *from, t_bfs *bfs, t_graph *graph)
 	return (bfs);
 }
 
-t_bfs				*path_found(t_edge *from, t_graph *graph)
+t_bfs			*bfs_from(size_t node_from, t_graph *graph)
 {
 	size_t	node;
 	t_bfs	*bfs;
 	t_edge	*neighbours;
 
 	neighbours = NULL;
-	bfs = init_bfs(graph, FALSE);
-	bfs->queue[0] = from->dest;
+	bfs = init_bfs(graph);
+	bfs->queue[0] = node_from;
 	bfs->queue_size = 1;
-	graph->nodes[from->dest].tmp_marked = TRUE;
+	bfs->paths_crossed = 0;
+	graph->nodes[node_from].tmp_marked = TRUE;
 	while (is_queue_empty(bfs) == FALSE)
 	{
 		node = dequeue(bfs);
@@ -126,24 +124,23 @@ t_bfs				*path_found(t_edge *from, t_graph *graph)
 			neighbours = neighbours->next;
 		}
 	}
-	return (reconstruct_path2(from, bfs, graph));
+	return (reconstruct_path_from(node_from, bfs, graph));
 }
-
 
 size_t			can_we_escape_from(size_t node, t_graph *graph, t_bfs *bfs)
 {
-	t_edge		*node_neighbours;
-	t_bfs		*new_bfs;
+	t_edge		*neighbours;
+	t_bfs		*new_bfs_from;
 	t_list		*path_node;
 
-	node_neighbours = graph->nodes[node].head;
-	while (node_neighbours != NULL)
+	neighbours = graph->nodes[node].head;
+	while (neighbours != NULL)
 	{
-		if (graph->nodes[node_neighbours->dest].bfs_marked == FALSE)
+		if (graph->nodes[neighbours->dest].bfs_marked == FALSE)
 		{
-			if ((new_bfs = path_found(node_neighbours, graph)) != NULL)
+			if ((new_bfs_from = bfs_from(neighbours->dest, graph)) != NULL)
 			{
-				path_node = new_bfs->shortest_path;
+				path_node = new_bfs_from->shortest_path;
 				bfs->prev[*(size_t *)path_node->content] = node;
 				graph->nodes[*(size_t *)path_node->content].bfs_marked = TRUE;
 				while (path_node->next != NULL)
@@ -156,11 +153,10 @@ size_t			can_we_escape_from(size_t node, t_graph *graph, t_bfs *bfs)
 			}
 			return (FALSE);
 		}
-		node_neighbours = node_neighbours->next;
+		neighbours = neighbours->next;
 	}
 	return (FALSE);
 }
-
 
 t_bfs			*bfs_disjoint_paths(t_graph *graph, t_list *aug_paths)
 {
@@ -168,17 +164,19 @@ t_bfs			*bfs_disjoint_paths(t_graph *graph, t_list *aug_paths)
 	t_bfs	*bfs;
 	t_edge	*neighbours;
 	t_edge	*neighbours2;
+	int8_t	node_on_path;
 
 	neighbours = NULL;
-	bfs = init_bfs(graph, TRUE);
+	bfs = init_bfs(graph);
 	while (is_queue_empty(bfs) == FALSE)
 	{
 		node = dequeue(bfs);
+		//ft_printf(">> deq %s\n", graph->nodes[node].name);
+		node_on_path = is_on_path(node, aug_paths, graph);
 		neighbours = graph->nodes[node].head;
-		//ft_printf(">> %s\n", graph->nodes[node].name);
-		if (node != graph->source && node != graph->sink && is_on_path(node, aug_paths) == TRUE)
+		while (neighbours != NULL)
 		{
-			while (neighbours)
+			if (node_on_path == TRUE)
 			{
 				if (neighbours->capacity > 0 && can_we_escape_from(neighbours->dest, graph, bfs) == TRUE)
 				{
@@ -188,31 +186,27 @@ t_bfs			*bfs_disjoint_paths(t_graph *graph, t_list *aug_paths)
 				}
 				else if (graph->nodes[neighbours->dest].already_enqueued == FALSE && neighbours->capacity == 2)
 				{
+					ft_printf("ON PATH %s > enq:%s\n", graph->nodes[node].name, graph->nodes[neighbours->dest].name);
 					enqueue(bfs, neighbours->dest);
-					//ft_printf("ON PATH %s > enq:%s\n", graph->nodes[node].name, graph->nodes[neighbours->dest].name);
 					bfs->prev[neighbours->dest] = node;
 					graph->nodes[neighbours->dest].bfs_marked = TRUE;
 					graph->nodes[neighbours->dest].already_enqueued = TRUE;
 					break ;
 				}
-				neighbours = neighbours->next;
 			}
-		}
-		else
-		{
-			while (neighbours)
+			else
 			{
 				if ((graph->nodes[neighbours->dest].already_enqueued == FALSE
 					&& graph->nodes[neighbours->dest].bfs_marked == FALSE))
 				{
-					enqueue(bfs, neighbours->dest);
 					//ft_printf("enq:%s\n", graph->nodes[neighbours->dest].name);
+					enqueue(bfs, neighbours->dest);
 					bfs->prev[neighbours->dest] = node;
 					graph->nodes[neighbours->dest].bfs_marked = TRUE;
 					graph->nodes[neighbours->dest].already_enqueued = TRUE;
 				}
-				else if (is_on_path(node, aug_paths) == FALSE
-					&& is_on_path(neighbours->dest, aug_paths) == TRUE
+				else if (node_on_path == FALSE
+					&& is_on_path(neighbours->dest, aug_paths, graph) == TRUE
 					&& neighbours->dest != graph->source
 					&& graph->nodes[neighbours->dest].already_enqueued == FALSE)
 				{
@@ -223,23 +217,21 @@ t_bfs			*bfs_disjoint_paths(t_graph *graph, t_list *aug_paths)
 					neighbours2 = graph->nodes[neighbours->dest].head;
 					while (neighbours2)
 					{
-						if (neighbours2->capacity == 2)
+						if (neighbours2->capacity == 2 && neighbours2->dest != graph->source && neighbours2->dest != graph->sink)
 						{
+							ft_printf("START ON PATH: %s\n", graph->nodes[neighbours2->dest].name);
 							enqueue(bfs, neighbours2->dest);
-							//ft_printf("START ON PATH: %s\n", graph->nodes[neighbours2->dest].name);
 							bfs->prev[neighbours2->dest] = neighbours->dest;
 							graph->nodes[neighbours2->dest].bfs_marked = TRUE;
 							graph->nodes[neighbours2->dest].already_enqueued = TRUE;
-							graph->paths_crossed += 1;
-							bfs->paths_crossed += 1;
 							break ;
 						}
 						neighbours2 = neighbours2->next;
 					}
 					break ;
 				}
-				neighbours = neighbours->next;
 			}
+			neighbours = neighbours->next;
 		}
 	}
 	return (reconstruct_path(bfs, graph));
@@ -250,8 +242,6 @@ t_list	*find_disjoint_paths(t_graph *graph, t_list *aug_paths)
 	t_bfs	*new_bfs;
 	t_list	*curr_path_node;
 
-	if (graph->paths_count > 1)
-		return (aug_paths);
 	while (TRUE)
 	{
 		if ((new_bfs = bfs_disjoint_paths(graph, aug_paths)) == NULL)
@@ -267,6 +257,5 @@ t_list	*find_disjoint_paths(t_graph *graph, t_list *aug_paths)
 		aug_paths = rebuild_paths(graph);
 		free_bfs(new_bfs);
 	}
-	//ft_putendl("END BFS DISJOINT");
 	return (aug_paths);
 }
