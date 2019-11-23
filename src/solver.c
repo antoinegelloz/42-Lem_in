@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:13:33 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/22 19:11:41 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/23 15:54:00 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,16 @@ int8_t	is_solution_found(t_paths *paths, t_graph *graph)
 	while (i < graph->paths_count)
 		sum = sum + paths->n[i++];
 	if (sum >= graph->ants)
+	{
+		ft_printf("ants:%d sum:%d\n", graph->ants, sum);
+		i = 0;
+		while (i < graph->paths_count)
+		{
+			ft_printf("i:%d - %d\n", i, paths->n[i]);
+			i++;
+		}
 		return (TRUE);
+	}
 	return (FALSE);
 }
 
@@ -103,9 +112,7 @@ int8_t	solver(t_graph *graph, int8_t visual, t_list *aug_paths)
 			paths->n[i++] = 0;
 		paths->output_lines++;
 	}
-	if (visual == TRUE)
-		cytoscape_visualizer(graph, paths);
-	flow_ants(graph, paths);
+	flow_ants(graph, paths, visual);
 	free_paths(paths, graph);
 	return (SUCCESS);
 }

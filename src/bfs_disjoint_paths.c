@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 16:12:57 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/22 18:31:53 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/23 15:20:31 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_list			*rebuild_paths(t_graph *graph)
 	return (new_aug_paths);
 }
 
-size_t			is_on_path(size_t node, t_list *aug_paths, t_graph *graph)
+size_t			is_on_path(size_t node, t_list *aug_paths)
 {
 	t_list	*curr;
 
@@ -176,7 +176,7 @@ t_bfs			*bfs_disjoint_paths(t_graph *graph, t_list *aug_paths)
 		node = dequeue(bfs);
 		neighbours = graph->nodes[node].head;
 		//ft_printf(">> %s\n", graph->nodes[node].name);
-		if (node != graph->source && node != graph->sink && is_on_path(node, aug_paths, graph) == TRUE)
+		if (node != graph->source && node != graph->sink && is_on_path(node, aug_paths) == TRUE)
 		{
 			while (neighbours)
 			{
@@ -211,8 +211,8 @@ t_bfs			*bfs_disjoint_paths(t_graph *graph, t_list *aug_paths)
 					graph->nodes[neighbours->dest].bfs_marked = TRUE;
 					graph->nodes[neighbours->dest].already_enqueued = TRUE;
 				}
-				else if (is_on_path(node, aug_paths, graph) == FALSE
-					&& is_on_path(neighbours->dest, aug_paths, graph) == TRUE
+				else if (is_on_path(node, aug_paths) == FALSE
+					&& is_on_path(neighbours->dest, aug_paths) == TRUE
 					&& neighbours->dest != graph->source
 					&& graph->nodes[neighbours->dest].already_enqueued == FALSE)
 				{

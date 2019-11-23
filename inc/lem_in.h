@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/22 12:32:04 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/23 17:23:19 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ typedef struct	s_node
 
 typedef struct	s_graph
 {
+	t_node	*nodes;
 	size_t	ants;
 	size_t	size;
 	size_t	source;
 	size_t	sink;
 	size_t	paths_count;
-	t_node	*nodes;
 	int8_t	paths_crossed;
 	char    pad[7];
 }				t_graph;
@@ -146,7 +146,7 @@ t_bfs			*bfs_disjoint_paths(t_graph *graph, t_list *aug_paths);
 int8_t			change_capacity(t_graph *graph,
 			  					t_list *u, t_list *v, int8_t order);
 t_paths			*init_output(t_graph *graph, t_paths *paths, t_list *aug_paths);
-int8_t			flow_ants(t_graph *graph, t_paths *paths);
+int8_t			flow_ants(t_graph *graph, t_paths *paths, int8_t visual);
 int8_t			reset_availability(t_graph *graph,
 				t_paths *paths, size_t *capacity);
 int8_t			all_paths_used(t_paths *paths, t_graph *graph);

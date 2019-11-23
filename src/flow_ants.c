@@ -6,13 +6,13 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 18:15:53 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/22 19:03:27 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/23 15:56:15 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void		fill_n(t_graph *graph, t_paths *paths, size_t tmp[])
+static void		fill_n(t_graph *graph, t_paths *paths, size_t tmp[], int8_t visual)
 {
 	size_t	i;
 
@@ -23,6 +23,8 @@ static void		fill_n(t_graph *graph, t_paths *paths, size_t tmp[])
 		i++;
 	}
 	reset_availability(graph, paths, paths->n);
+	if (visual == TRUE)
+		cytoscape_visualizer(graph, paths);
 	print_lines(paths, graph);
 }
 
@@ -39,7 +41,7 @@ static size_t	update_index(t_graph *graph,
 	return (j);
 }
 
-static void		fill_ants_paths(t_graph *graph, t_paths *paths, size_t tmp[])
+static void		fill_ants_paths(t_graph *graph, t_paths *paths, size_t tmp[], int8_t visual)
 {
 	size_t	i;
 	size_t	j;
@@ -65,10 +67,10 @@ static void		fill_ants_paths(t_graph *graph, t_paths *paths, size_t tmp[])
 		}
 		i++;
 	}
-	fill_n(graph, paths, tmp);
+	fill_n(graph, paths, tmp, visual);
 }
 
-int8_t			flow_ants(t_graph *graph, t_paths *paths)
+int8_t			flow_ants(t_graph *graph, t_paths *paths, int8_t visual)
 {
 	size_t	i;
 	size_t	tmp[graph->paths_count];
@@ -86,6 +88,6 @@ int8_t			flow_ants(t_graph *graph, t_paths *paths)
 				(int8_t*)malloc(sizeof(int8_t) * graph->paths_count)))
 		return (FAILURE);
 	reset_availability(graph, paths, paths->n);
-	fill_ants_paths(graph, paths, tmp);
+	fill_ants_paths(graph, paths, tmp, visual);
 	return (SUCCESS);
 }
