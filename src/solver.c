@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:13:33 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/23 15:54:00 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/24 18:10:34 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ int8_t	is_solution_found(t_paths *paths, t_graph *graph)
 		sum = sum + paths->n[i++];
 	if (sum >= graph->ants)
 	{
-		ft_printf("ants:%d sum:%d\n", graph->ants, sum);
+		//ft_printf("ants:%d sum:%d\n", graph->ants, sum);
 		i = 0;
 		while (i < graph->paths_count)
 		{
-			ft_printf("i:%d - %d\n", i, paths->n[i]);
+			//ft_printf("i:%d - %d\n", i, paths->n[i]);
 			i++;
 		}
 		return (TRUE);

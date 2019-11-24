@@ -6,7 +6,7 @@
 //   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2019/11/01 11:38:14 by agelloz           #+#    #+#             //
-//   Updated: 2019/11/23 19:57:37 by agelloz          ###   ########.fr       //
+//   Updated: 2019/11/24 21:03:44 by agelloz          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -14,6 +14,8 @@ var cy;
 var data;
 var ants_out = 0;
 var ants_total = 0;
+var rounds = 0;
+var pause = true;
 
 $(document).ready(function() {
   $.getJSON("data.json", function(data) {
@@ -70,18 +72,22 @@ $(document).ready(function() {
       height: new_width
     });
     var i = 0;
-    data.paths.forEach(function(path) {
-      ants_total += path.ants;
-      color_path(path.nodes, i);
-      i++;
-    });
+    var all_started;
+    var ants_on_paths = new Array(data.paths.length);
 
     $("#paths").text("Paths used: " + data.paths_used + "/" + data.paths_count);
     $("#ants_out").text("Ants out: " + ants_out + "/" + data.ants);
+	$("#rounds").text("Rounds: " + rounds);
+    data.paths.forEach(function(path, p) {
+      ants_total += path.ants;
+      color_path(path.nodes, i);
+      ants_on_paths[p] = path.ants;
+      i++;
+    });
 
     $("#next").click(function() {
       if (ants_out < ants_total) {
-        var all_started = true;
+        all_started = true;
         data.paths.forEach(function(path, p) {
           for (i = path.nodes.length - 2; i > 0; i--) {
             if (cy.getElementById(path.nodes[i]).style("opacity") == 1) {
@@ -97,29 +103,73 @@ $(document).ready(function() {
             }
           }
           if (
-            data.paths[p].ants > 0 &&
+            ants_on_paths[p] > 0 &&
             get_edge_opacity(path.nodes[0], path.nodes[1]) < 1
           ) {
             move_ant(path.nodes[0], path.nodes[1], data.ants);
-            data.paths[p].ants -= 1;
-            if (data.paths[p].ants > 0) {
+            ants_on_paths[p] -= 1;
+            if (ants_on_paths[p] > 0) {
               all_started = false;
-              console.log("false");
             }
-            console.log("ant started");
           }
         });
         if (all_started == true) {
           cy.nodes('node[type = "start"]').style("opacity", 0.3);
         }
+		rounds += 1;
+		$("#rounds").text("Rounds: " + rounds);
       } else {
         cy.nodes().style("opacity", 0.3);
         cy.edges().style("opacity", 0.03);
         cy.nodes('node[type = "end"]').style("opacity", 1);
+        document.getElementById("play_pause").style.color = "#999999";
+        document.getElementById("next").style.color = "#999999";
       }
+    });
+
+    $("#reset").click(function() {
+      ants_out = 0;
+	  rounds = 0;
+      $("#ants_out").text("Ants out: " + ants_out + "/" + data.ants);
+	  $("#rounds").text("Rounds: " + rounds);
+      data.paths.forEach(function(path, p) {
+        for (i = 0; i < path.nodes.length; i++) {
+          cy.getElementById(path.nodes[i]).style("opacity", 0.3);
+          set_edge_opacity(path.nodes[i], path.nodes[i + 1], 0.03);
+        }
+        ants_on_paths[p] = path.ants;
+      });
+      cy.nodes('node[type = "start"]').style("opacity", 1);
+      cy.nodes('node[type = "end"]').style("opacity", 0.3);
+      document.getElementById("play_pause").style.color = "#111111";
+      document.getElementById("next").style.color = "#111111";
+    });
+
+    $("#play_pause").click(function() {
+      if (pause == true) {
+        pause = false;
+        $("#play_pause").text("Pause");
+      } else {
+        pause = true;
+        $("#play_pause").text("Play ");
+      }
+      play_pause();
     });
   });
 });
+
+function play_pause() {
+  if (ants_out <= ants_total && pause == false) {
+    time_out = 60;
+    setTimeout(function() {
+      $("#next").trigger("click");
+      play_pause();
+    }, time_out);
+    if (ants_out == ants_total) {
+      $("#play_pause").trigger("click");
+    }
+  }
+}
 
 function set_edge_opacity(node1, node2, value) {
   cy.edges()
@@ -145,7 +195,7 @@ function get_edge_opacity(node1, node2) {
 function move_ant(node1, node2, total_ants) {
   cy.nodes('node[id = "' + node2 + '"]').style("opacity", 1);
   set_edge_opacity(node1, node2, 1);
-  console.log(node1 + "->" + node2);
+  //console.log(node1 + "->" + node2);
   if (node2 == cy.nodes('node[type = "end"]').id()) {
     ants_out += 1;
     $("#ants_out").text("Ants out: " + ants_out + "/" + total_ants);

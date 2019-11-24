@@ -12,7 +12,8 @@ body {
 	background-color: #e7e7e7;
 	border: none;
 	color: black;
-	padding: 1vw 3vw;
+	width: 15vw;
+	height: 6vw;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
@@ -57,6 +58,10 @@ body {
 }
 #ants_div h2 {
 	color: #222222;
+}
+#rounds_div {
+	overflow: hidden;
+	background-color: #181818;
 }
 #cy {
 	width: 95vw;

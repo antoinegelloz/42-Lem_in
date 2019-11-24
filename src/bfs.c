@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:32:38 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/23 19:51:42 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/24 18:09:21 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,14 @@ t_bfs			*reconstruct_path(t_bfs *bfs, t_graph *graph)
 		i = bfs->prev[i];
 		j++;
 	}
-	if (j == graph->size)
-		ft_putendl("ERROR RECONSTRUCT PATH");
+	//if (j == graph->size)
+	//	ft_putendl("ERROR RECONSTRUCT PATH");
 	if (graph->nodes[*(ssize_t *)bfs->shortest_path->content].source != TRUE)
 	{
 		reset_marks_fail(graph, bfs, TRUE);
 		ft_lstdel(&bfs->shortest_path, ft_delcontent);
 		free_bfs(bfs);
+		//ft_putendl("no path found");
 		return (NULL);
 	}
 	graph->paths_count++;
@@ -65,6 +66,7 @@ t_bfs			*bfs(t_graph *graph)
 	t_bfs	*bfs;
 	t_edge	*neighbours;
 
+	//ft_putendl("\nBFS");
 	neighbours = NULL;
 	bfs = init_bfs(graph);
 	while (is_queue_empty(bfs) == FALSE)
