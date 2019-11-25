@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/23 17:50:44 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/25 16:45:03 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct	s_node
 	int8_t	source;
 	int8_t	sink;
 	int8_t	bfs_marked;
-	int8_t	tmp_marked;
 	char	*name;
 	int8_t	already_enqueued;
 	char    pad[7];
@@ -91,7 +90,6 @@ typedef struct	s_bfs
 	size_t	queue_rear;
 	size_t	queue_size;
 	size_t	queue_capacity;
-	int8_t	paths_crossed;
 	char    pad[7];
 }				t_bfs;
 
@@ -129,10 +127,10 @@ void			free_paths(t_paths *paths, t_graph *graph);
 
 t_bfs			*bfs(t_graph *graph);
 t_bfs			*reconstruct_path(t_bfs *bfs, t_graph *graph);
-void			reset_marks_fail(t_graph *graph, t_bfs *bfs, int8_t full_bfs);
-void			reset_marks(t_graph *graph, t_bfs *bfs, int8_t full_bfs);
+void			reset_marks_fail(t_graph *graph, t_bfs *bfs);
+void			reset_marks(t_graph *graph, t_bfs *bfs);
 t_bfs			*init_bfs(t_graph *graph);
-int8_t			enqueue(t_bfs *bfs, size_t index);
+int8_t			enqueue(size_t node, size_t neighbour, t_graph *graph, t_bfs *bfs);
 size_t			dequeue(t_bfs *bfs);
 int8_t			is_queue_full(t_bfs *bfs);
 int8_t			is_queue_empty(t_bfs *bfs);
@@ -140,7 +138,6 @@ void			free_bfs(t_bfs *bfs);
 
 int8_t			solver(t_graph *graph, int8_t visual, t_list *aug_paths);
 t_list			*edmonds_karp(t_graph *graph);
-t_bfs			*bfs_disjoint_paths(t_graph *graph, t_list *aug_paths);
 int8_t			change_capacity(t_graph *graph,
 			  					t_list *u, t_list *v, int8_t order);
 t_paths			*init_output(t_graph *graph, t_paths *paths, t_list *aug_paths);
@@ -153,7 +150,7 @@ int8_t			all_moved(t_list **pos, ssize_t *tmp,
 						  t_graph *graph, t_paths *paths);
 ssize_t			*save_ants_pos(t_list **ants_pos, ssize_t ants);
 int8_t			init_lines(t_paths *paths, t_graph *graph);
-t_list			*find_disjoint_paths(t_graph *graph, t_list *aug_paths);
+t_list			*bfs_disjoint_paths(t_graph *graph, t_list *aug_paths, t_list *prev_path);
 
 int8_t			cytoscape_visualizer(t_graph *graph, t_paths *paths);
 

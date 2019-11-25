@@ -6,13 +6,13 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 15:12:29 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/23 17:52:04 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/25 16:34:33 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void			reset_marks_fail(t_graph *graph, t_bfs *bfs, int8_t full_bfs)
+void			reset_marks_fail(t_graph *graph, t_bfs *bfs)
 {
 	ssize_t	i;
 	ssize_t	j;
@@ -25,10 +25,8 @@ void			reset_marks_fail(t_graph *graph, t_bfs *bfs, int8_t full_bfs)
 		{
 			if (i == bfs->queue[j])
 			{
-				if (full_bfs == TRUE)
-					graph->nodes[i].bfs_marked = FALSE;
-				else
-					graph->nodes[i].tmp_marked = FALSE;
+				graph->nodes[i].bfs_marked = FALSE;
+				graph->nodes[i].already_enqueued = FALSE;
 			}
 			j++;
 		}
@@ -39,20 +37,15 @@ void			reset_marks_fail(t_graph *graph, t_bfs *bfs, int8_t full_bfs)
 static int8_t	find_node(t_list *path, size_t i)
 {
 	t_list	*curr;
-	int8_t	found;
 
-	found = FALSE;
 	curr = path;
 	while (curr != NULL)
 	{
 		if (i == *(size_t *)curr->content)
-		{
-			found = TRUE;
-			break ;
-		}
+			return (TRUE);
 		curr = curr->next;
 	}
-	return (found);
+	return (FALSE);
 }
 
 static int8_t	find_neighbour(t_edge *neighbours, int8_t found)
@@ -60,39 +53,30 @@ static int8_t	find_neighbour(t_edge *neighbours, int8_t found)
 	while (neighbours)
 	{
 		if (neighbours->capacity == 2)
-		{
-			found = TRUE;
-			break ;
-		}
+			return (TRUE);
 		neighbours = neighbours->next;
 	}
 	return (found);
 }
 
-void			reset_marks(t_graph *graph, t_bfs *bfs, int8_t full_bfs)
+void			reset_marks(t_graph *graph, t_bfs *bfs)
 {
 	size_t	i;
 	int8_t	found;
 	t_edge	*neighbours;
 
 	i = 0;
-	neighbours = NULL;
 	found = FALSE;
+	neighbours = NULL;
 	while (i < graph->size)
 	{
 		found = find_node(bfs->shortest_path, i);
 		neighbours = graph->nodes[i].head;
 		found = find_neighbour(neighbours, found);
-		if (full_bfs == TRUE && (found == FALSE
-								|| graph->nodes[i].sink == TRUE
-								|| graph->nodes[i].source == TRUE))
-		{
+		if (found == FALSE || graph->nodes[i].sink == TRUE
+						   || graph->nodes[i].source == TRUE)
 			graph->nodes[i].bfs_marked = FALSE;
-		}
-		else
-		{
-			graph->nodes[i].tmp_marked = FALSE;
-		}
+		graph->nodes[i].already_enqueued = FALSE;
 		found = FALSE;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:01:34 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/23 17:46:40 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/25 15:14:14 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,16 @@ int8_t			is_queue_empty(t_bfs *bfs)
 	return (bfs->queue_size == 0);
 }
 
-int8_t			enqueue(t_bfs *bfs, size_t index)
+int8_t			enqueue(size_t node, size_t neighbour, t_graph *graph, t_bfs *bfs)
 {
 	if (bfs->queue_size == bfs->queue_capacity)
 		return (FAILURE);
 	bfs->queue_rear = bfs->queue_rear + 1;
-	bfs->queue[bfs->queue_rear] = index;
+	bfs->queue[bfs->queue_rear] = neighbour;
 	bfs->queue_size = bfs->queue_size + 1;
+	bfs->prev[neighbour] = node;
+	graph->nodes[neighbour].bfs_marked = TRUE;
+	graph->nodes[neighbour].already_enqueued = TRUE;
 	return (SUCCESS);
 }
 

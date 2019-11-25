@@ -1,0 +1,88 @@
+Algorithm: Edmonds-Karp with BFS for shortest augmenting paths searching
+
+main(file)
+	parse file, get ants number and create graph via an adjacency list
+	if (no solution possible)
+		exit error
+	print file on stdout
+	create aug_paths list
+	aug_paths = edmonds_karp(graph)
+	if (aug_paths is NULL)
+		exit error
+	let the ants pass into the graph through 
+	each aug_paths and print each round
+
+edmonds_karp(graph)
+	while (true)
+		if ((new_path = bfs(graph)) is NULL)
+			return (aug_paths)
+		append new shortest path to aug_paths
+		reduce capacities of the new path edges
+		increase capacities of the new path reverse edges
+		aug_paths = find_disjoint_paths(graph, aug_paths, new_path)
+
+bfs(graph)
+	create queue and add source node
+	create a prev[size of graph] array to keep track of previous nodes at each enqueues
+	while (queue is not empty)
+		dequeue front node of the queue
+		if (it has not been visited)
+			mark it as visited
+			while (it has neighbours)
+				if (neighbour has not been visited)
+					enqueue(neighbour)
+	return (reconstruct_path(new_bfs, graph))
+
+
+bfs_disjoint_paths(graph, aug_paths, prev_path)
+	create queue and add source node
+	create a prev[size of graph] array to keep track of previous nodes at each enqueues
+	while (queue is not empty)
+	{
+		node = dequeue
+		for each neighbour of node
+		{
+			if (node is NOT on prev_path)
+			{
+				if (neighbour is on prev_path)
+				{
+					mark neighbour as visited
+					mark neighbour as already enqueued
+					update prev[neighbour] = node
+					for each neighbour2 of neighbour
+					{
+						if (edge to neighbour2 has capacity of 2
+							AND neighbour2 is on prev_path)
+							enqueue(neighbour2)
+					}
+				}
+				else
+					enqueue(neighbour)
+			}
+			else if (node is on prev_path 
+				     AND edge to neighbour has capacity of 2 (backward)
+					 AND neighbour != source)
+				enqueue(neighbour)
+			else if (node is on prev_path
+					 AND edge to neighbour has capacity of 1 (forward))
+				enqueue(neighbour)
+		}
+	}
+	new_path = reconstruct_path(new_bfs, graph)
+	new_aug_paths = rebuild_paths(graph)
+	return (new_aug_paths))
+	//return (compare_solutions(new_aug_paths, aug_paths))
+
+reconstruct_path(new_bfs, graph)
+	node = graph->sink
+	while (node != NULL)
+		add node to new_path list beginning
+		node = prev[node]
+	reset all marks except source and the nodes on the new aug_path
+	if (first node of new_path is source)
+		return new_path
+	else
+		return NULL
+
+compare_solutions(new, old)
+	t_paths
