@@ -44,7 +44,7 @@ t_bfs			*reconstruct_path(t_bfs *new_bfs, t_graph *graph)
 		reset_marks_fail(graph, new_bfs);
 		ft_lstdel(&new_bfs->shortest_path, ft_delcontent);
 		free_bfs(new_bfs);
-		ft_putendl("no path found");
+		//ft_putendl("no path found");
 		return (NULL);
 	}
 	reset_marks(graph, new_bfs);
@@ -52,10 +52,10 @@ t_bfs			*reconstruct_path(t_bfs *new_bfs, t_graph *graph)
 	//ft_putendl("shortest path:");
 	while (tmp != NULL)
 	{
-		ft_printf("%s ", graph->nodes[*(size_t *)tmp->content].name);
+		//ft_printf("%s ", graph->nodes[*(size_t *)tmp->content].name);
 		tmp = tmp->next;
 	}
-	ft_putchar('\n');
+	//ft_putchar('\n');
 	return (new_bfs);
 }
 
@@ -77,16 +77,10 @@ t_bfs			*bfs(t_graph *graph)
 					&& neighbours->capacity > 0)
 			{
 				enqueue(node, neighbours->dest, graph, new_bfs);
-				ft_printf("EQ : %s\n", graph->nodes[neighbours->dest].name);
+				//ft_printf("EQ : %s\n", graph->nodes[neighbours->dest].name);
 			}
 			neighbours = neighbours->next;
 		}
 	}
-	if ((new_bfs = reconstruct_path(new_bfs, graph)) != NULL)
-	{
-		graph->paths_count++;
-		reset_marks(graph, new_bfs);
-		return (new_bfs);
-	}
-	return (NULL);
+	return (reconstruct_path(new_bfs, graph));
 }

@@ -12,30 +12,38 @@
 
 #include "lem_in.h"
 
+int8_t		update_edge_capacities(t_bfs *new_bfs, t_graph *graph)
+{
+  t_list	*curr;
+
+  curr = NULL;
+  curr = new_bfs->shortest_path;
+  while (curr->next != NULL)
+  {
+    change_capacity(graph, curr, curr->next, DECREASE);
+    change_capacity(graph, curr->next, curr, INCREASE);
+    curr = curr->next;
+  }
+  return (SUCCESS);
+}
+
 t_list		*edmonds_karp(t_graph *graph)
 {
-	t_list	*aug_paths;
-	t_bfs	*new_bfs;
-	t_list	*curr;
+  t_list	*aug_paths;
+  t_bfs   *new_bfs;
 
-	aug_paths = NULL;
-	new_bfs = NULL;
-	curr = NULL;
-	while (TRUE)
-	{
-		ft_putendl("BFS");
-		if ((new_bfs = bfs(graph)) == NULL)
-			return (aug_paths);
-		ft_lstappend(&aug_paths, new_bfs->shortest_path);
-		curr = new_bfs->shortest_path;
-		while (curr->next != NULL)
-		{
-			change_capacity(graph, curr, curr->next, DECREASE);
-			change_capacity(graph, curr->next, curr, INCREASE);
-			curr = curr->next;
-		}
-		aug_paths = bfs_disjoint_paths(graph, aug_paths, new_bfs->shortest_path);
-		free_bfs(new_bfs);
-	}
-	return (NULL);
+  aug_paths = NULL;
+  new_bfs = NULL;
+  while (TRUE)
+  {
+    //ft_putendl("BFS");
+    if ((new_bfs = bfs(graph)) == NULL)
+      return (find_disjoint_paths(graph, aug_paths));
+    ft_lstappend(&aug_paths, new_bfs->shortest_path);
+    graph->paths_count++;
+    update_edge_capacities(new_bfs, graph);
+    free_bfs(new_bfs);
+    //aug_paths = find_disjoint_paths(graph, aug_paths);
+  }
+  return (NULL);
 }

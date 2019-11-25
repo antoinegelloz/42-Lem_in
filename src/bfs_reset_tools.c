@@ -24,12 +24,10 @@ void			reset_marks_fail(t_graph *graph, t_bfs *bfs)
 		while (bfs->queue[j] != -1)
 		{
 			if (i == bfs->queue[j])
-			{
 				graph->nodes[i].bfs_marked = FALSE;
-				graph->nodes[i].already_enqueued = FALSE;
-			}
 			j++;
 		}
+    graph->nodes[i].already_enqueued = FALSE;
 		i++;
 	}
 }

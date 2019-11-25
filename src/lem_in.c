@@ -61,7 +61,7 @@ int				main(int ac, char **av)
 	if ((aug_paths = edmonds_karp(graph)) == NULL)
 		return (exit_bfs_error(&p, graph));
 	//print_graph(graph);
-	//print_file(&p);
+	print_file(&p);
 	free_p(&p);
 	//ft_putendl("PATHS:");
 	//print_ssize_t(aug_paths);

@@ -25,7 +25,7 @@ static void		fill_n(t_graph *graph, t_paths *paths, size_t tmp[], int8_t visual)
 	reset_availability(graph, paths, paths->n);
 	if (visual == TRUE)
 		cytoscape_visualizer(graph, paths);
-	//print_lines(paths, graph);
+	print_lines(paths, graph);
 }
 
 static size_t	update_index(t_graph *graph,
