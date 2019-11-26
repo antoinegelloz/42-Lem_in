@@ -6,7 +6,7 @@
 #    By: cgiron <cgiron@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/19 17:57:30 by cgiron            #+#    #+#              #
-#    Updated: 2019/08/08 09:01:28 by cgiron           ###   ########.fr        #
+#    Updated: 2019/11/26 17:14:24 by agelloz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ program=./lem-in
 prog_options=
 n_maps=100
 i=1
-max_step=20
+max_step=100
 no_gen=1
 verifier=./verifier
 verif=0

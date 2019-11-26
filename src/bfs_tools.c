@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:01:34 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/25 15:14:14 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/26 12:43:00 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 int8_t		change_capacity(t_graph *graph, t_list *u, t_list *v, int8_t order)
 {
-	t_edge	*curr;
+	t_edge	*neighbours;
 
-	curr = graph->nodes[*(int *)u->content].head;
-	while (curr->dest != *(size_t *)v->content)
-		curr = curr->next;
-	if (curr->dest == *(size_t *)v->content)
+	neighbours = graph->nodes[*(size_t *)u->content].head;
+	while (neighbours->dest != *(size_t *)v->content)
+		neighbours = neighbours->next;
+	if (neighbours->dest == *(size_t *)v->content)
 	{
 		if (order == INCREASE)
-			curr->capacity++;
+			neighbours->capacity++;
 		if (order == DECREASE)
-			curr->capacity--;
+			neighbours->capacity--;
 	}
 	return (SUCCESS);
 }

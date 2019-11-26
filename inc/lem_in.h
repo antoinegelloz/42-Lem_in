@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/25 16:45:03 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/26 14:20:15 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,5 +147,5 @@ ssize_t			*save_ants_pos(t_list **ants_pos, ssize_t ants);
 int8_t			cytoscape_visualizer(t_graph *graph, t_paths *paths);
 
 
-void			print_ssize_t(t_list *list);
+void			print_ssize_t(t_list *list, t_graph *graph);
 #endif

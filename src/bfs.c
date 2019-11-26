@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 13:32:38 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/25 17:57:29 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/26 16:56:17 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,24 @@ t_bfs			*reconstruct_path(t_bfs *new_bfs, t_graph *graph)
 	//ft_putendl("RECONSTRUCT PATH");
 	while (i < (ssize_t)graph->size)
 	{
-		//ft_printf("prev[%d]:%d\n", i, new_bfs->prev[i]);
+		//ft_printf("prev[%d]:%d", i, new_bfs->prev[i]);
+		//if (new_bfs->prev[i] != -1)
+		//	ft_printf(" prev[%s]:%s", graph->nodes[i].name, graph->nodes[new_bfs->prev[i]].name);
+		//ft_putchar('\n');
 		i++;
 	}
 	i = graph->size - 1;
 	while (graph->nodes[i].sink == FALSE)
 		i--;
 	j = 0;
-	while (i != -1 && j < graph->size)
+	while (i != -1 && j <= graph->size)
 	{
 		tmp = ft_lstnew(&i, sizeof(ssize_t));
 		ft_lstadd(&new_bfs->shortest_path, tmp);
 		i = new_bfs->prev[i];
 		j++;
 	}
-	if (j == graph->size)
+	if (j > graph->size)
 		ft_putendl("ERROR RECONSTRUCT PATH");
 	if (graph->nodes[*(ssize_t *)new_bfs->shortest_path->content].source != TRUE)
 	{
@@ -65,6 +68,7 @@ t_bfs			*bfs(t_graph *graph)
 	t_bfs	*new_bfs;
 	t_edge	*neighbours;
 
+	//ft_putendl("BFS");
 	neighbours = NULL;
 	new_bfs = init_bfs(graph);
 	while (is_queue_empty(new_bfs) == FALSE)
