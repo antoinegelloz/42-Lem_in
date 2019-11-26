@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/26 14:20:15 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/26 17:59:38 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct	s_graph
 	size_t	source;
 	size_t	sink;
 	size_t	paths_count;
+	size_t	old_output_lines;
 }				t_graph;
 
 typedef struct	s_parsing
@@ -124,7 +125,7 @@ t_list		*find_disjoint_paths(t_graph *graph, t_list *aug_paths);
 t_bfs			*reconstruct_path(t_bfs *bfs, t_graph *graph);
 void			reset_marks_fail(t_graph *graph, t_bfs *bfs);
 void			reset_marks(t_graph *graph, t_bfs *bfs);
-int8_t      update_edge_capacities(t_bfs *new_bfs, t_graph *graph);
+int8_t      update_edge_capacities(t_bfs *new_bfs, t_graph *graph, int8_t bfs_succeed);
 int8_t			change_capacity(t_graph *graph, t_list *u, t_list *v, int8_t order);
 int8_t			enqueue(size_t node, size_t neighbour, t_graph *graph, t_bfs *bfs);
 size_t			dequeue(t_bfs *bfs);
@@ -135,6 +136,7 @@ void			free_bfs(t_bfs *bfs);
 int8_t			solver(t_graph *graph, int8_t visual, t_list *aug_paths);
 t_paths			*init_output(t_graph *graph, t_paths *paths, t_list *aug_paths);
 int8_t			init_lines(t_paths *paths, t_graph *graph);
+int8_t			is_solution_found(t_paths *paths, t_graph *graph);
 int8_t			flow_ants(t_graph *graph, t_paths *paths, int8_t visual);
 int8_t			reset_availability(t_graph *graph,
 				t_paths *paths, size_t *capacity);

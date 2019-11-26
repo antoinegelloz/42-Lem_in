@@ -6,11 +6,28 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 16:12:57 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/26 17:10:51 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/26 19:22:59 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void	free_tmp_paths(t_paths *paths, t_graph *graph)
+{
+	size_t i;
+
+	i = 0;
+	while (i < graph->paths_count)
+	{
+		ft_lstdel(&paths->array[i], ft_delcontent);
+		i++;
+	}
+	free(paths->array);
+	free(paths->ants_to_paths);
+	free(paths->n);
+	free(paths->len);
+	free(paths);
+}
 
 t_list	*rebuild_aug_paths(t_graph *graph)
 {
@@ -58,33 +75,33 @@ t_list	*rebuild_aug_paths(t_graph *graph)
 	return (new_aug_paths);
 }
 
-/*int8_t	is_new_solution_better(t_bfs *new_bfs, t_list *aug_paths, t_graph *graph)
-  {
-  t_paths *paths;
-  size_t old_output_lines;
-  size_t new_output_lines;
-  size_t  i;
+int8_t	is_new_solution_better(t_list *aug_paths, t_graph *graph)
+{
+	t_paths		*paths;
+	size_t		new_output_lines;
+	size_t		i;
 
-  old_output_lines = 0;
-  new_output_lines = 0;
-  i = 0;
-  paths = NULL;
-  if ((paths = init_output(graph, paths, aug_paths)) == NULL)
-  return (FAILURE);
-  init_lines(paths, graph);
-  while (is_solution_found(paths, graph) == FALSE)
-  {
-  i = 0;
-  while (i < graph->paths_count)
-  paths->n[i++] = 0;
-  paths->output_lines++;
-  }
-// To do:
-// compute old and new output_lines
-// if (new_output_lines > old_output_lines)
-//	return (FALSE);
-return (TRUE);
-}*/
+	i = 0;
+	paths = NULL;
+	new_output_lines = 0;
+	if ((paths = init_output(graph, paths, aug_paths)) == NULL)
+		return (FAILURE);
+	init_lines(paths, graph);
+	while (is_solution_found(paths, graph) == FALSE)
+	{
+		i = 0;
+		while (i < graph->paths_count)
+			paths->n[i++] = 0;
+		paths->output_lines++;
+	}
+	new_output_lines = paths->output_lines;
+	free_tmp_paths(paths, graph);
+	//ft_printf("new:%d, old:%d\n", new_output_lines, graph->old_output_lines);
+	if (new_output_lines < graph->old_output_lines)
+		return (TRUE);
+	graph->old_output_lines = new_output_lines;
+	return (FALSE);
+}
 
 size_t	is_on_path(size_t node, t_list *path, t_graph *graph)
 {
@@ -117,7 +134,7 @@ int8_t	is_sink_neighbour(size_t node, t_graph *graph)
 
 t_bfs   *bfs_disjoint_paths(t_graph *graph, t_list *path)
 {
-	t_bfs	  *new_bfs;
+	t_bfs	*new_bfs;
 	t_edge	*neighbours;
 	t_edge	*neighbours2;
 	size_t	node;
@@ -146,7 +163,7 @@ t_bfs   *bfs_disjoint_paths(t_graph *graph, t_list *path)
 						while (neighbours2)
 						{
 							if (neighbours2->capacity == 2 && is_on_path(neighbours2->dest, path, graph) == TRUE
-								&& graph->nodes[neighbours2->dest].already_enqueued == FALSE)
+									&& graph->nodes[neighbours2->dest].already_enqueued == FALSE)
 								enqueue(neighbours->dest, neighbours2->dest, graph, new_bfs);
 							neighbours2 = neighbours2->next;
 						}
@@ -165,23 +182,6 @@ t_bfs   *bfs_disjoint_paths(t_graph *graph, t_list *path)
 	return (reconstruct_path(new_bfs, graph));
 }
 
-t_list *edmonds_disjoint_paths(t_graph *graph, t_list *aug_paths, t_list *path)
-{
-	t_bfs	  *new_bfs;
-
-	new_bfs = NULL;
-	if ((new_bfs = bfs_disjoint_paths(graph, path)) == NULL)
-		return (aug_paths);
-	//if (is_new_solution_better(new_bfs, aug_paths, graph) == FALSE)
-	//return (aug_paths);
-	graph->paths_count++;
-	update_edge_capacities(new_bfs, graph);
-	ft_lstdel(&aug_paths, ft_delcontent);
-	aug_paths = rebuild_aug_paths(graph);
-	free_bfs(new_bfs);
-	return (aug_paths);
-}
-
 t_list  *get_next_path(t_list *path, t_graph *graph)
 {
 	t_list  *next_path;
@@ -194,20 +194,76 @@ t_list  *get_next_path(t_list *path, t_graph *graph)
 	return (next_path);
 }
 
+t_list *edmonds_disjoint_paths(t_graph *graph, t_list *aug_paths, t_list **path)
+{
+	t_bfs	*new_bfs;
+	size_t	path_pos;
+	t_list	*curr;
+
+	path_pos = 0;
+	curr = aug_paths;
+	while (curr != *path)
+	{
+		if (*(size_t *)curr->content == graph->source)
+			path_pos++;
+		curr = curr->next;
+	}
+	new_bfs = NULL;
+	if ((new_bfs = bfs_disjoint_paths(graph, *path)) == NULL)
+		return (aug_paths);
+	graph->paths_count++;
+	update_edge_capacities(new_bfs, graph, TRUE);
+	ft_lstdel(&aug_paths, ft_delcontent);
+	aug_paths = rebuild_aug_paths(graph);
+	if (is_new_solution_better(aug_paths, graph) == FALSE)
+	{
+		//print_ssize_t(aug_paths, graph);
+		graph->paths_count--;
+		update_edge_capacities(new_bfs, graph, FALSE);
+		ft_lstdel(&aug_paths, ft_delcontent);
+		aug_paths = rebuild_aug_paths(graph);
+		//print_ssize_t(aug_paths, graph);
+		*path = aug_paths;
+		while (path_pos > 0)
+		{
+			*path = get_next_path(*path, graph);
+			path_pos--;
+		}
+	}
+	free_bfs(new_bfs);
+	return (aug_paths);
+}
+
 t_list *find_disjoint_paths(t_graph *graph, t_list *aug_paths)
 {
-	t_list  *path;
-	t_list  *new_aug_paths;
-	size_t  prev_paths_count;
+	t_list		*path;
+	t_list		*new_aug_paths;
+	size_t		prev_paths_count;
+	t_paths		*paths;
+	size_t		i;
+
+	i = 0;
+	paths = NULL;
+	if ((paths = init_output(graph, paths, aug_paths)) == NULL)
+		return (NULL);
+	init_lines(paths, graph);
+	while (is_solution_found(paths, graph) == FALSE)
+	{
+		i = 0;
+		while (i < graph->paths_count)
+			paths->n[i++] = 0;
+		paths->output_lines++;
+	}
+	graph->old_output_lines = paths->output_lines;
+	free_tmp_paths(paths, graph);
 
 	path = aug_paths;
 	new_aug_paths = aug_paths;
 	while (path != NULL)
 	{
 		//ft_putendl("\npath:");
-		//print_ssize_t(path);
 		prev_paths_count = graph->paths_count;
-		new_aug_paths = edmonds_disjoint_paths(graph, new_aug_paths, path);
+		new_aug_paths = edmonds_disjoint_paths(graph, new_aug_paths, &path);
 		if (prev_paths_count == graph->paths_count)
 		{
 			if ((path = get_next_path(path, graph)) == NULL)
