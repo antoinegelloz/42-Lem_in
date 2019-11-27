@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/26 17:59:38 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/27 15:10:54 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,4 +150,7 @@ int8_t			cytoscape_visualizer(t_graph *graph, t_paths *paths);
 
 
 void			print_ssize_t(t_list *list, t_graph *graph);
+void			free_tmp_paths(t_paths *paths, t_graph *graph); 
+int8_t			is_new_solution_better(t_list *aug_paths, t_graph *graph);
+t_list			*rebuild_aug_paths(t_graph *graph);
 #endif
