@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/26 14:19:57 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/27 16:07:00 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	print_ssize_t(t_list *list, t_graph *graph)
 {
 	t_list		*curr;
 
-	//ft_putstr("print ssize_t list: ");
 	curr = list;
 	while (curr)
 	{
