@@ -1,0 +1,10 @@
+4
+##start
+start 0 0
+##end
+end 1 1
+dead0 2 2
+dead1 3 3
+start-dead0
+start-dead1
+start-end

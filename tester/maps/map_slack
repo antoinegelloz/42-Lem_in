@@ -1,0 +1,55 @@
+20
+##start
+start 0 0
+##end
+end 0 0
+short1 0 0
+short2 0 0
+short3 0 0
+short4 0 0
+short5 0 0
+longA1 0 0
+longA2 0 0
+longA3 0 0
+longA4 0 0
+longA5 0 0
+longB1 0 0
+longB2 0 0
+longB3 0 0
+longB4 0 0
+longC1 0 0
+longC2 0 0
+longC3 0 0
+longC4 0 0
+longC5 0 0
+longC6 0 0
+longC7 0 0
+# Short path
+start-short1
+short1-short2
+short2-short3
+short3-short4
+short4-short5
+short5-end
+# Long path A
+short1-longA1
+longA1-longA2
+longA2-longA3
+longA3-longA4
+longA4-longA5
+longA5-end
+# Long path B
+short3-longB1
+longB1-longB2
+longB2-longB3
+longB3-longB4
+longB4-end
+# Long path C
+start-longC1
+longC1-longC2
+longC2-longC3
+longC3-longC4
+longC4-longC5
+longC5-longC6
+longC6-longC7
+longC7-short5

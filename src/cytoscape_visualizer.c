@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 12:01:09 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/23 16:30:27 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/27 15:47:11 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int8_t	cytoscape_visualizer(t_graph *graph, t_paths *paths)
 	int		position;
 
 	i = 0;
-	file = fopen("cytoscape/data.json", "w");
+	file = fopen("visual/data.json", "w");
 	fprintf(file, "{\n\"nodes\": \n[");
 	prefix = "{ \"data\": { \"id\": \"";
 	suffix = "\" } },\n";
@@ -99,6 +99,6 @@ int8_t	cytoscape_visualizer(t_graph *graph, t_paths *paths)
 	fprintf(file, "\"paths_count\": %zu\n", graph->paths_count);
 	fprintf(file, "}\n");
 	system("if ! ps aux | grep -v grep | grep 'php -S localhost:8000' &>/dev/null; then php -S localhost:8000 &>/dev/null & fi");
-	system("open -a \"Google Chrome\" http://localhost:8000/cytoscape/");
+	system("open -a \"Google Chrome\" http://localhost:8000/visual/");
 	return (SUCCESS);
 }

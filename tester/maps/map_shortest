@@ -1,0 +1,20 @@
+3
+##start
+start 0 0
+##end
+end 1 1
+long0 2 2
+long1 3 3
+short 4 4
+longer0 5 5
+longer1 6 6
+longer2 7 7
+start-long0
+long0-long1
+long1-end
+start-short
+short-end
+start-longer0
+longer0-longer1
+longer1-longer2
+longer2-end
