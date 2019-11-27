@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 16:12:57 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/26 19:22:59 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/27 12:12:57 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ t_bfs   *bfs_disjoint_paths(t_graph *graph, t_list *path)
 				}
 				else if (node_on_path == TRUE
 						&& ((neighbours->capacity == 2 && neighbours->dest != graph->source)
-							|| neighbours->capacity == 1))
+							|| (neighbours->capacity == 1 && graph->nodes[neighbours->dest].bfs_marked == FALSE)))
 					enqueue(node, neighbours->dest, graph, new_bfs);
 			}
 			neighbours = neighbours->next;
