@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 16:12:57 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/27 12:12:57 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/27 14:15:08 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,10 @@ int8_t	is_new_solution_better(t_list *aug_paths, t_graph *graph)
 	free_tmp_paths(paths, graph);
 	//ft_printf("new:%d, old:%d\n", new_output_lines, graph->old_output_lines);
 	if (new_output_lines < graph->old_output_lines)
+	{
+		graph->old_output_lines = new_output_lines;
 		return (TRUE);
-	graph->old_output_lines = new_output_lines;
+	}
 	return (FALSE);
 }
 
