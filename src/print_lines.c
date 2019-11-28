@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_result.c                                     :+:      :+:    :+:   */
+/*   print_lines.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 18:58:06 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/22 19:11:52 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/28 15:55:34 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int8_t			init_lines(t_paths *paths, t_graph *graph)
+void			init_lines(t_paths *paths, t_graph *graph)
 {
 	size_t	i;
 	size_t	tmp;
@@ -26,11 +26,10 @@ int8_t			init_lines(t_paths *paths, t_graph *graph)
 			paths->output_lines = tmp;
 		i++;
 	}
-	return (SUCCESS);
 }
 
 static void		print_first_ant(t_list **ants_pos, t_paths *paths,
-		t_graph *graph, size_t i)
+								t_graph *graph, size_t i)
 {
 	if (paths->available[paths->ants_to_paths[i]] == TRUE)
 	{
@@ -44,7 +43,7 @@ static void		print_first_ant(t_list **ants_pos, t_paths *paths,
 }
 
 static void		print_moving_ant(t_list **ants_pos, t_paths *paths,
-		t_graph *graph, size_t i)
+									t_graph *graph, size_t i)
 {
 	if (ants_pos[i] == paths->array[paths->ants_to_paths[i]]->next
 					&& paths->n[paths->ants_to_paths[i]] > 0)
@@ -56,7 +55,7 @@ static void		print_moving_ant(t_list **ants_pos, t_paths *paths,
 }
 
 static void		print_round(t_paths *paths, t_graph *graph,
-		t_list **ants_pos, ssize_t *tmp_pos)
+							t_list **ants_pos, ssize_t *tmp_pos)
 {
 	size_t	i;
 
@@ -78,33 +77,34 @@ static void		print_round(t_paths *paths, t_graph *graph,
 		}
 		i++;
 	}
+	ft_putchar('\n');
 }
 
-int8_t			print_lines(t_paths *paths, t_graph *graph)
+void			print_lines(t_paths *paths, t_graph *graph)
 {
-	t_list	**ants_pos;
-	ssize_t	*tmp_pos;
+	t_list	*ants_pos[graph->ants];
+	ssize_t	tmp_pos[graph->ants];
 	size_t	i;
+	size_t	round;
 
-	if ((ants_pos = (t_list**)malloc(sizeof(t_list*) * graph->ants)) == NULL)
-		return (FAILURE);
 	i = 0;
 	while (i < graph->ants)
 	{
 		ants_pos[i] = paths->array[paths->ants_to_paths[i]];
 		i++;
 	}
-	while (paths->round < paths->output_lines)
+	round = 0;
+	while (round++ < paths->output_lines)
 	{
-		if (!(tmp_pos = save_ants_pos(ants_pos, graph->ants)))
-			return (FAILURE);
+		i = 0;
+		while (i < graph->ants)
+		{
+			if (ants_pos[i] != NULL)
+				tmp_pos[i] = *(ssize_t *)ants_pos[i]->content;
+			else
+				tmp_pos[i] = -1;
+			i++;
+		}
 		print_round(paths, graph, ants_pos, tmp_pos);
-		ft_putchar('\n');
-		free(tmp_pos);
-		tmp_pos = NULL;
-		paths->round++;
 	}
-	free(ants_pos);
-	ants_pos = NULL;
-	return (SUCCESS);
 }

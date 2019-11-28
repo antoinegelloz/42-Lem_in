@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 16:12:57 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/27 15:24:51 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/28 13:41:50 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ t_bfs   *bfs_disjoint_paths(t_graph *graph, t_list *path)
 			{
 				if (node_on_path == FALSE && node != graph->sink)
 				{
-					if (is_on_path(neighbours->dest, path, graph) == TRUE && is_sink_neighbour(neighbours->dest, graph) == FALSE)
+					if (is_on_path(neighbours->dest, path, graph) == TRUE)
 					{
 						new_bfs->prev[neighbours->dest] = node;
 						graph->nodes[neighbours->dest].bfs_marked = TRUE;
