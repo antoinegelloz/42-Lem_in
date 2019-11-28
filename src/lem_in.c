@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/28 17:57:34 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/28 22:08:28 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,26 +54,6 @@ static void		init_parsing(t_parsing *p)
 	p->file = NULL;
 }
 
-static t_graph	*build_graph(t_parsing *p)
-{
-	t_graph *graph;
-	t_list	*curr_from;
-	t_list	*curr_to;
-
-	if ((graph = create_graph(p)) == NULL)
-		return (NULL);
-	curr_from = p->from;
-	curr_to = p->to;
-	while (curr_from != NULL && curr_to != NULL)
-	{
-		create_edge(graph, *(size_t *)curr_from->content,
-				*(size_t *)curr_to->content);
-		curr_from = curr_from->next;
-		curr_to = curr_to->next;
-	}
-	return (graph);
-}
-
 int				main(int ac, char **av)
 {
 	t_options	o;
@@ -87,7 +67,7 @@ int				main(int ac, char **av)
 		return (EXIT_FAILURE);
 	if ((graph = build_graph(&p)) == NULL)
 		return (EXIT_FAILURE);
-	if ((aug_paths = edmonds_karp(graph)) == NULL)
+	if ((aug_paths = find_paths(graph)) == NULL)
 		return (exit_bfs_error(&p, graph));
 	print_file(&p);
 	if (solver(graph, aug_paths, &o) == FAILURE)

@@ -6,20 +6,20 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:13:33 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/28 19:22:51 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/28 23:48:00 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int8_t	reset_availability(t_graph *graph, t_paths *paths, size_t *capacity)
+int8_t	reset_availability(t_graph *graph, t_paths *paths, size_t *ants2paths)
 {
 	size_t	i;
 
 	i = 0;
 	while (i < graph->paths_count)
 	{
-		if (capacity[i] > 0)
+		if (ants2paths[i] > 0)
 			paths->available[i] = TRUE;
 		else
 			paths->available[i] = FALSE;
@@ -53,10 +53,13 @@ int8_t	is_solution_found(t_paths *paths, t_graph *graph)
 	return (FALSE);
 }
 
-void	find_solution(t_graph *graph, t_paths *paths)
+t_paths	*find_solution(t_graph *graph, t_list *aug_paths)
 {
 	size_t	i;
+	t_paths	*paths;
 
+	if ((paths = init_output(graph, aug_paths)) == NULL)
+		return (NULL);
 	init_lines(paths, graph);
 	while (is_solution_found(paths, graph) == FALSE)
 	{
@@ -65,17 +68,33 @@ void	find_solution(t_graph *graph, t_paths *paths)
 			paths->n[i++] = 0;
 		paths->output_lines++;
 	}
+	if (graph->paths_count
+		&& !(paths->available = malloc(sizeof(int8_t) * graph->paths_count)))
+		return (NULL);
+	return (paths);
 }
 
 int8_t	solver(t_graph *graph, t_list *aug_paths, t_options *o)
 {
 	t_paths	*paths;
+	size_t	i;
+	size_t	tmp[graph->paths_count];
 
-	if ((paths = init_output(graph, aug_paths)) == NULL)
+	if ((paths = find_solution(graph, aug_paths)) == NULL)
 		return (FAILURE);
-	find_solution(graph, paths);
-	solver2(graph, paths, o);
-	free_paths(paths, graph);
-	free_graph(graph);
+	i = 0;
+	paths->paths_used = 0;
+	while (i < graph->paths_count)
+	{
+		if (paths->n[i] > 0)
+			paths->paths_used++;
+		tmp[i] = paths->n[i];
+		i++;
+	}
+	reset_availability(graph, paths, paths->n);
+	assign_ants_to_paths(graph, paths, tmp);
+	if (o->visual == TRUE)
+		visualizer(graph, paths);
+	print_lines(paths, graph);
 	return (SUCCESS);
 }

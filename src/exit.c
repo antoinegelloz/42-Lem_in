@@ -6,13 +6,13 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:00:34 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/26 18:05:00 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/28 23:14:43 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	free_paths(t_paths *paths, t_graph *graph)
+t_paths	*free_paths(t_paths *paths, t_graph *graph)
 {
 	size_t	i;
 
@@ -22,12 +22,13 @@ void	free_paths(t_paths *paths, t_graph *graph)
 		ft_lstdel(&paths->array[i], ft_delcontent);
 		i++;
 	}
-	free(paths->array);
-	free(paths->ants_to_paths);
-	free(paths->n);
-	free(paths->len);
-	free(paths->available);
+	paths->array ? free(paths->array) : 0;
+	paths->n ? free(paths->n) : 0;
+	paths->len ? free(paths->len) : 0;
+	paths->available ? free(paths->available) : 0;
+	paths->ants_to_paths ? free(paths->ants_to_paths) : 0;
 	free(paths);
+	return (NULL);
 }
 
 int		exit_bfs_error(t_parsing *p, t_graph *graph)
@@ -69,9 +70,10 @@ void	free_graph(t_graph *graph)
 	graph = NULL;
 }
 
-void	free_bfs(t_bfs *bfs)
+t_bfs	*free_bfs(t_bfs *bfs)
 {
 	free(bfs->prev);
 	free(bfs->queue);
 	free(bfs);
+	return (NULL);
 }

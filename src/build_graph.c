@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   graph.c                                            :+:      :+:    :+:   */
+/*   build_graph.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/28 15:37:32 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/29 00:00:26 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static t_graph	*init_graph(t_parsing *p, t_graph *graph)
 	return (graph);
 }
 
-t_graph			*create_graph(t_parsing *p)
+static t_graph	*create_graph(t_parsing *p)
 {
 	t_graph *graph;
 	ssize_t	size;
@@ -97,4 +97,24 @@ t_graph			*create_graph(t_parsing *p)
 		return (NULL);
 	}
 	return (init_graph(p, graph));
+}
+
+t_graph			*build_graph(t_parsing *p)
+{
+	t_graph *graph;
+	t_list	*curr_from;
+	t_list	*curr_to;
+
+	if ((graph = create_graph(p)) == NULL)
+		return (NULL);
+	curr_from = p->from;
+	curr_to = p->to;
+	while (curr_from != NULL && curr_to != NULL)
+	{
+		create_edge(graph, *(size_t *)curr_from->content,
+				*(size_t *)curr_to->content);
+		curr_from = curr_from->next;
+		curr_to = curr_to->next;
+	}
+	return (graph);
 }

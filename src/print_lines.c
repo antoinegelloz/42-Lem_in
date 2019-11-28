@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 18:58:06 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/28 15:55:34 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/28 23:50:44 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,14 @@ static void		print_first_ant(t_list **ants_pos, t_paths *paths,
 {
 	if (paths->available[paths->ants_to_paths[i]] == TRUE)
 	{
-		ants_pos[i] = ants_pos[i]->next;
+		if (ants_pos[i] != NULL)
+			ants_pos[i] = ants_pos[i]->next;
 		if (ants_pos[i] != NULL && ants_pos[i]->next != NULL)
 			paths->available[paths->ants_to_paths[i]] = FALSE;
 		paths->n[paths->ants_to_paths[i]]--;
-		ft_printf("L%d-%s", i + 1,
-				graph->nodes[*(size_t *)ants_pos[i]->content].name);
+		if (ants_pos[i] != NULL)
+			ft_printf("L%d-%s", i + 1,
+						graph->nodes[*(size_t *)ants_pos[i]->content].name);
 	}
 }
 
@@ -48,10 +50,11 @@ static void		print_moving_ant(t_list **ants_pos, t_paths *paths,
 	if (ants_pos[i] == paths->array[paths->ants_to_paths[i]]->next
 					&& paths->n[paths->ants_to_paths[i]] > 0)
 		paths->available[paths->ants_to_paths[i]] = TRUE;
-	ants_pos[i] = ants_pos[i]->next;
+	if (ants_pos[i] != NULL)
+		ants_pos[i] = ants_pos[i]->next;
 	if (ants_pos[i] != NULL)
 		ft_printf("L%d-%s", i + 1,
-				graph->nodes[*(size_t *)ants_pos[i]->content].name);
+					graph->nodes[*(size_t *)ants_pos[i]->content].name);
 }
 
 static void		print_round(t_paths *paths, t_graph *graph,
@@ -87,12 +90,9 @@ void			print_lines(t_paths *paths, t_graph *graph)
 	size_t	i;
 	size_t	round;
 
-	i = 0;
-	while (i < graph->ants)
-	{
+	i = -1;
+	while (++i < graph->ants)
 		ants_pos[i] = paths->array[paths->ants_to_paths[i]];
-		i++;
-	}
 	round = 0;
 	while (round++ < paths->output_lines)
 	{
@@ -107,4 +107,6 @@ void			print_lines(t_paths *paths, t_graph *graph)
 		}
 		print_round(paths, graph, ants_pos, tmp_pos);
 	}
+	free_paths(paths, graph);
+	free_graph(graph);
 }

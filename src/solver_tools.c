@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   solver2.c                                          :+:      :+:    :+:   */
+/*   solver_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 18:15:53 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/28 16:37:27 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/28 21:56:20 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void		all_paths_used(t_graph *graph, t_paths *paths, size_t tmp[])
 	reset_availability(graph, paths, tmp);
 }
 
-static void		assign_ants_to_paths(t_graph *graph, t_paths *paths,
+void			assign_ants_to_paths(t_graph *graph, t_paths *paths,
 								size_t tmp[])
 {
 	size_t	i;
@@ -79,29 +79,4 @@ static void		assign_ants_to_paths(t_graph *graph, t_paths *paths,
 		i++;
 	}
 	update_n(graph, paths, tmp);
-}
-
-int8_t			solver2(t_graph *graph, t_paths *paths, t_options *o)
-{
-	size_t	i;
-	size_t	tmp[graph->paths_count];
-
-	i = 0;
-	paths->paths_used = 0;
-	while (i < graph->paths_count)
-	{
-		if (paths->n[i] > 0)
-			paths->paths_used++;
-		tmp[i] = paths->n[i];
-		i++;
-	}
-	if (!(paths->available = (int8_t*)malloc(sizeof(int8_t)
-											* graph->paths_count)))
-		return (FAILURE);
-	reset_availability(graph, paths, paths->n);
-	assign_ants_to_paths(graph, paths, tmp);
-	if (o->visual == TRUE)
-		visualizer(graph, paths);
-	print_lines(paths, graph);
-	return (SUCCESS);
 }

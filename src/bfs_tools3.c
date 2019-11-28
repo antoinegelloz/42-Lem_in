@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bfs_disj_tools2.c                                  :+:      :+:    :+:   */
+/*   bfs_tools3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 17:49:03 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/28 17:50:43 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/28 22:42:34 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,42 @@ t_list	*get_next_path(t_list *path, t_graph *graph)
 		next_path = next_path->next;
 	next_path = next_path->next;
 	return (next_path);
+}
+
+void	change_capacity(t_graph *graph, t_list *u, t_list *v, int8_t order)
+{
+	t_edge	*neighbours;
+
+	neighbours = graph->nodes[*(size_t *)u->content].head;
+	while (neighbours->dest != *(size_t *)v->content)
+		neighbours = neighbours->next;
+	if (neighbours->dest == *(size_t *)v->content)
+	{
+		if (order == INCREASE)
+			neighbours->capacity++;
+		if (order == DECREASE)
+			neighbours->capacity--;
+	}
+}
+
+void	update_edge_capacities(t_bfs *new_bfs, t_graph *graph, int8_t order)
+{
+	t_list	*curr;
+
+	curr = new_bfs->shortest_path;
+	while (curr->next != NULL)
+	{
+		if (order == INCREASE)
+		{
+			change_capacity(graph, curr, curr->next, DECREASE);
+			change_capacity(graph, curr->next, curr, INCREASE);
+		}
+		else
+		{
+			change_capacity(graph, curr, curr->next, INCREASE);
+			change_capacity(graph, curr->next, curr, DECREASE);
+		}
+		curr = curr->next;
+	}
+	graph->paths_count += order;
 }
