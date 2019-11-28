@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/28 17:28:05 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/28 18:31:08 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ t_bfs			*reconstruct_path(t_bfs *bfs, t_graph *graph);
 t_list			*find_disjoint_paths(t_graph *graph, t_list *aug_paths);
 t_list			*rebuild_aug_paths(t_graph *graph);
 int8_t			is_new_solution_better(t_list *aug_paths, t_graph *graph);
-int8_t			update_edge_capacities(t_bfs *new_bfs, t_graph *graph,
+void			update_edge_capacities(t_bfs *new_bfs, t_graph *graph,
 										int8_t bfs_succeed);
 int8_t			change_capacity(t_graph *graph, t_list *u, t_list *v,
 								int8_t order);
@@ -139,7 +139,7 @@ void			reset_marks(t_graph *graph, t_bfs *bfs);
 void			print_file(t_parsing *p);
 
 int8_t			solver(t_graph *graph, t_list *aug_paths, t_options *o);
-t_paths			*init_output(t_graph *graph, t_paths *paths, t_list *aug_paths);
+t_paths			*init_output(t_graph *graph, t_list *aug_paths);
 void			init_lines(t_paths *paths, t_graph *graph);
 int8_t			is_solution_found(t_paths *paths, t_graph *graph);
 int8_t			solver2(t_graph *graph, t_paths *paths, t_options *o);

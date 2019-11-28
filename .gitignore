@@ -52,3 +52,9 @@ Mkfile.old
 dkms.conf
 
 *.swp
+
+*.out_checker
+*.usr_map
+*.usr_paths
+*.usr_solution
+*data.json

@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 16:12:57 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/28 17:26:16 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/28 18:43:01 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,8 @@ int8_t	is_new_solution_better(t_list *aug_paths, t_graph *graph)
 	size_t		i;
 
 	i = 0;
-	paths = NULL;
 	new_output_lines = 0;
-	if ((paths = init_output(graph, paths, aug_paths)) == NULL)
+	if ((paths = init_output(graph, aug_paths)) == NULL)
 		return (FAILURE);
 	init_lines(paths, graph);
 	while (is_solution_found(paths, graph) == FALSE)
@@ -224,14 +223,12 @@ t_list	*edmonds_disjoint_paths(t_graph *graph,
 	new_bfs = NULL;
 	if ((new_bfs = bfs_disjoint_paths(graph, *path)) == NULL)
 		return (aug_paths);
-	graph->paths_count++;
-	update_edge_capacities(new_bfs, graph, TRUE);
+	update_edge_capacities(new_bfs, graph, INCREASE);
 	ft_lstdel(&aug_paths, ft_delcontent);
 	aug_paths = rebuild_aug_paths(graph);
 	if (is_new_solution_better(aug_paths, graph) == FALSE)
 	{
-		graph->paths_count--;
-		update_edge_capacities(new_bfs, graph, FALSE);
+		update_edge_capacities(new_bfs, graph, DECREASE);
 		ft_lstdel(&aug_paths, ft_delcontent);
 		aug_paths = rebuild_aug_paths(graph);
 		*path = aug_paths;
@@ -249,8 +246,7 @@ t_list	*find_disjoint_paths(t_graph *graph, t_list *aug_paths)
 	size_t		prev_paths_count;
 	t_paths		*paths;
 
-	paths = NULL;
-	if ((paths = init_output(graph, paths, aug_paths)) == NULL)
+	if ((paths = init_output(graph, aug_paths)) == NULL)
 		return (NULL);
 	compute_output_lines(paths, graph);
 	path = aug_paths;
