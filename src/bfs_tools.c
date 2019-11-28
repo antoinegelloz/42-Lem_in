@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:01:34 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/26 12:43:00 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/28 15:37:15 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int8_t			enqueue(size_t node, size_t neighbour, t_graph *graph, t_bfs *bfs)
 	bfs->queue_size = bfs->queue_size + 1;
 	bfs->prev[neighbour] = node;
 	graph->nodes[neighbour].bfs_marked = TRUE;
-	graph->nodes[neighbour].already_enqueued = TRUE;
+	graph->nodes[neighbour].enqueued = TRUE;
 	return (SUCCESS);
 }
 
@@ -71,6 +71,7 @@ t_bfs			*init_bfs(t_graph *graph)
 	bfs->queue_rear = 0;
 	bfs->queue = (ssize_t *)malloc(bfs->queue_capacity * sizeof(ssize_t));
 	bfs->prev = (ssize_t *)malloc(bfs->queue_capacity * sizeof(ssize_t));
+	bfs->node = 0;
 	i = 0;
 	while (i < bfs->queue_capacity)
 	{
@@ -81,7 +82,7 @@ t_bfs			*init_bfs(t_graph *graph)
 			bfs->queue[0] = i;
 			bfs->queue_size = 1;
 			graph->nodes[i].bfs_marked = TRUE;
-			graph->nodes[i].already_enqueued = TRUE;
+			graph->nodes[i].enqueued = TRUE;
 		}
 		i++;
 	}

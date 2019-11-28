@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/27 15:10:54 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/28 15:35:35 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct	s_node
 	int8_t	source;
 	int8_t	sink;
 	int8_t	bfs_marked;
-	int8_t	already_enqueued;
+	int8_t	enqueued;
 	char	*name;
 }				t_node;
 
@@ -90,6 +90,7 @@ typedef struct	s_bfs
 	size_t	queue_rear;
 	size_t	queue_size;
 	size_t	queue_capacity;
+	size_t	node;
 }				t_bfs;
 
 int8_t			parse_file(t_parsing *p);
@@ -153,4 +154,6 @@ void			print_ssize_t(t_list *list, t_graph *graph);
 void			free_tmp_paths(t_paths *paths, t_graph *graph); 
 int8_t			is_new_solution_better(t_list *aug_paths, t_graph *graph);
 t_list			*rebuild_aug_paths(t_graph *graph);
+void			compute_output_lines(t_paths *paths, t_graph *graph);
+
 #endif
