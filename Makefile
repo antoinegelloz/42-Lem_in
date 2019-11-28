@@ -6,7 +6,7 @@
 #    By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/19 11:32:25 by agelloz           #+#    #+#              #
-#    Updated: 2019/11/28 16:17:18 by agelloz          ###   ########.fr        #
+#    Updated: 2019/11/28 17:52:00 by ekelkel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,8 @@ SRC_FILES += edmonds_karp.c
 SRC_FILES += bfs.c
 SRC_FILES += bfs_tools.c
 SRC_FILES += bfs_disjoint_paths.c
+SRC_FILES += bfs_disj_tools.c
+SRC_FILES += bfs_disj_tools2.c
 SRC_FILES += bfs_reset_tools.c
 SRC_FILES += init_output.c
 SRC_FILES += solver.c

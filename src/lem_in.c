@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/28 15:10:40 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/28 17:57:34 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int				main(int ac, char **av)
 		return (exit_bfs_error(&p, graph));
 	print_file(&p);
 	if (solver(graph, aug_paths, &o) == FAILURE)
-		return (EXIT_FAILURE);;
+		return (EXIT_FAILURE);
 	ft_lstdel(&aug_paths, ft_delcontent);
 	return (EXIT_SUCCESS);
 }

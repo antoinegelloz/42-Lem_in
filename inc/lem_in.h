@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/28 17:28:05 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/28 17:51:20 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,11 +161,12 @@ int8_t			exit_parsing_error(t_parsing *p, char *line,
 									char **tab);
 int				exit_bfs_error(t_parsing *p, t_graph *graph);
 
-void			print_ssize_t(t_list *list, t_graph *graph);
-void			free_tmp_paths(t_paths *paths, t_graph *graph); 
 int8_t			is_new_solution_better(t_list *aug_paths, t_graph *graph);
 t_list			*rebuild_aug_paths(t_graph *graph);
 void			compute_output_lines(t_paths *paths, t_graph *graph);
+t_list			*get_next_path(t_list *path, t_graph *graph);
+size_t			compute_path_pos(t_list **path, t_list *aug_paths, t_graph *graph);
+size_t			is_on_path(size_t node, t_list *path, t_graph *graph);
 
 int8_t			visualizer(t_graph *graph, t_paths *paths);
 

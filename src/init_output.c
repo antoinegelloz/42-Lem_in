@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:51:16 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/28 15:49:54 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/28 17:56:46 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ t_paths	*init_paths(t_graph *graph, t_paths *paths, t_list *aug_paths)
 
 	if ((paths = (t_paths*)malloc(sizeof(t_paths))) == NULL)
 		return (NULL);
-	if (!(paths->array = (t_list**)malloc(graph->paths_count*sizeof(t_list*))))
+	if (!(paths->array =
+				(t_list**)malloc(graph->paths_count * sizeof(t_list*))))
 		return (NULL);
 	i = 0;
 	while (i < graph->paths_count)
@@ -39,16 +40,19 @@ t_paths	*init_paths(t_graph *graph, t_paths *paths, t_list *aug_paths)
 }
 
 t_paths	*init_output(t_graph *graph, t_paths *paths, t_list *aug_paths)
-{	
+{
 	size_t	i;
 
 	if ((paths = init_paths(graph, paths, aug_paths)) == NULL)
 		return (NULL);
-	if ((paths->ants_to_paths = (size_t*)malloc(graph->ants * sizeof(size_t))) == NULL)
+	if ((paths->ants_to_paths =
+				(size_t*)malloc(graph->ants * sizeof(size_t))) == NULL)
 		return (NULL);
-	if ((paths->n = (size_t*)malloc(graph->paths_count * sizeof(size_t))) == NULL)
+	if ((paths->n =
+				(size_t*)malloc(graph->paths_count * sizeof(size_t))) == NULL)
 		return (NULL);
-	if ((paths->len = (size_t*)malloc(graph->paths_count * sizeof(size_t))) == NULL)
+	if ((paths->len =
+				(size_t*)malloc(graph->paths_count * sizeof(size_t))) == NULL)
 		return (NULL);
 	i = 0;
 	while (i < graph->paths_count)
