@@ -6,14 +6,13 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 11:38:50 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/28 18:37:21 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/28 19:18:43 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	update_edge_capacities(t_bfs *new_bfs, t_graph *graph,
-		int8_t order)
+void	update_edge_capacities(t_bfs *new_bfs, t_graph *graph, int8_t order)
 {
 	t_list	*curr;
 
@@ -32,30 +31,14 @@ void	update_edge_capacities(t_bfs *new_bfs, t_graph *graph,
 		}
 		curr = curr->next;
 	}
-	ft_printf("order:%d\n", order);
 	graph->paths_count += order;
-}
-
-void	compute_output_lines(t_paths *paths, t_graph *graph)
-{
-	size_t	i;
-
-	init_lines(paths, graph);
-	while (is_solution_found(paths, graph) == FALSE)
-	{
-		i = 0;
-		while (i < graph->paths_count)
-			paths->n[i++] = 0;
-		paths->output_lines++;
-	}
-	graph->old_output_lines = paths->output_lines;
-	free_tmp_paths(paths, graph);
 }
 
 t_list	*first_bfs(t_graph *graph)
 {
 	t_list	*aug_paths;
 	t_bfs	*new_bfs;
+	t_paths *paths;
 
 	aug_paths = NULL;
 	if ((new_bfs = bfs(graph)) == NULL)
@@ -63,6 +46,11 @@ t_list	*first_bfs(t_graph *graph)
 	ft_lstappend(&aug_paths, new_bfs->shortest_path);
 	update_edge_capacities(new_bfs, graph, INCREASE);
 	free_bfs(new_bfs);
+	if ((paths = init_output(graph, aug_paths)) == NULL)
+		return (NULL);
+	find_solution(graph, paths);
+	graph->old_output_lines = paths->output_lines;
+	free_tmp_paths(paths, graph);
 	return (aug_paths);
 }
 
@@ -70,13 +58,9 @@ t_list	*edmonds_karp(t_graph *graph)
 {
 	t_list	*aug_paths;
 	t_bfs	*new_bfs;
-	t_paths *paths;
 
 	if ((aug_paths = first_bfs(graph)) == NULL)
 		return (NULL);
-	if ((paths = init_output(graph, aug_paths)) == NULL)
-		return (NULL);
-	compute_output_lines(paths, graph);
 	while ((new_bfs = bfs(graph)) != NULL)
 	{
 		ft_lstappend(&aug_paths, new_bfs->shortest_path);

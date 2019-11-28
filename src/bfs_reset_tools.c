@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 15:12:29 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/28 15:36:54 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/28 19:40:44 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,16 @@ void			reset_marks_fail(t_graph *graph, t_bfs *bfs)
 				graph->nodes[i].bfs_marked = FALSE;
 			j++;
 		}
-    graph->nodes[i].enqueued = FALSE;
+		graph->nodes[i].enqueued = FALSE;
 		i++;
 	}
 }
 
-static int8_t	find_node(t_list *path, size_t i)
+static int8_t	find_neighbour(t_graph *graph, size_t i, int8_t found)
 {
-	t_list	*curr;
+	t_edge	*neighbours;
 
-	curr = path;
-	while (curr != NULL)
-	{
-		if (i == *(size_t *)curr->content)
-			return (TRUE);
-		curr = curr->next;
-	}
-	return (FALSE);
-}
-
-static int8_t	find_neighbour(t_edge *neighbours, int8_t found)
-{
+	neighbours = graph->nodes[i].head;
 	while (neighbours)
 	{
 		if (neighbours->capacity == 2)
@@ -61,21 +50,24 @@ void			reset_marks(t_graph *graph, t_bfs *bfs)
 {
 	size_t	i;
 	int8_t	found;
-	t_edge	*neighbours;
+	t_list	*curr;
 
 	i = 0;
-	found = FALSE;
-	neighbours = NULL;
 	while (i < graph->size)
 	{
-		found = find_node(bfs->shortest_path, i);
-		neighbours = graph->nodes[i].head;
-		found = find_neighbour(neighbours, found);
+		found = FALSE;
+		curr = bfs->shortest_path;
+		while (curr != NULL)
+		{
+			if (i == *(size_t *)curr->content)
+				found = TRUE;
+			curr = curr->next;
+		}
+		found = find_neighbour(graph, i, found);
 		if (found == FALSE || graph->nodes[i].sink == TRUE
-						   || graph->nodes[i].source == TRUE)
+			|| graph->nodes[i].source == TRUE)
 			graph->nodes[i].bfs_marked = FALSE;
 		graph->nodes[i].enqueued = FALSE;
-		found = FALSE;
 		i++;
 	}
 }

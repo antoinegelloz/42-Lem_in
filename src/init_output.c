@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:51:16 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/28 17:48:39 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/28 18:52:38 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ t_paths	*init_paths(t_graph *graph, t_list *aug_paths)
 
 	if (!(paths = (t_paths*)malloc(sizeof(t_paths))))
 		return (NULL);
-	if (!(paths->array = (t_list**)malloc(graph->paths_count*sizeof(t_list*))))
+	if (!(paths->array =
+				(t_list**)malloc(graph->paths_count * sizeof(t_list*))))
 		return (NULL);
 	i = 0;
 	while (i < graph->paths_count)
@@ -46,18 +47,20 @@ t_paths	*init_output(t_graph *graph, t_list *aug_paths)
 
 	if (!(paths = init_paths(graph, aug_paths)))
 		return (NULL);
-	if (!(paths->ants_to_paths = (size_t*)malloc(graph->ants * sizeof(size_t))))
+	if ((paths->ants_to_paths =
+				(size_t*)malloc(graph->ants * sizeof(size_t))) == NULL)
 		return (NULL);
-	if (!(paths->n = (size_t*)malloc(graph->paths_count * sizeof(size_t))))
+	if ((paths->n =
+				(size_t*)malloc(graph->paths_count * sizeof(size_t))) == NULL)
 		return (NULL);
-	if (!(paths->len = (size_t*)malloc(graph->paths_count * sizeof(size_t))))
+	if ((paths->len =
+				(size_t*)malloc(graph->paths_count * sizeof(size_t))) == NULL)
 		return (NULL);
 	i = 0;
 	while (i < graph->paths_count)
 	{
 		paths->len[i] = ft_lstgetsize(paths->array[i]) - 1;
-		paths->n[i] = 0;
-		i++;
+		paths->n[i++] = 0;
 	}
 	i = 0;
 	while (i < graph->ants)

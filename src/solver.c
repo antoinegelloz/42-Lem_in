@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:13:33 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/28 18:08:08 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/28 19:22:51 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,10 @@ int8_t	is_solution_found(t_paths *paths, t_graph *graph)
 	return (FALSE);
 }
 
-int8_t	solver(t_graph *graph, t_list *aug_paths, t_options *o)
+void	find_solution(t_graph *graph, t_paths *paths)
 {
-	t_paths	*paths;
 	size_t	i;
 
-	i = 0;
-	if ((paths = init_output(graph, aug_paths)) == NULL)
-		return (FAILURE);
 	init_lines(paths, graph);
 	while (is_solution_found(paths, graph) == FALSE)
 	{
@@ -69,6 +65,15 @@ int8_t	solver(t_graph *graph, t_list *aug_paths, t_options *o)
 			paths->n[i++] = 0;
 		paths->output_lines++;
 	}
+}
+
+int8_t	solver(t_graph *graph, t_list *aug_paths, t_options *o)
+{
+	t_paths	*paths;
+
+	if ((paths = init_output(graph, aug_paths)) == NULL)
+		return (FAILURE);
+	find_solution(graph, paths);
 	solver2(graph, paths, o);
 	free_paths(paths, graph);
 	free_graph(graph);
