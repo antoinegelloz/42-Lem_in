@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/28 15:35:35 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/28 17:28:05 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,6 @@ typedef struct	s_edge
 	size_t			capacity;
 	struct s_edge	*next;
 }				t_edge;
-
-typedef struct	s_paths
-{
-	t_list		**array;
-	size_t		*ants_to_paths;
-	size_t		*n;
-	size_t		*len;
-	size_t		paths_used;
-	size_t		output_lines;
-	int8_t		*available;
-	t_edge		*neighbours;
-	t_edge		*neighbours2;
-	size_t		round;
-}				t_paths;
 
 typedef struct	s_node
 {
@@ -76,7 +62,7 @@ typedef struct	s_parsing
 	t_list	*to;
 	t_list	*file;
 	int8_t	is_prev_command;
-	char    pad[7];
+	char	pad[7];
 }				t_parsing;
 
 typedef struct	s_bfs
@@ -92,6 +78,27 @@ typedef struct	s_bfs
 	size_t	queue_capacity;
 	size_t	node;
 }				t_bfs;
+
+typedef struct	s_paths
+{
+	t_list		**array;
+	size_t		*ants_to_paths;
+	size_t		*n;
+	size_t		*len;
+	size_t		paths_used;
+	size_t		output_lines;
+	int8_t		*available;
+	t_edge		*neighbours;
+	t_edge		*neighbours2;
+}				t_paths;
+
+typedef struct	s_options
+{
+	int8_t		help;
+	int8_t		visual;
+	int8_t		graph;
+	int8_t		paths;
+}				t_options;
 
 int8_t			parse_file(t_parsing *p);
 int8_t			save_node(t_parsing *p, char *line);
@@ -110,50 +117,56 @@ int8_t			check_int(char *nb, int8_t pos);
 t_graph			*create_graph(t_parsing *p);
 int8_t			create_edge(t_graph *graph, size_t src, size_t dest);
 
-void			print_file(t_parsing *p);
-
-int8_t			exit_parsing_error(t_parsing *p, char *line, char **tab);
-void			free_p(t_parsing *p);
-void			free_tab(char **tab);
-void			free_graph(t_graph *graph);
-int				exit_bfs_error(t_parsing *p, t_graph *graph);
-void			free_paths(t_paths *paths, t_graph *graph);
-
 t_list			*edmonds_karp(t_graph *graph);
 t_bfs			*init_bfs(t_graph *graph);
 t_bfs			*bfs(t_graph *graph);
-t_list		*find_disjoint_paths(t_graph *graph, t_list *aug_paths);
 t_bfs			*reconstruct_path(t_bfs *bfs, t_graph *graph);
-void			reset_marks_fail(t_graph *graph, t_bfs *bfs);
-void			reset_marks(t_graph *graph, t_bfs *bfs);
-int8_t      update_edge_capacities(t_bfs *new_bfs, t_graph *graph, int8_t bfs_succeed);
-int8_t			change_capacity(t_graph *graph, t_list *u, t_list *v, int8_t order);
-int8_t			enqueue(size_t node, size_t neighbour, t_graph *graph, t_bfs *bfs);
+t_list			*find_disjoint_paths(t_graph *graph, t_list *aug_paths);
+t_list			*rebuild_aug_paths(t_graph *graph);
+int8_t			is_new_solution_better(t_list *aug_paths, t_graph *graph);
+int8_t			update_edge_capacities(t_bfs *new_bfs, t_graph *graph,
+										int8_t bfs_succeed);
+int8_t			change_capacity(t_graph *graph, t_list *u, t_list *v,
+								int8_t order);
+int8_t			enqueue(size_t node, size_t neighbour, t_graph *graph,
+						t_bfs *bfs);
 size_t			dequeue(t_bfs *bfs);
 int8_t			is_queue_full(t_bfs *bfs);
 int8_t			is_queue_empty(t_bfs *bfs);
-void			free_bfs(t_bfs *bfs);
+void			reset_marks_fail(t_graph *graph, t_bfs *bfs);
+void			reset_marks(t_graph *graph, t_bfs *bfs);
 
-int8_t			solver(t_graph *graph, int8_t visual, t_list *aug_paths);
+void			print_file(t_parsing *p);
+
+int8_t			solver(t_graph *graph, t_list *aug_paths, t_options *o);
 t_paths			*init_output(t_graph *graph, t_paths *paths, t_list *aug_paths);
-int8_t			init_lines(t_paths *paths, t_graph *graph);
+void			init_lines(t_paths *paths, t_graph *graph);
 int8_t			is_solution_found(t_paths *paths, t_graph *graph);
-int8_t			flow_ants(t_graph *graph, t_paths *paths, int8_t visual);
-int8_t			reset_availability(t_graph *graph,
-				t_paths *paths, size_t *capacity);
-int8_t			all_paths_used(t_paths *paths, t_graph *graph);
-int8_t			print_lines(t_paths *paths, t_graph *graph);
-int8_t			all_moved(t_list **pos, ssize_t *tmp,
-						  t_graph *graph, t_paths *paths);
-ssize_t			*save_ants_pos(t_list **ants_pos, ssize_t ants);
+int8_t			solver2(t_graph *graph, t_paths *paths, t_options *o);
+int8_t			reset_availability(t_graph *graph, t_paths *paths,
+									size_t *capacity);
+int8_t			all_moved(t_list **pos, ssize_t *tmp, t_graph *graph,
+							t_paths *paths);
+void			print_lines(t_paths *paths, t_graph *graph);
 
-int8_t			cytoscape_visualizer(t_graph *graph, t_paths *paths);
+void			print_ssize_t(t_list *list, t_graph *graph);
 
+void			free_bfs(t_bfs *bfs);
+void			free_p(t_parsing *p);
+void			free_tab(char **tab);
+void			free_graph(t_graph *graph);
+void			free_paths(t_paths *paths, t_graph *graph);
+void			free_tmp_paths(t_paths *paths, t_graph *graph);
+int8_t			exit_parsing_error(t_parsing *p, char *line,
+									char **tab);
+int				exit_bfs_error(t_parsing *p, t_graph *graph);
 
 void			print_ssize_t(t_list *list, t_graph *graph);
 void			free_tmp_paths(t_paths *paths, t_graph *graph); 
 int8_t			is_new_solution_better(t_list *aug_paths, t_graph *graph);
 t_list			*rebuild_aug_paths(t_graph *graph);
 void			compute_output_lines(t_paths *paths, t_graph *graph);
+
+int8_t			visualizer(t_graph *graph, t_paths *paths);
 
 #endif

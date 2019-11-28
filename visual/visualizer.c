@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cytoscape_visualizer.c                             :+:      :+:    :+:   */
+/*   visualizer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 12:01:09 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/27 15:47:11 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/28 13:05:16 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int8_t	dump_path(FILE *file, t_paths *paths, size_t i, size_t path_id, t_graph *
 	return (SUCCESS);
 }
 
-int8_t	cytoscape_visualizer(t_graph *graph, t_paths *paths)
+int8_t	visualizer(t_graph *graph, t_paths *paths)
 {
 	FILE	*file;
 	size_t	i;

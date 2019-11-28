@@ -83,6 +83,3 @@ reconstruct_path(new_bfs, graph)
 		return new_path
 	else
 		return NULL
-
-compare_solutions(new, old)
-	t_paths

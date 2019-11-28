@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flow_ants.c                                        :+:      :+:    :+:   */
+/*   solver2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 18:15:53 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/25 10:24:57 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/28 16:37:27 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void		fill_n(t_graph *graph, t_paths *paths, size_t tmp[], int8_t visual)
+static void		update_n(t_graph *graph, t_paths *paths, size_t tmp[])
 {
 	size_t	i;
 
@@ -23,13 +23,10 @@ static void		fill_n(t_graph *graph, t_paths *paths, size_t tmp[], int8_t visual)
 		i++;
 	}
 	reset_availability(graph, paths, paths->n);
-	if (visual == TRUE)
-		cytoscape_visualizer(graph, paths);
-	print_lines(paths, graph);
 }
 
-static size_t	update_index(t_graph *graph,
-		t_paths *paths, size_t tmp[], size_t j)
+static size_t	update_index(t_graph *graph, t_paths *paths, size_t tmp[],
+								size_t j)
 {
 	if (j == graph->paths_count - 1 && paths->available[j] == FALSE)
 	{
@@ -41,7 +38,22 @@ static size_t	update_index(t_graph *graph,
 	return (j);
 }
 
-static void		fill_ants_paths(t_graph *graph, t_paths *paths, size_t tmp[], int8_t visual)
+static void		all_paths_used(t_graph *graph, t_paths *paths, size_t tmp[])
+{
+	size_t	i;
+
+	i = 0;
+	while (i < graph->paths_count)
+	{
+		if (paths->n[i] > 0 && paths->available[i] == TRUE)
+			return ;
+		i++;
+	}
+	reset_availability(graph, paths, tmp);
+}
+
+static void		assign_ants_to_paths(t_graph *graph, t_paths *paths,
+								size_t tmp[])
 {
 	size_t	i;
 	size_t	j;
@@ -49,9 +61,8 @@ static void		fill_ants_paths(t_graph *graph, t_paths *paths, size_t tmp[], int8_
 	i = 0;
 	while (i < graph->ants)
 	{
+		all_paths_used(graph, paths, tmp);
 		j = 0;
-		if (all_paths_used(paths, graph) == TRUE)
-			reset_availability(graph, paths, tmp);
 		while (j < graph->paths_count)
 		{
 			if (tmp[j] == 0)
@@ -67,10 +78,10 @@ static void		fill_ants_paths(t_graph *graph, t_paths *paths, size_t tmp[], int8_
 		}
 		i++;
 	}
-	fill_n(graph, paths, tmp, visual);
+	update_n(graph, paths, tmp);
 }
 
-int8_t			flow_ants(t_graph *graph, t_paths *paths, int8_t visual)
+int8_t			solver2(t_graph *graph, t_paths *paths, t_options *o)
 {
 	size_t	i;
 	size_t	tmp[graph->paths_count];
@@ -84,10 +95,13 @@ int8_t			flow_ants(t_graph *graph, t_paths *paths, int8_t visual)
 		tmp[i] = paths->n[i];
 		i++;
 	}
-	if (!(paths->available =
-				(int8_t*)malloc(sizeof(int8_t) * graph->paths_count)))
+	if (!(paths->available = (int8_t*)malloc(sizeof(int8_t)
+											* graph->paths_count)))
 		return (FAILURE);
 	reset_availability(graph, paths, paths->n);
-	fill_ants_paths(graph, paths, tmp, visual);
+	assign_ants_to_paths(graph, paths, tmp);
+	if (o->visual == TRUE)
+		visualizer(graph, paths);
+	print_lines(paths, graph);
 	return (SUCCESS);
 }

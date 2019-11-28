@@ -82,7 +82,7 @@ done
 
 ################################ Main loop #####################################
 
-echo "\033[0mMAP FOLDER :\033[0;32m" $map_folder "\033[0m"
+echo "MAP FOLDER :\033[0;32m" $map_folder "\033[0m"
 
 if [ $no_gen -eq 1 ]; then
 	if test -f "$program"; then
