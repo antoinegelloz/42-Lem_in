@@ -6,7 +6,7 @@
 #    By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/19 11:32:25 by agelloz           #+#    #+#              #
-#    Updated: 2019/11/29 14:24:13 by agelloz          ###   ########.fr        #
+#    Updated: 2019/11/29 15:29:07 by ekelkel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC_FILES += parsing_tests2.c
 SRC_FILES += build_graph.c 
 SRC_FILES += print.c 
 SRC_FILES += find_paths.c
+SRC_FILES += find_paths_tools.c
 SRC_FILES += init_output.c
 SRC_FILES += bfs_tools.c
 SRC_FILES += bfs_tools2.c
