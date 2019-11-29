@@ -144,8 +144,9 @@ Many examples are provided in the `/maps` repository.
 ## Output
 The output of the program is divided in two parts:
 * the file read from `stdin`
-* one round - movements of ants - per line (output to minimize) </br>
-Example:
+* one round - movements of ants - per line (output to minimize)
+
+### Example
 ```
 5
 ##start
