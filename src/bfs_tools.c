@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:01:34 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/28 23:46:21 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/29 12:21:46 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ static t_bfs	*init_bfs2(t_bfs *bfs, t_graph *graph)
 	bfs->queue_front = 0;
 	bfs->queue_size = 0;
 	bfs->queue_rear = 0;
-	bfs->queue_capacity = graph->size;
+	bfs->queue_capacity = graph->size * 2;
 	bfs->node = 0;
 	bfs->shortest_path = NULL;
 	if (!(bfs->queue = malloc(bfs->queue_capacity * sizeof(ssize_t))))
 		return (NULL);
-	if (!(bfs->prev = malloc(bfs->queue_capacity * sizeof(ssize_t))))
+	if (!(bfs->prev = malloc(graph->size * sizeof(ssize_t))))
 		return (NULL);
 	return (bfs);
 }
@@ -62,7 +62,7 @@ t_bfs			*init_bfs(t_graph *graph)
 	if (init_bfs2(bfs, graph) == NULL)
 		return (free_bfs(bfs));
 	i = 0;
-	while (i < bfs->queue_capacity)
+	while (i < graph->size)
 	{
 		bfs->prev[i] = -1;
 		bfs->queue[i] = -1;
@@ -72,6 +72,7 @@ t_bfs			*init_bfs(t_graph *graph)
 			bfs->queue_size = 1;
 			graph->nodes[i].bfs_marked = TRUE;
 			graph->nodes[i].enqueued = TRUE;
+			graph->nodes[i].enqueued_backward = TRUE;
 		}
 		i++;
 	}

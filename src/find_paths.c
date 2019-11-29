@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 16:12:57 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/28 23:36:11 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/29 14:38:28 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ t_bfs	*reconstruct_path(t_bfs *new_bfs, t_graph *graph)
 		return (NULL);
 	}
 	reset_marks(graph, new_bfs);
+	//ft_putendl("NEW PATH:");
+	//ft_putchar('\n');
+	//print_ssize_t(new_bfs->shortest_path, graph);
 	return (new_bfs);
 }
 
@@ -48,56 +51,83 @@ void	skip_node(t_bfs *new_bfs, t_edge *neigh, t_graph *graph, t_list *path)
 	neigh2 = graph->nodes[neigh->dest].head;
 	while (neigh2)
 	{
+		//ft_printf("neigh2:%s, cap:%d, eq:%d\n", graph->nodes[neigh2->dest].name, neigh2->capacity, graph->nodes[neigh2->dest].enqueued);
 		if (neigh2->capacity == 2
 			&& is_on_path(neigh2->dest, path, graph) == TRUE
-			&& graph->nodes[neigh2->dest].enqueued == FALSE)
+			&& neigh2->dest != graph->source)
+		{
+			//ft_putendl("BACKWARD");
 			enqueue(neigh->dest, neigh2->dest, graph, new_bfs);
+			//ft_printf("*** Q1 : %s\n", graph->nodes[neigh2->dest].name);
+			graph->nodes[neigh2->dest].enqueued_backward = TRUE;
+		}
 		neigh2 = neigh2->next;
 	}
 }
 
-void	enqueue_node(t_graph *graph, t_list *path,
-		t_edge *neigh, t_bfs *new_bfs)
+int8_t	is_source_neighbours(size_t node, t_graph *graph)
 {
-	if (graph->nodes[neigh->dest].enqueued == FALSE)
+	t_edge	*curr;
+
+	curr = graph->nodes[node].head;
+	while (curr != NULL)
 	{
-		if (is_on_path(new_bfs->node, path, graph) == FALSE
-				&& new_bfs->node != graph->sink)
-		{
-			if (is_on_path(neigh->dest, path, graph) == TRUE)
-				skip_node(new_bfs, neigh, graph, path);
-			else if (graph->nodes[neigh->dest].bfs_marked == FALSE)
-				enqueue(new_bfs->node, neigh->dest, graph, new_bfs);
-		}
-		else if (is_on_path(new_bfs->node, path, graph) == TRUE
-				&& ((neigh->capacity == 2 && neigh->dest != graph->source)
-					|| (neigh->capacity == 1
-					&& graph->nodes[neigh->dest].bfs_marked == FALSE)))
-			enqueue(new_bfs->node, neigh->dest, graph, new_bfs);
+		if (curr->dest== graph->source)
+			return (TRUE);
+		curr = curr->next;
 	}
+	return (FALSE);
 }
 
 t_bfs	*bfs(t_graph *graph, t_list *path)
 {
 	t_bfs	*new_bfs;
-	t_edge	*neighbours;
+	t_edge	*neigh;
 
-	neighbours = NULL;
+	neigh = NULL;
 	new_bfs = init_bfs(graph);
 	while (new_bfs->queue_size > 0)
 	{
 		new_bfs->node = dequeue(new_bfs);
-		neighbours = graph->nodes[new_bfs->node].head;
-		while (neighbours != NULL)
+		//ft_printf(">>DQ:%s\n", graph->nodes[new_bfs->node].name);
+		neigh = graph->nodes[new_bfs->node].head;
+		while (neigh != NULL)
 		{
-			enqueue_node(graph, path, neighbours, new_bfs);
-			neighbours = neighbours->next;
+			//ft_printf("neigh:%s\n", graph->nodes[neigh->dest].name);
+			if (graph->nodes[neigh->dest].enqueued == FALSE)
+			{
+				//ft_putendl("NOT EQ");
+				if (is_on_path(new_bfs->node, path, graph) == FALSE
+						&& new_bfs->node != graph->sink)
+				{
+					//ft_putendl("NOT ON PATH");
+					if (is_on_path(neigh->dest, path, graph) == TRUE
+						&& is_source_neighbours(neigh->dest, graph) == FALSE)
+						skip_node(new_bfs, neigh, graph, path);
+					else if (graph->nodes[neigh->dest].bfs_marked == FALSE)
+					{
+						enqueue(new_bfs->node, neigh->dest, graph, new_bfs);
+						//ft_printf("*** Q2 : %s\n", graph->nodes[neigh->dest].name);
+					}
+				}
+				else if (is_on_path(new_bfs->node, path, graph) == TRUE
+						&& ((neigh->capacity == 2 && neigh->dest != graph->source)
+							|| (neigh->capacity == 1
+							&& graph->nodes[neigh->dest].bfs_marked == FALSE)))
+				{
+					//ft_putendl("ON PATH");
+					enqueue(new_bfs->node, neigh->dest, graph, new_bfs);
+					//ft_printf("*** Q3 : %s\n", graph->nodes[neigh->dest].name);
+				}
+			}
+			neigh = neigh->next;
 		}
 	}
+	//ft_putchar('\n');
 	return (reconstruct_path(new_bfs, graph));
 }
 
-t_list	*edmonds_karp(t_graph *graph,
+t_list	*bfs_and_compare(t_graph *graph,
 		t_list *aug_paths, t_list **path)
 {
 	t_bfs	*new_bfs;
@@ -154,7 +184,7 @@ t_list	*find_paths(t_graph *graph)
 	while (path != NULL)
 	{
 		prev_paths_count = graph->paths_count;
-		aug_paths = edmonds_karp(graph, aug_paths, &path);
+		aug_paths = bfs_and_compare(graph, aug_paths, &path);
 		if (prev_paths_count == graph->paths_count)
 		{
 			if ((path = get_next_path(path, graph)) == NULL)

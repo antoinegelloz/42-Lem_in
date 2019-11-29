@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 15:12:29 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/28 21:26:18 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/29 12:08:32 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,21 @@
 
 void			reset_marks_fail(t_graph *graph, t_bfs *bfs)
 {
-	ssize_t	i;
+	size_t	i;
 	ssize_t	j;
 
 	i = 0;
-	while (i < (ssize_t)graph->size)
+	while (i < graph->size)
 	{
 		j = 0;
 		while (bfs->queue[j] != -1)
 		{
-			if (i == bfs->queue[j])
+			if (i == (size_t)bfs->queue[j])
 				graph->nodes[i].bfs_marked = FALSE;
 			j++;
 		}
 		graph->nodes[i].enqueued = FALSE;
+		graph->nodes[i].enqueued_backward = FALSE;
 		i++;
 	}
 }
@@ -68,6 +69,7 @@ void			reset_marks(t_graph *graph, t_bfs *bfs)
 			|| graph->nodes[i].source == TRUE)
 			graph->nodes[i].bfs_marked = FALSE;
 		graph->nodes[i].enqueued = FALSE;
+		graph->nodes[i].enqueued_backward = FALSE;
 		i++;
 	}
 }

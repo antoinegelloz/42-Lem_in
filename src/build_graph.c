@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/29 00:00:26 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/29 11:31:05 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static t_graph	*init_graph(t_parsing *p, t_graph *graph)
 		((size_t)p->sink == i) ? graph->sink = i : 1;
 		graph->nodes[i].bfs_marked = FALSE;
 		graph->nodes[i].enqueued = FALSE;
+		graph->nodes[i].enqueued_backward = FALSE;
 		graph->nodes[i].head = NULL;
 		curr_nodes = curr_nodes->next;
 		i++;

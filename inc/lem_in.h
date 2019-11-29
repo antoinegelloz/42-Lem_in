@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/28 23:41:57 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/29 11:34:15 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef struct	s_node
 	int8_t	sink;
 	int8_t	bfs_marked;
 	int8_t	enqueued;
+	int8_t	enqueued_backward;
+	char	pad[7];
 	char	*name;
 }				t_node;
 
