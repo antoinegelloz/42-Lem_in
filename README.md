@@ -96,7 +96,7 @@ function enqueue(room, neighbour):
 cd 42-Lem_in
 make
 ```
-### Dependencies (only for the visual)
+## Dependencies (only for the visual)
 * PHP
 * Google Chrome
 
@@ -141,7 +141,7 @@ Many examples are provided in the `/maps` repository.
 * -p --paths : Display the paths found by the algorithm
 * -v --visual : Display the visual in a new Google Chrome tab
 
-### Output
+## Output
 The output of the program is divided in two parts:
 * the file read from `stdin`
 * one round - movements of ants - per line (output to minimize)
