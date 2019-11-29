@@ -7,8 +7,10 @@ A round ends when no more ants are able to move any further.
 
 ![demo](visual/lemin.gif)
 
-## Algorithm: Modified Edmonds-Karp with BFS searching for the paths minimizing the lines of output
+## Algorithm
 ```
+Modified Edmonds-Karp with BFS searching for the paths minimizing the lines of output
+
 function main(options):
 	parse the arguments for any options
 	parse the file from stdin (get ants number, rooms and tunnels)
@@ -96,13 +98,12 @@ make
 ```
 ## Usage
 A map with a precise format has to be sent to the `lem-in` program as `stdin` input:
-
 ```
 ./lem-in [-h --help] [-a --anthill] [-p --paths] [-v --visual] < maps/demo_map
 ```
 ### Map format
 ```
-5			<< ants number
+5		<< ants number
 ##start		<< start room is following
 r0 1 2
 r1 2 3
@@ -128,7 +129,7 @@ r3-r2
 r2-r5
 r5-r8
 ```
-Many examples can be found in the `/maps` repository.
+Many examples are provided in the `/maps` repository.
 
 ### Options
 * -h --help : Display usage
@@ -136,6 +137,6 @@ Many examples can be found in the `/maps` repository.
 * -p --paths : Display the paths found by the algorithm
 * -v --visual : Display the visual in a new Google Chrome tab
 
-### Dependencies
-* PHP: only for the visual
-* Google Chrome: only for the visual
+### Dependencies (only for the visual)
+* PHP
+* Google Chrome
