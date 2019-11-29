@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 12:25:10 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/16 15:31:56 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/29 17:07:42 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ long long	ft_atol(const char *str)
 	long long	nbr;
 	size_t		i;
 
+	if (str == NULL)
+		return (FAILURE);
 	nbr = 0;
 	i = 0;
 	while (*str == ' ' || (*str >= 9 && *str <= 13))
