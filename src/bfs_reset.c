@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 15:12:29 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/29 12:08:32 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/29 16:12:24 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,20 @@ static int8_t	find_neighbour(t_graph *graph, size_t i, int8_t found)
 	return (found);
 }
 
+int8_t			sink_link_source(t_graph *graph)
+{
+	t_edge *curr;
+
+	curr = graph->nodes[graph->source].head;
+	while (curr != NULL)
+	{
+		if (curr->dest == graph->sink)
+			return (TRUE);
+		curr = curr->next;
+	}
+	return (FALSE);
+}
+
 void			reset_marks(t_graph *graph, t_bfs *bfs)
 {
 	size_t	i;
@@ -65,8 +79,9 @@ void			reset_marks(t_graph *graph, t_bfs *bfs)
 			curr = curr->next;
 		}
 		found = find_neighbour(graph, i, found);
-		if (found == FALSE || graph->nodes[i].sink == TRUE
+		if (found == FALSE || ((graph->nodes[i].sink == TRUE
 			|| graph->nodes[i].source == TRUE)
+			&& sink_link_source(graph) == FALSE))
 			graph->nodes[i].bfs_marked = FALSE;
 		graph->nodes[i].enqueued = FALSE;
 		graph->nodes[i].enqueued_backward = FALSE;

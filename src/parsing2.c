@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/28 11:12:02 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/29 17:08:39 by ekelkel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ int8_t			save_node(t_parsing *p, char *line)
 		return (exit_parsing_error(p, line, tab));
 	if (save_node_name(tab, p) == FAILURE)
 		return (exit_parsing_error(p, line, tab));
-	if (check_int(tab[1], FALSE) == FAILURE
-			|| check_int(tab[2], FALSE) == FAILURE)
+	if (!tab[1] || check_int(tab[1], FALSE) == FAILURE
+		|| !tab[2] || check_int(tab[2], FALSE) == FAILURE)
 		return (exit_parsing_error(p, line, tab));
-	x = ft_atoi(tab[1]);
+	x = ft_atol(tab[1]);
 	y = ft_atol(tab[2]);
 	if (is_coord_duplicate(p, x, y) == TRUE)
 		return (exit_parsing_error(p, line, tab));
