@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/29 11:34:15 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/29 18:24:30 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ typedef struct	s_paths
 	size_t		*ants_to_paths;
 	size_t		*n;
 	size_t		*len;
-	size_t		paths_used;
 	size_t		output_lines;
 	int8_t		*available;
 	t_edge		*neighbours;
@@ -152,6 +151,7 @@ int8_t			all_moved(t_list **pos, ssize_t *tmp, t_graph *graph,
 void			print_lines(t_paths *paths, t_graph *graph);
 
 void			print_ssize_t(t_list *list, t_graph *graph);
+void			print_graph(t_graph *graph);
 
 void			free_p(t_parsing *p);
 void			free_tab(char **tab);

@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:13:33 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/28 23:48:00 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/29 18:58:01 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,25 @@ t_paths	*find_solution(t_graph *graph, t_list *aug_paths)
 	return (paths);
 }
 
+void	print_options(t_graph *graph, t_paths *paths, t_options *o)
+{
+	size_t i;
+
+	if (o->graph == TRUE)
+		print_graph(graph);
+	if (o->paths == TRUE)
+	{
+		ft_putendl("\n*** Paths ***");
+		i = 0;
+		while (i < graph->paths_count)
+		{
+			ft_printf("path %d: ", i);
+			print_ssize_t(paths->array[i++], graph);
+		}
+		ft_putchar('\n');
+	}
+}
+
 int8_t	solver(t_graph *graph, t_list *aug_paths, t_options *o)
 {
 	t_paths	*paths;
@@ -83,11 +102,8 @@ int8_t	solver(t_graph *graph, t_list *aug_paths, t_options *o)
 	if ((paths = find_solution(graph, aug_paths)) == NULL)
 		return (FAILURE);
 	i = 0;
-	paths->paths_used = 0;
 	while (i < graph->paths_count)
 	{
-		if (paths->n[i] > 0)
-			paths->paths_used++;
 		tmp[i] = paths->n[i];
 		i++;
 	}
@@ -96,5 +112,8 @@ int8_t	solver(t_graph *graph, t_list *aug_paths, t_options *o)
 	if (o->visual == TRUE)
 		visualizer(graph, paths);
 	print_lines(paths, graph);
+	print_options(graph, paths, o);
+	free_paths(paths, graph);
+	free_graph(graph);
 	return (SUCCESS);
 }

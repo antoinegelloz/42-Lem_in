@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/28 15:08:40 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/29 19:15:07 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,26 @@ void	print_graph(t_graph *graph)
 	size_t	i;
 	t_edge	*neighbours;
 
-	ft_putendl("\n*** Anthill ***");
+	ft_putendl("\n        *** Anthill ***\n      rooms  x  y  tunnels");
 	i = 0;
 	while (i < graph->size)
 	{
 		neighbours = graph->nodes[i].head;
 		if (graph->nodes[i].source == 1)
-			ft_putstr("start ");
+			ft_putstr("start");
 		else if (graph->nodes[i].sink == 1)
-			ft_putstr("  end ");
+			ft_putstr("  end");
 		else
-			ft_putstr("      ");
-		ft_printf("Room|%s| x|%d| y|%d| tunnels|", graph->nodes[i].name,
+			ft_putstr("     ");
+		ft_printf("|%5s|%2d|%2d|", graph->nodes[i].name,
 					graph->nodes[i].x_coord, graph->nodes[i].y_coord);
 		while (neighbours)
 		{
 			ft_printf(" -> %s", graph->nodes[neighbours->dest].name);
 			neighbours = neighbours->next;
 		}
-		ft_putstr("|\n");
+		ft_putchar('\n');
 		i++;
 	}
+	ft_putchar('\n');
 }

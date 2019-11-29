@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 18:58:06 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/28 23:50:44 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/29 16:02:16 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,4 @@ void			print_lines(t_paths *paths, t_graph *graph)
 		}
 		print_round(paths, graph, ants_pos, tmp_pos);
 	}
-	free_paths(paths, graph);
-	free_graph(graph);
 }
