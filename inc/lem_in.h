@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/29 19:18:15 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/11/29 19:20:30 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,16 +136,19 @@ void			reset_marks(t_graph *graph, t_bfs *bfs);
 void			print_file(t_parsing *p);
 
 int8_t			solver(t_graph *graph, t_list *aug_paths, t_options *o);
-void			assign_ants_to_paths(t_graph *graph, t_paths *paths, size_t tmp[]);
+void			assign_ants_to_paths(t_graph *graph, t_paths *paths,
+									size_t tmp[]);
 t_paths			*init_output(t_graph *graph, t_list *aug_paths);
 void			init_lines(t_paths *paths, t_graph *graph);
 int8_t			is_solution_found(t_paths *paths, t_graph *graph);
 int8_t			is_new_solution_better(t_list *aug_paths, t_graph *graph);
 t_list			*get_next_path(t_list *path, t_graph *graph);
-size_t			compute_path_pos(t_list **path, t_list *aug_paths, t_graph *graph);
+size_t			compute_path_pos(t_list **path, t_list *aug_paths,
+									t_graph *graph);
 size_t			is_on_path(size_t node, t_list *path, t_graph *graph);
 t_bfs			*reconstruct_path(t_bfs *new_bfs, t_graph *graph);
-void			skip_node(t_bfs *new_bfs, t_edge *neigh, t_graph *graph, t_list *path);
+void			skip_node(t_bfs *new_bfs, t_edge *neigh, t_graph *graph,
+							t_list *path);
 int8_t			is_source_neighbours(size_t node, t_graph *graph);
 int8_t			reset_availability(t_graph *graph, t_paths *paths,
 									size_t *ants2paths);
