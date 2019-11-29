@@ -5,7 +5,7 @@ An anthill is described as a network composed of 'rooms' (graph nodes) and 'tunn
 The real trouble begins when each room can welcome only one ant at a time (except for start and end).</br>
 A round ends when no more ants are able to move any further.
 
-![Output sample](https://github.com/agelloz/42-Lem_in/visual/lemin.gif)
+![demo](visual/lemin.gif)
 
 ## Algorithm: Modified Edmonds-Karp with BFS searching for the paths minimizing the lines of output
 ```
