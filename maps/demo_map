@@ -1,9 +1,9 @@
 100
 #Here is the number of lines required: 30
 ##start
-Jyx2 2 2
+start 2 2
 ##end
-Wst8 5 5
+end 5 5
 A_b7 7 7
 Nkz9 8 8
 Rzg5 10 10
@@ -512,7 +512,7 @@ Beg9-Omc4
 Sfm6-Rjv6
 Ibp7-Sjn7
 B_i7-Psp3
-Tgw4-Wst8
+Tgw4-end
 Iil0-Tgw4
 Atj9-Iil0
 Zmx1-Ycp7
@@ -537,7 +537,7 @@ Czm4-Izi8
 Osa1-Czm4
 Ptg2-O_r3
 Aaj9-Tpk0
-Jyx2-Aaj9
+start-Aaj9
 Joq2-Iow4
 Qmn2-Ir_8
 Mjg9-Fec5
@@ -557,7 +557,7 @@ T_q5-Vxl6
 Rym2-T_q5
 Pxf7-Rym2
 Ujc2-Pxf7
-Abk4-Wst8
+Abk4-end
 Qxm0-Mba7
 Gvy2-Qxm0
 Zt_7-Gvy2
@@ -578,8 +578,8 @@ Gdc1-Mks7
 Afy5-Izx7
 Ids6-Afy5
 Jdb8-Nmi1
-Jyx2-Jdb8
-Itw1-Wst8
+start-Jdb8
+Itw1-end
 Aay9-Itw1
 Qmh6-Aay9
 Qmt7-Qmh6
@@ -606,8 +606,8 @@ Rfy5-Jen0
 Eal0-Zij5
 Fhk0-Eal0
 Epb4-Fhk0
-Jyx2-Bwu3
-Uys0-Wst8
+start-Bwu3
+Uys0-end
 F_v1-Uys0
 Ngi5-F_v1
 Upx1-Ngi5
@@ -626,7 +626,7 @@ Zit1-Vok5
 Yui7-Zit1
 Vpb1-Yui7
 Qop0-Prr9
-Fut8-Wst8
+Fut8-end
 Xbt9-Fut8
 K_p8-Xbt9
 Pqw7-K_p8
@@ -635,7 +635,7 @@ Tyb2-Raw1
 H_b8-Jf_1
 Rz_8-T_d0
 Dyd7-Rz_8
-Jyx2-Dyd7
+start-Dyd7
 Jjg8-Un_9
 Exg3-Hdn1
 Eht2-Exg3
@@ -644,7 +644,7 @@ Csy3-Rey2
 Hyg8-Urk4
 Cgr5-Ifg5
 B_r5-Cgr5
-Yzj1-Wst8
+Yzj1-end
 Apy2-Ppb7
 Cax2-Apy2
 Koz8-Cax2
@@ -653,7 +653,7 @@ Zti1-Wia1
 Jme3-Zti1
 Dux1-Jme3
 Bdm9-Hoz6
-Jyx2-Beg0
+start-Beg0
 Zqy2-Trx0
 Btr2-Zxr9
 Yhi6-Btr2
@@ -662,7 +662,7 @@ Mpe5-Rwa4
 Sgl3-Unb7
 Sai0-Maz6
 Ec_4-Sai0
-Hmz1-Wst8
+Hmz1-end
 Nlp0-Ptc6
 Hxj2-Gxy0
 Yud9-Hxj2
@@ -673,8 +673,8 @@ Obm0-Nh_8
 Gts3-Obm0
 Y_o9-Gts3
 Vs_8-Y_o9
-Jyx2-Dob8
-Iif4-Wst8
+start-Dob8
+Iif4-end
 Hur2-Iif4
 Ekd3-Ruv7
 Kdi9-Ekd3
@@ -687,7 +687,7 @@ Imp4-Mpb1
 Nct6-Imp4
 Wzt0-Nct6
 Ibp7-Wzt0
-Jyx2-Ibp7
+start-Ibp7
 Ndj4-Ake0
 Okv0-Uzm5
 Pmi3-Vki3
@@ -701,7 +701,7 @@ Ywj6-Ifj4
 Aiv4-Zya1
 Ixr1-Aiv4
 Efx0-Ixr1
-V_p3-Wst8
+V_p3-end
 Epi9-Iy_6
 Gza0-Epi9
 Vxl2-Gza0
@@ -711,7 +711,7 @@ Mth0-Eij9
 Oht9-Mth0
 M_h7-Oht9
 B_t0-M_h7
-Jyx2-Naz8
+start-Naz8
 Naz8-B_t0
 Rgg4-Sv_4
 Sv_4-Azx2
@@ -719,7 +719,7 @@ Qav6-Voc5
 Voc5-Vxl2
 Iy_6-Fou9
 Fou9-V_p3
-Jyx2-Qad4
+start-Qad4
 Qad4-Efx0
 Zya1-Ywj6
 Ifj4-Bcr3
@@ -729,7 +729,7 @@ Dfx9-Zjl6
 Vki3-R_n6
 R_n6-Okv0
 Uzm5-Ndj4
-Ake0-Wst8
+Ake0-end
 Pky8-Bja5
 Zpe1-Ozm0
 Ozm0-Fkp2
@@ -751,7 +751,7 @@ Gxy0-Gst1
 Gst1-Nlp0
 Ptc6-Eoy9
 Eoy9-Hmz1
-Jyx2-Ec_4
+start-Ec_4
 Maz6-G_t2
 G_t2-Uor2
 Uor2-Sgl3
@@ -766,7 +766,7 @@ Trx0-Jto6
 Jto6-Szr4
 Szr4-Ajr8
 Ajr8-Uyk3
-Uyk3-Wst8
+Uyk3-end
 Beg0-Bdm9
 Hoz6-Yyo5
 Yyo5-Ynw8
@@ -775,7 +775,7 @@ Fde5-Dv_7
 Dv_7-Dux1
 Cxy9-Koz8
 Ppb7-Yzj1
-Jyx2-Ico2
+start-Ico2
 Ico2-B_r5
 Ifg5-Haz8
 Haz8-Qhe3
@@ -784,22 +784,22 @@ Urk4-Rlt1
 Rlt1-Csy3
 Rey2-Mpp6
 Hdn1-Jjg8
-Un_9-Wst8
+Un_9-end
 T_d0-Zbr2
 Zbr2-H_b8
 Jf_1-Tyb2
 Raw1-Pwc9
 Pwc9-Tvy7
 Tvy7-Glx6
-Jyx2-Ipn4
+start-Ipn4
 Ipn4-Qop0
 Prr9-Vpb1
 B_t6-Iyd6
 Iyd6-Shm9
 Bi_3-Yrc5
 Ghp1-Tcs1
-Tcs1-Wst8
-Jyx2-Xmw5
+Tcs1-end
+start-Xmw5
 Xmw5-Hnd3
 Kex3-Me_2
 Me_2-Qth8
@@ -854,7 +854,7 @@ Ktw3-G_b8
 Tit1-Djd0
 Djd0-Qaz3
 Mba7-Abk4
-Jyx2-Kgh7
+start-Kgh7
 Kgh7-Ujc2
 Yao8-Nd_4
 Nd_4-Tif0
@@ -872,7 +872,7 @@ Fec5-Mju5
 Mju5-Qmn2
 Ir_8-Mfz7
 Mfz7-Joq2
-Iow4-Wst8
+Iow4-end
 Tpk0-Bcf6
 Bcf6-Qc_2
 Qc_2-Skj4

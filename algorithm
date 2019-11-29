@@ -1,85 +1,79 @@
-Algorithm: Edmonds-Karp with BFS for shortest augmenting paths searching
+Algorithm: Modified Edmonds-Karp with BFS searching for the paths minimizing the lines of output
 
-main(file)
-	parse file, get ants number and create graph via an adjacency list
-	if (no solution possible)
-		exit error
-	print file on stdout
-	create aug_paths list
-	aug_paths = edmonds_karp(graph)
-	if (aug_paths is NULL)
-		exit error
-	let the ants pass into the graph through 
-	each aug_paths and print each round
+function main(options):
+	parse the arguments for any options
+	parse the file from stdin (get ants number, rooms and tunnels)
+	build the graph with an adjacency list
+	if (parsing error):
+		print error and exit
+	initialize paths list to null
+	paths = find_paths(graph)
+	if (no solution is found):
+		print error and exit
+	print the file on stdout
+	assign each ant to a path
+	let the ants pass into the graph by printing one line of output for each round
+	display any options for arguments
 
-edmonds_karp(graph)
-	while (true)
-		if ((new_path = bfs(graph)) is NULL)
-			return (aug_paths)
-		append new shortest path to aug_paths
-		reduce capacities of the new path edges
-		increase capacities of the new path reverse edges
-		aug_paths = find_disjoint_paths(graph, aug_paths, new_path)
+function find_paths(graph):
+	initialize paths list to null
+	new_path = bfs(graph)
+	append new_path to paths
+	reduce capacities of the new_path forward edges
+	increase capacities of the new_path backward edges
+	compute the initial lines of output using only this first path
+	point to the first path with selected_path
+	while (selected_path did not reach the end of the paths list):
+		store the previous number of paths found
+		new_path = bfs(graph, selected_path)
+		compute the new lines of output
+		if (the new output is minimized):
+			update the count of lines of output
+			append new_paths to paths
+			reduce capacities of the new_path forward edges to 0
+			increase capacities of the new_path backward edges to 2
+			selected_path to first path
+		else:
+			discard new_path
+			selected_path to next path
+	return (paths)
 
-bfs(graph)
-	create queue and add source node
-	create a prev[size of graph] array to keep track of previous nodes at each enqueues
-	while (queue is not empty)
-		dequeue front node of the queue
-		if (it has not been visited)
-			mark it as visited
-			while (it has neighbours)
-				if (neighbour has not been visited)
-					enqueue(neighbour)
-	return (reconstruct_path(new_bfs, graph))
-
-
-bfs_disjoint_paths(graph, aug_paths, prev_path)
-	create queue and add source node
-	create a prev[size of graph] array to keep track of previous nodes at each enqueues
-	while (queue is not empty)
-	{
-		node = dequeue
-		for each neighbour of node
-		{
-			if (node is NOT on prev_path)
-			{
-				if (neighbour is on prev_path)
-				{
+function bfs(graph, selected_path):
+	create a queue and add start_room
+	create a prev[size of graph] array to keep track of previous rooms when enqueued
+	while (queue is not empty):
+		room = dequeue(queue)
+		for each (neighbours of room NOT already enqueued):
+			if (room is NOT on selected_path AND NOT end_room):
+				if (neighbour is on selected_path AND NOT a start_room neighbour):
 					mark neighbour as visited
 					mark neighbour as already enqueued
-					update prev[neighbour] = node
-					for each neighbour2 of neighbour
-					{
-						if (edge to neighbour2 has capacity of 2
-							AND neighbour2 is on prev_path)
-							enqueue(neighbour2)
-					}
-				}
-				else
-					enqueue(neighbour)
-			}
-			else if (node is on prev_path 
-				     AND edge to neighbour has capacity of 2 (backward)
-					 AND neighbour != source)
-				enqueue(neighbour)
-			else if (node is on prev_path
-					 AND edge to neighbour has capacity of 1 (forward))
-				enqueue(neighbour)
-		}
-	}
-	new_path = reconstruct_path(new_bfs, graph)
-	new_aug_paths = rebuild_paths(graph)
-	return (new_aug_paths))
-	//return (compare_solutions(new_aug_paths, aug_paths))
+					update prev[neighbour] = room
+					select neighbour2 as the previous room of neighbour on the selected_path
+					enqueue(neighbour, neighbour2)
+				else if (neighbour is NOT visited):
+					enqueue(room, neighbour)
+			else if (room is on selected_path
+					AND (edge to neighbour has a capacity of 2 AND NOT start_room
+						|| edge to neighbour has a capacity of 1 AND NOT visited)):
+				enqueue(room, neighbour)
+	return (reconstruct_path(graph, prev))
 
-reconstruct_path(new_bfs, graph)
-	node = graph->sink
-	while (node != NULL)
-		add node to new_path list beginning
-		node = prev[node]
-	reset all marks except source and the nodes on the new aug_path
-	if (first node of new_path is source)
-		return new_path
-	else
-		return NULL
+function reconstruct_path(graph, prev):
+	initialize new_paths list to null
+	room = end_room
+	while (room exists):
+		add room to new_path list
+		room = prev[room]
+	if (the first room of new_path is start):
+		reset all rooms visited on the new_path
+		return (new_path)
+	else:
+		reset all rooms visited
+		return (null)
+
+function enqueue(room, neighbour):
+	mark neighbour as visited
+	mark neighbour as already enqueued
+	update prev[neighbour] = room
+	enqueue(neighbour)

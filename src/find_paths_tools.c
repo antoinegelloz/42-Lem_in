@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:26:16 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/29 16:05:51 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/29 21:22:49 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	skip_node(t_bfs *new_bfs, t_edge *neigh, t_graph *graph, t_list *path)
 	while (neigh2)
 	{
 		if (neigh2->capacity == 2
-				&& is_on_path(neigh2->dest, path, graph) == TRUE
-				&& neigh2->dest != graph->source)
+			&& is_on_path(neigh2->dest, path, graph) == TRUE
+			&& neigh2->dest != graph->source)
 		{
 			enqueue(neigh->dest, neigh2->dest, graph, new_bfs);
 			graph->nodes[neigh2->dest].enqueued_backward = TRUE;

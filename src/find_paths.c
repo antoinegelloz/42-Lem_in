@@ -6,7 +6,7 @@
 /*   By: ekelkel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 16:12:57 by ekelkel           #+#    #+#             */
-/*   Updated: 2019/11/29 16:09:12 by ekelkel          ###   ########.fr       */
+/*   Updated: 2019/11/29 21:47:52 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	enqueue_node(t_bfs *new_bfs, t_graph *graph,
 		else if (is_on_path(new_bfs->node, path, graph) == TRUE
 				&& ((neigh->capacity == 2 && neigh->dest != graph->source)
 					|| (neigh->capacity == 1
-						&& graph->nodes[neigh->dest].bfs_marked == FALSE)))
+					&& graph->nodes[neigh->dest].bfs_marked == FALSE)))
 			enqueue(new_bfs->node, neigh->dest, graph, new_bfs);
 	}
 }
