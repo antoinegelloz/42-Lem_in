@@ -96,8 +96,12 @@ function enqueue(room, neighbour):
 cd 42-Lem_in
 make
 ```
+### Dependencies (only for the visual)
+* PHP
+* Google Chrome
+
 ## Usage
-A map with a precise format has to be sent to the `lem-in` program as `stdin` input:
+A map with a precise format is sent to the `lem-in` program as `stdin` input:
 ```
 ./lem-in [-h --help] [-a --anthill] [-p --paths] [-v --visual] < maps/demo_map
 ```
@@ -119,7 +123,7 @@ r0-r1		<< tunnels
 r1-r2
 r2-r8
 r0-r6
-#comment	<< optional comments can be any line
+#comment	<< optional comments can at any line
 r6-r7
 r1-r6
 r1-r4
@@ -137,6 +141,40 @@ Many examples are provided in the `/maps` repository.
 * -p --paths : Display the paths found by the algorithm
 * -v --visual : Display the visual in a new Google Chrome tab
 
-### Dependencies (only for the visual)
-* PHP
-* Google Chrome
+### Output
+The output of the program is divided in two parts:
+* the file read from `stdin`
+* one round - movements of ants - per line (output to minimize)
+example:
+```
+5
+##start
+r0 1 2
+r1 2 3
+r2 3 4
+r3 4 5
+r4 3 5
+r5 6 7
+r6 8 9
+r7 7 9
+##end
+r8 90 1
+r0-r1
+r1-r2
+r2-r8
+r0-r6
+r6-r7
+r1-r6
+r1-r4
+r4-r8
+r0-r3
+r3-r2
+r2-r5
+r5-r8
+
+L1-r3 L2-r1				<< round 0
+L1-r2 L2-r4 L3-r3 L4-r1			<< round 1
+L1-r8 L2-r8 L3-r2 L4-r4 L5-r3		<< round 2
+L3-r8 L4-r8 L5-r2			<< round 3
+L5-r8					<< round 4
+```
