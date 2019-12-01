@@ -1,4 +1,4 @@
-# lem-in
+# Lem_in
 This 42 school project is about designing and implementing an algorithm to solve a special case of a maximum flow problem in graph theory.</br>
 The goal is to find the optimal flow of ants through an anthill that minimizes the number of rounds needed to traverse the anthill.</br>
 An anthill is described as a network composed of 'rooms' (graph nodes) and 'tunnels' (edges) linking the rooms together, with all ants starting and finishing at two precise rooms.</br>
@@ -91,7 +91,7 @@ function enqueue(room, neighbour):
 ## Building
 `make` is used to build the `libft.a` static library and the `lem-in` binary. To build the project, execute the following commands:
 ```
-cd 42-lem-in
+cd 42-Lem_in
 make
 ```
 ## Dependencies only for the visual option
