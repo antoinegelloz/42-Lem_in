@@ -1,20 +1,20 @@
 # Lem_in
-Lem_in is an algorithm project about solving a special case of a maximum flow problem in network optimization.</br>
-The goal is to find the best flow of ants through an anthill that minimizes the number of movement rounds.</br>
-An anthill is described as a network composed of 'rooms' (graph nodes) and 'tunnels' (graph edges) linking the rooms together.</br>
-The real trouble begins when each room can welcome only one ant at a time (except for start and end).</br>
-A round ends when no more ants are able to move any further.
+Lem_in is an algorithm project solving a special case of a maximum flow problem in graph theory.</br>
+The goal is to find the optimal flow of ants through an anthill that minimizes the number of rounds needed to traverse the anthill.</br>
+An anthill is described as a network composed of 'rooms' (graph nodes) and 'tunnels' (edges) linking the rooms together, with all ants starting and finishing at two precise rooms.</br>
+The real trouble begins when each room can welcome only one ant at a time (except for the start and end rooms).</br>
+A round ends when no more ants are able to start or move any further in the anthill.
 
 ![demo](visual/lemin.gif)
 
 ## Algorithm
 ```
-Modified Edmonds-Karp with BFS searching for the paths minimizing the lines of output
+Modified Edmonds-Karp with BFS searching for paths minimizing the lines of output
 
 function main(options):
-	parse the arguments for any options
+	parse the arguments for any display options
 	parse the file from stdin (get ants number, rooms and tunnels)
-	build the graph with an adjacency list
+	build the graph data structure with an adjacency list with all edge's capacities at 1
 	if (parsing error):
 		print error and exit
 	initialize paths list to null
@@ -23,17 +23,17 @@ function main(options):
 		print error and exit
 	print the file on stdout
 	assign each ant to a path
-	let the ants pass into the graph by printing one line of output for each round
-	display any options for arguments
+	let the ants pass into the graph by printing one line of output for each round on stdout
+	display any options from arguments
 
 function find_paths(graph):
 	initialize paths list to null
 	new_path = bfs(graph)
-	append new_path to paths
+	append new_path to paths list
 	reduce capacities of the new_path forward edges
 	increase capacities of the new_path backward edges
-	compute the initial lines of output using only this first path
-	point to the first path with selected_path
+	compute the initial lines of output using only this new_path
+	point to the new_path as selected_path
 	while (selected_path did not reach the end of the paths list):
 		store the previous number of paths found
 		new_path = bfs(graph, selected_path)
@@ -43,10 +43,10 @@ function find_paths(graph):
 			append new_paths to paths
 			reduce capacities of the new_path forward edges to 0
 			increase capacities of the new_path backward edges to 2
-			selected_path to first path
+			point selected_path to first path
 		else:
 			discard new_path
-			selected_path to next path
+			point selected_path to next path
 	return (paths)
 
 function bfs(graph, selected_path):
@@ -91,12 +91,12 @@ function enqueue(room, neighbour):
 ```
 
 ## Building
-`make` is used to build the `libft.a` static library and the `lem-in` binary. To build the project, Execute the following commands:
+`make` is used to build the `libft.a` static library and the `lem-in` binary. To build the project, execute the following commands:
 ```
 cd 42-Lem_in
 make
 ```
-## Dependencies (only for the visual)
+## Dependencies only for the visual option
 * PHP
 * Google Chrome
 
@@ -107,7 +107,7 @@ A map with a precise format is sent to the `lem-in` program as `stdin` input:
 ```
 ### Map format
 ```
-5		<< ants number
+5			<< ants number
 ##start		<< start room is following
 r0 1 2
 r1 2 3
@@ -133,18 +133,18 @@ r3-r2
 r2-r5
 r5-r8
 ```
-Many examples are provided in the `/maps` repository.
+Many more examples are provided in the `/maps` repository.
 
 ### Options
 * -h --help : Display usage
-* -a --anthill : Display the anthill rooms and tunnels in a table
+* -a --anthill : Display the anthill rooms and tunnels
 * -p --paths : Display the paths found by the algorithm
 * -v --visual : Display the visual in a new Google Chrome tab
 
 ## Output
 The output of the program is divided in two parts:
 * the file read from `stdin`
-* one round per line (output to minimize). It represents the movements of ants with the format `LX-Y` (`X` being the ant's number and `Y` the room's name).
+* one line per round (output to minimize). It represents the movements of ants with the format `LX-Y` (`X` being the ant's number and `Y` the room's name).
 
 ### Example
 ```
