@@ -1,5 +1,5 @@
-# Lem_in
-Lem_in is an algorithm project solving a special case of a maximum flow problem in graph theory.</br>
+# lem-in
+This 42 school project is about designing and implementing an algorithm to solve a special case of a maximum flow problem in graph theory.</br>
 The goal is to find the optimal flow of ants through an anthill that minimizes the number of rounds needed to traverse the anthill.</br>
 An anthill is described as a network composed of 'rooms' (graph nodes) and 'tunnels' (edges) linking the rooms together, with all ants starting and finishing at two precise rooms.</br>
 The real trouble begins when each room can welcome only one ant at a time (except for the start and end rooms).</br>
