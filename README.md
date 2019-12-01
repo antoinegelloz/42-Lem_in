@@ -5,8 +5,6 @@ An anthill is described as a network composed of 'rooms' (graph nodes) and 'tunn
 The real trouble begins when each room can welcome only one ant at a time (except for the start and end rooms).</br>
 A round ends when no more ants are able to start or move any further in the anthill.
 
-![demo](visual/lemin.gif)
-
 ## Algorithm
 ```
 Modified Edmonds-Karp with BFS searching for paths minimizing the lines of output
@@ -93,7 +91,7 @@ function enqueue(room, neighbour):
 ## Building
 `make` is used to build the `libft.a` static library and the `lem-in` binary. To build the project, execute the following commands:
 ```
-cd 42-Lem_in
+cd 42-lem-in
 make
 ```
 ## Dependencies only for the visual option
@@ -107,7 +105,7 @@ A map with a precise format is sent to the `lem-in` program as `stdin` input:
 ```
 ### Map format
 ```
-5			<< ants number
+5		<< ants number
 ##start		<< start room is following
 r0 1 2
 r1 2 3
