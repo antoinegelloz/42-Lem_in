@@ -30,7 +30,7 @@ t_bfs	*reconstruct_path(t_bfs *new_bfs, t_graph *graph)
 	if (*(size_t *)new_bfs->shortest_path->content != graph->source)
 	{
 		reset_marks_fail(graph, new_bfs);
-		ft_lstdel(&new_bfs->shortest_path, ft_delcontent);
+    ft_lstdel(&new_bfs->shortest_path, ft_delcontent);
 		free_bfs(new_bfs);
 		return (NULL);
 	}

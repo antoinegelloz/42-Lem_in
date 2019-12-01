@@ -76,6 +76,7 @@ t_list	*bfs_and_compare(t_graph *graph,
 		while (path_pos-- > 0)
 			*path = get_next_path(*path, graph);
 	}
+  ft_lstdel(&new_bfs->shortest_path, ft_delcontent);
 	free_bfs(new_bfs);
 	return (aug_paths);
 }
@@ -83,7 +84,7 @@ t_list	*bfs_and_compare(t_graph *graph,
 t_list	*first_bfs(t_graph *graph)
 {
 	t_list	*aug_paths;
-	t_bfs	*new_bfs;
+	t_bfs   *new_bfs;
 	t_paths *paths;
 
 	aug_paths = NULL;
@@ -91,10 +92,10 @@ t_list	*first_bfs(t_graph *graph)
 		return (NULL);
 	ft_lstappend(&aug_paths, new_bfs->shortest_path);
 	update_edge_capacities(new_bfs, graph, INCREASE);
-	free_bfs(new_bfs);
 	if ((paths = find_solution(graph, aug_paths)) == NULL)
 		return (NULL);
 	graph->old_output_lines = paths->output_lines;
+	free_bfs(new_bfs);
 	free_paths(paths, graph);
 	return (aug_paths);
 }

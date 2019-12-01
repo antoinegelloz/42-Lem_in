@@ -12,8 +12,8 @@
 
 NAME = libft.a
 CC = Clang
-#CFLAGS = -Wall -Wextra -Werror -O3 -ffreestanding -fno-builtin -flto
-CFLAGS = -Wall -Wextra -g3 -fsanitize=address,undefined -Wpadded
+CFLAGS = -Wall -Wextra -Werror -O3 -ffreestanding -fno-builtin -flto
+#CFLAGS = -Wall -Wextra -g3 -fsanitize=address,undefined -Wpadded
 CLEANUP = /bin/rm -rf
 INC = libft.h
 INC_DIR = inc/

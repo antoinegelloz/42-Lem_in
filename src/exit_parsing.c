@@ -40,16 +40,13 @@ void	free_tab(char **tab)
 
 int8_t	exit_parsing_error(t_parsing *p, char *line, char **tab)
 {
+	free_tab(tab);
+  ft_strdel(&line);
+  get_next_line(CLEANUP, NULL);
 	if (p->ants > 0 && p->source > -1 && p->sink > -1
 		&& p->nodes != NULL && p->from != NULL && p->to != NULL)
-	{
-		free_tab(tab);
 		return (STOP);
-	}
-	if (line)
-		ft_strdel(&line);
 	free_p(p);
-	free_tab(tab);
 	ft_putendl_fd("ERROR", 2);
 	return (FAILURE);
 }

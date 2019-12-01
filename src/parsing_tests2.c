@@ -83,7 +83,11 @@ int8_t	is_edge_duplicate(t_parsing *p, t_list *new_f, t_list *new_t)
 			&& *(size_t *)new_t->content == *(size_t *)t->content)
 			|| (*(size_t *)new_f->content == *(size_t *)t->content
 			&& *(size_t *)new_t->content == *(size_t *)f->content))
+    {
+      ft_lstdel(&new_f, ft_delcontent);
+      ft_lstdel(&new_t, ft_delcontent);
 			return (TRUE);
+    }
 		f = f->next;
 		t = t->next;
 	}

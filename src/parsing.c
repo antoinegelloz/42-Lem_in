@@ -85,15 +85,15 @@ int8_t			parse_file(t_parsing *p)
 		if (ret_process == FAILURE)
 			return (FAILURE);
 		else if (ret_process == STOP)
-			break ;
-		if ((new_line = ft_lstnew(line, (ft_strlen(line) + 1)
-						* sizeof(char))) == NULL)
+			return (SUCCESS);
+		if (!(new_line = ft_lstnew(line, ft_strlen(line) * (sizeof(char) + 1))))
 			return (exit_parsing_error(p, line, NULL));
 		ft_lstappend(&p->file, new_line);
 		ft_strdel(&line);
 	}
-	if (ret_gnl == FAILURE || p->from == NULL || p->to == NULL)
-		exit_parsing_error(p, NULL, NULL);
+	if (ret_gnl == FAILURE || p->ants <= 0 || p->source < 0 || p->sink < 0
+      || !p->nodes || !p->from || !p->to)
+		return (exit_parsing_error(p, line, NULL));
 	ft_strdel(&line);
 	get_next_line(CLEANUP, NULL);
 	return (SUCCESS);
