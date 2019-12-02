@@ -6,23 +6,12 @@
 /*   By: agelloz <agelloz@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/28 16:58:56 by agelloz           #+#    #+#             */
-/*   Updated: 2019/09/05 12:35:25 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/12/02 12:42:20 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
-
-int		ft_strlen(char *s)
-{
-	int i;
-
-	if (!s)
-		return (0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
+#include "libft.h"
 
 void	ft_print_string(t_sp *sp)
 {

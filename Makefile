@@ -6,13 +6,14 @@
 #    By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/19 11:32:25 by agelloz           #+#    #+#              #
-#    Updated: 2019/11/29 17:00:52 by ekelkel          ###   ########.fr        #
+#    Updated: 2019/12/02 13:48:43 by agelloz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 NAME = lem-in
-CFLAGS = -Wall -Wextra -Werror -O3 -ffreestanding -fno-builtin -flto
+CFLAGS = -Wall -Wextra -Werror -g3
+#CFLAGS = -Wall -Wextra -Werror -O3 -ffreestanding -fno-builtin -flto
 #CFLAGS = -Wall -Wextra -g3 -fsanitize=address,undefined -Wpadded
 LIBH = libft/inc
 INC = inc/

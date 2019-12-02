@@ -6,18 +6,16 @@
 /*   By: agelloz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 16:02:30 by agelloz           #+#    #+#             */
-/*   Updated: 2019/04/04 16:03:39 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/12/02 12:35:33 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putendl(char const *s)
+int	ft_putendl(char const *s)
 {
-	if (s)
-	{
-		while (*s)
-			ft_putchar(*(s++));
-		ft_putchar('\n');
-	}
+	if (!s)
+		return (0);
+	write(1, s, ft_strlen(s));
+	return (write(1, "\n", 1));
 }

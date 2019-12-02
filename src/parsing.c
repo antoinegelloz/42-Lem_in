@@ -6,7 +6,7 @@
 /*   By: agelloz <agelloz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:33:35 by agelloz           #+#    #+#             */
-/*   Updated: 2019/11/19 14:18:06 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/12/02 12:42:54 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int8_t			parse_file(t_parsing *p)
 			return (FAILURE);
 		else if (ret_process == STOP)
 			return (SUCCESS);
-		if (!(new_line = ft_lstnew(line, ft_strlen(line) * (sizeof(char) + 1))))
+		if (!(new_line = ft_lstnew(line, ft_strlen(line) * sizeof(char) + 1)))
 			return (exit_parsing_error(p, line, NULL));
 		ft_lstappend(&p->file, new_line);
 		ft_strdel(&line);
