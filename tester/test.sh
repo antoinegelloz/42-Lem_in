@@ -98,11 +98,11 @@ if [ $no_gen -eq 1 ]; then
 		if [ ! -z "$turns" ]; then
 			average=$(($average + $resu - $turns))
 			average_str=$(echo "scale=1; $average / $i" | bc)
+			diff=$(echo "$resu-$turns" | bc)
 			if [ $resu -eq $turns ]; then
 				echo $map_str ": Required:" $turns "-" $resu "Achieved" \
 					"Average:" $average_str
 			else
-				diff=$(echo "$resu-$turns" | bc)
 				if [ $resu -gt $turns ]; then
 					echo $map_str ": Required:" $turns "-\033[0;31m" $resu "\033[0mAchieved" \
 						"- Average:" $average_str "- Diff:\033[0;31m" $diff "\033[0m"
@@ -163,11 +163,11 @@ while [ $(($i)) -lt $(($n_maps + 1)) ]; do
 	resu=$($program $prog_options <$map_folder/$map_str | grep "^L" | wc -l | awk '{$1=$1;print}')
 	average=$(($average + $resu - $turns))
 	average_str=$(echo "scale=1; $average / $i * 100 /100" | bc)
+	diff=$(echo "$resu-$turns" | bc)
 	if [ $resu -eq $turns ]; then
 		echo "Generating" $map_str "  Required :" $turns "-" $resu "Achieved" \
-			" and Average" $average_str " diff:" $diff
+			" and Average" $average_str
 	else
-		diff=$(echo "$resu-$turns" | bc)
 		if [ $resu -gt $turns ]; then
 			echo "Generating" $map_str "  Required:" $turns "-\033[0;31m" $resu "\033[0mAchieved" \
 				"- Average" $average_str "- Diff:\033[0;31m" $diff "\033[0m"
@@ -178,14 +178,14 @@ while [ $(($i)) -lt $(($n_maps + 1)) ]; do
 	fi
 	if [ $check -eq 1 ]; then
 		if test -f "$checker"; then
-			$program $prog_options <$map_folder/$map_str | $checker $program $filename 
+			$program $prog_options <$map_folder/$map_str | $checker $program $map_folder/$map_str
 		fi
 	fi
 	if [ $timer -eq 1 ]; then
 		if test -f "$program"; then
 			utime="$(
 				TIMEFORMAT='%R'
-				time ($program $prog_options <$map_folder/$map_str) 2>&1 1>/dev/null
+				time ($program $prog_options <$map_str) 2>&1 1>/dev/null
 			)"
 			utime_tot=$(echo "scale=3; $utime + $utime_tot" | bc)
 			utime_av=$(echo "scale=3; $utime_tot / $i " | bc)
