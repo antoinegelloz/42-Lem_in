@@ -1,11 +1,31 @@
-# Lem_in
-This 42 school project is about designing and implementing an algorithm to solve a special case of a maximum flow problem in graph theory.</br>
+# Lem_in 🐜
+In this 42 school project, we designed and implemented an algorithm to solve a special case of a maximum flow problem in graph theory.</br>
 The goal is to find the optimal flow of ants through an anthill that minimizes the number of rounds needed to traverse the anthill.</br>
 An anthill is described as a network composed of 'rooms' (graph nodes) and 'tunnels' (edges) linking the rooms together, with all ants starting and finishing at two precise rooms.</br>
 The real trouble begins when each room can welcome only one ant at a time (except for the start and end rooms).</br>
 A round ends when no more ants are able to start or move any further in the anthill.
 
 ![demo](visual/lemin.gif)
+
+### Inspired by Edmonds–Karp
+
+For each round of the algorithm, an augmenting path is found, increasing the potential flow of ants through the anthill. Edmonds-Karp algorithm chooses the next augmenting path using breadth-first search (BFS). If there are multiple augmenting paths to choose from, Edmonds-Karp garantees to select the shortest path from source to sink. Once there are no remaining paths found, the algorithm ends.
+
+We decided to design a tweaked version of the BFS to allow backtracking on a node already included in a selected augmenting path. We were able to find more paths than with regular Edmonds-Karp, thus improving the algorithm efficiency. Below is a case in point. The regular BFS will only find the path on Fig. 1. For a number of ants greater than 2, this is not the best solution. Our modified BFS will find the two paths on Fig. 2: 
+
+ ![alt text](https://raw.githubusercontent.com/agelloz/42-Lem_in/master/modified_bfs.png)
+
+### Linear programming model
+
+Once all the augmenting paths are found, we have to decide which paths to use in order to minimize the number of rounds given the number of ants. We consider the following : 
+
+ ![alt text](https://raw.githubusercontent.com/agelloz/42-Lem_in/master/model.png)
+
+At the beginning, C is set to the length of the shortest path. For each incremental value of C, we try to solve the following equations system:
+
+![alt text](https://raw.githubusercontent.com/agelloz/42-Lem_in/master/equation.png)
+
+Until a feasible solution is found, we increment C. We finally know how many ants will flow on each path.
 
 ## Algorithm
 ```
@@ -91,12 +111,9 @@ function enqueue(room, neighbour):
 ```
 
 ## Building
-`make` is used to build the `libft.a` static library and the `lem-in` binary. To build the project, execute the following commands:
-```
-cd 42-Lem_in
-make
-```
-## Dependencies only for the visual option
+Build the `libft.a` static library and the `lem-in` binary by executing `make` in the cloned repo.
+
+## Dependencies (for the visual only)
 * PHP
 * Google Chrome
 
