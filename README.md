@@ -13,17 +13,17 @@ For each round of the algorithm, an augmenting path is found, increasing the pot
 
 We decided to design a tweaked version of the BFS to allow backtracking on a node already included in a selected augmenting path. We were able to find more paths than with regular Edmonds-Karp, thus improving the algorithm efficiency. Below is a case in point. The regular BFS will only find the path on Fig. 1. For a number of ants greater than 2, this is not the best solution. Our modified BFS will find the two paths on Fig. 2: 
 
- ![alt text](https://raw.githubusercontent.com/agelloz/42-Lem_in/master/modified_bfs.png)
+![alt text](https://raw.githubusercontent.com/agelloz/42-Lem_in/master/img/modified_bfs.png)
 
 ### Linear programming model
 
 Once all the augmenting paths are found, we have to decide which paths to use in order to minimize the number of rounds given the number of ants. We consider the following : 
 
- ![alt text](https://raw.githubusercontent.com/agelloz/42-Lem_in/master/model.png)
+![alt text](https://raw.githubusercontent.com/agelloz/42-Lem_in/master/img/model.png)
 
 At the beginning, C is set to the length of the shortest path. For each incremental value of C, we try to solve the following equations system:
 
-![alt text](https://raw.githubusercontent.com/agelloz/42-Lem_in/master/equation.png)
+![alt text](https://raw.githubusercontent.com/agelloz/42-Lem_in/master/img/equation.png)
 
 Until a feasible solution is found, we increment C. We finally know how many ants will flow on each path.
 
