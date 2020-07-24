@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = libft.a
-CC = Clang
+CC = clang
 CFLAGS = -Wall -Wextra -Werror -g3
 #CFLAGS = -Wall -Wextra -Werror -O3 -ffreestanding -fno-builtin -flto
 #CFLAGS = -Wall -Wextra -g3 -fsanitize=address,undefined -Wpadded

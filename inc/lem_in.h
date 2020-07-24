@@ -13,7 +13,7 @@
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
-# include "libft.h"
+# include "libft.h" 
 
 # define INCREASE 1
 # define DECREASE -1

@@ -10,71 +10,209 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+################################################################################
+################################                ################################
+################################ MAIN VARIABLES ################################
+################################                ################################
+################################################################################
+
+# Name
 NAME = lem-in
-CFLAGS = -Wall -Wextra -Werror -g3
-#CFLAGS = -Wall -Wextra -Werror -O3 -ffreestanding -fno-builtin -flto
-#CFLAGS = -Wall -Wextra -g3 -fsanitize=address,undefined -Wpadded
-LIBH = libft/inc
-INC = inc/
-HEAD = $(INC)lem_in.h
-LIBA = libft/libft.a
-SRC_DIR = src/
+DEBUG_NAME = lem-in_db
 
-SRC_FILES += lem_in.c 
-SRC_FILES += parsing.c 
-SRC_FILES += parsing2.c 
-SRC_FILES += parsing_tests.c 
-SRC_FILES += parsing_tests2.c 
-SRC_FILES += build_graph.c 
-SRC_FILES += print.c 
-SRC_FILES += find_paths.c
-SRC_FILES += find_paths_tools.c
-SRC_FILES += init_output.c
-SRC_FILES += bfs_tools.c
-SRC_FILES += bfs_tools2.c
-SRC_FILES += bfs_tools3.c
-SRC_FILES += bfs_reset.c
-SRC_FILES += solver.c
-SRC_FILES += solver_tools.c
-SRC_FILES += print_lines.c
-SRC_FILES += print_lines2.c
-SRC_FILES += exit.c
-SRC_FILES += exit_parsing.c
+# Compiler
+CC = clang
 
-SRC = $(addprefix $(SRC_DIR), $(SRC_FILES)) visual/visualizer.c
+# Lib
+PATH_LIBFT = libft/
+LIBFT = $(PATH_LIBFT)libft.a
+DEBUG_LIBFT = $(PATH_LIBFT)db_libft.a
 
-OBJ = $(SRC:%.c=%.o)
+# Compiler Flags
+CFLAGS += -Wall
+CFLAGS += -Wextra
+CFLAGS += -Werror
 
-all: $(NAME)
+# Compiler Debug Flags
+DBFLAGS += $(CFLAGS)
+DBFLAGS += -fsanitize=address,undefined
+DBFLAGS += -g3
+DBFLAGS += -pedantic
 
-$(NAME): $(LIBA) $(OBJ) 
-	$(CC) $(CFLAGS) -I$(LIBH) -I$(INC) -Llibft -lft -o $@ $(OBJ)
-	printf "$(GREEN)created: $@\n$(NC)"
+# Debug Dir
+DSYM += $(NAME).dSYM
+DSYM += $(DBNAME).dSYM
 
-$(LIBA): FORCE
-	$(MAKE) -C libft
+################################################################################
+################################                ################################
+################################   PRINT VAR    ################################
+################################                ################################
+################################################################################
 
-FORCE:
+# Reset
+NC = \033[0m
 
-%.o: %.c $(HEAD)
-	$(CC) $(CFLAGS) -I$(LIBH) -I$(INC) -o $@ -c $<
-	printf "$(CYAN)compiling: $<\n$(NC)"
+# Regular Colors
+BLACK = \033[0;30m
+RED = \033[0;31m
+GREEN = \033[32m
+YELLOW = \033[0;33m
+BLUE = \033[0;34m
+PURPLE = \033[0;35m
+CYAN = \033[0;36m
+WHITE = \033[0;37m
+
+# One Line Output
+ONELINE =\e[1A\r
+
+################################################################################
+#################################               ################################
+#################################    INCLUDES   ################################
+#################################               ################################
+################################################################################
+
+INCLUDES_LIBFT = libft/inc/
+INCLUDES_LEMIN = inc/
+
+I_INCLUDES += -I $(INCLUDES_LIBFT)
+I_INCLUDES += -I $(INCLUDES_LEMIN)
+
+################################################################################
+#################################               ################################
+#################################    HEADERS    ################################
+#################################               ################################
+################################################################################
+
+vpath %.h $(INCLUDES_LIBFT)
+vpath %.h $(INCLUDES_LEMIN)
+
+# libft
+HEADER += libft.h
+
+# lemin
+HEADER += lem_in.h
+
+################################################################################
+#################################               ################################
+#################################  PATH SOURCES ################################
+#################################               ################################
+################################################################################
+
+PATH_SRCS += src
+PATH_SRCS += visual
+
+################################################################################
+#################################               ################################
+#################################    SOURCES    ################################
+#################################               ################################
+################################################################################
+
+SRCS += lem_in.c 
+SRCS += parsing.c 
+SRCS += parsing2.c 
+SRCS += parsing_tests.c 
+SRCS += parsing_tests2.c 
+SRCS += build_graph.c 
+SRCS += print.c 
+SRCS += find_paths.c
+SRCS += find_paths_tools.c
+SRCS += init_output.c
+SRCS += bfs_tools.c
+SRCS += bfs_tools2.c
+SRCS += bfs_tools3.c
+SRCS += bfs_reset.c
+SRCS += solver.c
+SRCS += solver_tools.c
+SRCS += print_lines.c
+SRCS += print_lines2.c
+SRCS += exit.c
+SRCS += exit_parsing.c
+SRCS += visualizer.c
+
+
+################# ATTRIBUTION
+
+vpath %.c $(PATH_SRCS)
+
+################################################################################
+#################################               ################################
+#################################     OBJS      ################################
+#################################               ################################
+################################################################################
+
+PATH_OBJS = objs/
+OBJS = $(patsubst %.c, $(PATH_OBJS)%.o, $(SRCS))
+
+DEBUG_PATH_OBJS = objs_debug/
+DEBUG_OBJS = $(patsubst %.c, $(DEBUG_PATH_OBJS)%.o, $(SRCS))
+
+
+################################################################################
+#################################               ################################
+#################################     RULES     ################################
+#################################               ################################
+################################################################################
+
+#---------------------------------- STANDARD ----------------------------------#
+
+all: $(PATH_OBJS) $(NAME)
+
+$(NAME): $(LIBFT) $(OBJS)
+	$(CC) $(CFLAGS) $(I_INCLUDES) $(OBJS) $(LIBFT) -o $@
+	printf "$(GREEN)$@ is ready.\n$(NC)"
+
+$(OBJS): $(PATH_OBJS)%.o: %.c $(HEADER) Makefile
+	$(CC) $(CFLAGS) $(I_INCLUDES) -c $< -o $@
+	printf "$(ONELINE)$(CYAN)Compiling $<"
+	printf "                                                            \n$(NC)"
+
+$(PATH_OBJS):
+	mkdir $@
+
+$(LIBFT): FORCE
+	$(MAKE) -C $(PATH_LIBFT)
+
+#------------------------------------ DEBUG -----------------------------------#
+
+debug: $(DEBUG_PATH_OBJS) $(DEBUG_NAME)
+
+$(DEBUG_NAME): $(DEBUG_LIBFT) $(DEBUG_OBJS)
+	$(CC) $(DBFLAGS) $(I_INCLUDES) $(DEBUG_OBJS) $(DEBUG_LIBFT) -o $@
+	printf "$(GREEN)$@ is ready.\n$(NC)"
+
+$(DEBUG_OBJS): $(DEBUG_PATH_OBJS)%.o: %.c $(HEADER) Makefile
+	$(CC) $(DBFLAGS) $(I_INCLUDES) -c $< -o $@
+	printf "$(ONELINE)$(PURPLE)Compiling for DEBUG $<"
+	printf "                                                            \n$(NC)"
+
+$(DEBUG_PATH_OBJS):
+	mkdir $@
+
+$(DEBUG_LIBFT): FORCE
+	$(MAKE) -C $(PATH_LIBFT) debug
+
+#--------------------------------- Basic Rules --------------------------------#
 
 clean:
-	$(MAKE) -C libft fclean
-	$(RM) $(OBJ)
+	$(RM) $(OBJS)
+	$(RM) $(DEBUG_OBJS)
+	$(RM) -R $(PATH_OBJS)
+	$(RM) -R $(DEBUG_PATH_OBJS)
+	$(RM) -R $(DSYM)
+	$(MAKE) -C $(PATH_LIBFT) clean
+	printf "$(RED)Objs from lemin removed\n$(NC)"
 
 fclean: clean
 	$(RM) $(NAME)
-	printf "$(RED)deleted: $(NAME)\n$(NC)"
+	$(RM) $(DEBUG_NAME)
+	$(MAKE) -C $(PATH_LIBFT) fclean
+	printf "$(RED)$(NAME) removed\n$(NC)"
 
 re: fclean all
 
-CYAN=\033[0;36m
-GREEN=\033[0;32m
-RED=\033[0;31m
-NC=\033[0m
+FORCE:
 
-.PHONY: all clean fclean re
+#----------------------------------- Special ----------------------------------#
+
+.PHONY: clean fclean re all debug
 .SILENT:

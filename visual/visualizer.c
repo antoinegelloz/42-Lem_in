@@ -109,6 +109,7 @@ int8_t	visualizer(t_graph *graph, t_paths *paths)
 	print_edges(file, graph, paths, prefix);
 	system("if ! ps aux | grep -v grep | grep 'php -S localhost:8000' \
 			&>/dev/null; then php -S localhost:8000 &>/dev/null & fi");
-	system("open -a \"Google Chrome\" http://localhost:8000/visual/");
+	system("google-chrome http://localhost:8000/visual/");
+	//system("open -a \"Google Chrome\" http://localhost:8000/visual/");
 	return (SUCCESS);
 }
