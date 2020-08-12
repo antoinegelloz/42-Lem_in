@@ -107,9 +107,16 @@ int8_t	visualizer(t_graph *graph, t_paths *paths)
 		i++;
 	}
 	print_edges(file, graph, paths, prefix);
-	system("if ! ps aux | grep -v grep | grep 'php -S localhost:8000' \
-			&>/dev/null; then php -S localhost:8000 &>/dev/null & fi");
-	system("google-chrome http://localhost:8000/visual/");
-	//system("open -a \"Google Chrome\" http://localhost:8000/visual/");
+
+	system("./visual/server/server -r ./visual > /dev/null 2>&1 &");
+
+#ifdef __linux__
+	system("google-chrome http://localhost:8888/ > /dev/null 2>&1 &");
+#elif __APPLE__
+	system("open -a \"Google Chrome\" http://localhost:8888/ > /dev/null 2>&1 &");
+#else
+	ft_printf("Unidentified OS\n");
+#endif
+
 	return (SUCCESS);
 }

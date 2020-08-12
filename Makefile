@@ -28,6 +28,10 @@ PATH_LIBFT = libft/
 LIBFT = $(PATH_LIBFT)libft.a
 DEBUG_LIBFT = $(PATH_LIBFT)db_libft.a
 
+# Web server
+PATH_WEBSRV = visual/server/
+WEBSRV = $(PATH_WEBSRV)server
+
 # Compiler Flags
 CFLAGS += -Wall
 CFLAGS += -Wextra
@@ -86,10 +90,7 @@ I_INCLUDES += -I $(INCLUDES_LEMIN)
 vpath %.h $(INCLUDES_LIBFT)
 vpath %.h $(INCLUDES_LEMIN)
 
-# libft
 HEADER += libft.h
-
-# lemin
 HEADER += lem_in.h
 
 ################################################################################
@@ -157,14 +158,13 @@ DEBUG_OBJS = $(patsubst %.c, $(DEBUG_PATH_OBJS)%.o, $(SRCS))
 
 all: $(PATH_OBJS) $(NAME)
 
-$(NAME): $(LIBFT) $(OBJS)
+$(NAME): $(LIBFT) $(WEBSRV) $(OBJS)
 	$(CC) $(CFLAGS) $(I_INCLUDES) $(OBJS) $(LIBFT) -o $@
 	printf "$(GREEN)$@ is ready.\n$(NC)"
 
 $(OBJS): $(PATH_OBJS)%.o: %.c $(HEADER) Makefile
 	$(CC) $(CFLAGS) $(I_INCLUDES) -c $< -o $@
-	printf "$(ONELINE)$(CYAN)Compiling $<"
-	printf "                                                            \n$(NC)"
+	printf "$(CYAN)compiling $<\n"
 
 $(PATH_OBJS):
 	mkdir $@
@@ -172,18 +172,20 @@ $(PATH_OBJS):
 $(LIBFT): FORCE
 	$(MAKE) -C $(PATH_LIBFT)
 
+$(WEBSRV): 
+	$(MAKE) -C $(PATH_WEBSRV)
+
 #------------------------------------ DEBUG -----------------------------------#
 
 debug: $(DEBUG_PATH_OBJS) $(DEBUG_NAME)
 
-$(DEBUG_NAME): $(DEBUG_LIBFT) $(DEBUG_OBJS)
+$(DEBUG_NAME): $(DEBUG_LIBFT) $(WEBSRV) $(DEBUG_OBJS)
 	$(CC) $(DBFLAGS) $(I_INCLUDES) $(DEBUG_OBJS) $(DEBUG_LIBFT) -o $@
 	printf "$(GREEN)$@ is ready.\n$(NC)"
 
 $(DEBUG_OBJS): $(DEBUG_PATH_OBJS)%.o: %.c $(HEADER) Makefile
 	$(CC) $(DBFLAGS) $(I_INCLUDES) -c $< -o $@
-	printf "$(ONELINE)$(PURPLE)Compiling for DEBUG $<"
-	printf "                                                            \n$(NC)"
+	printf "$(PURPLE)compiling for DEBUG $<\n"
 
 $(DEBUG_PATH_OBJS):
 	mkdir $@
@@ -200,12 +202,14 @@ clean:
 	$(RM) -R $(DEBUG_PATH_OBJS)
 	$(RM) -R $(DSYM)
 	$(MAKE) -C $(PATH_LIBFT) clean
-	printf "$(RED)Objs from lemin removed\n$(NC)"
+	$(MAKE) -C $(PATH_WEBSRV) clean
+	printf "$(RED)objs from $(NAME) removed\n$(NC)"
 
 fclean: clean
 	$(RM) $(NAME)
 	$(RM) $(DEBUG_NAME)
 	$(MAKE) -C $(PATH_LIBFT) fclean
+	$(MAKE) -C $(PATH_WEBSRV) fclean
 	printf "$(RED)$(NAME) removed\n$(NC)"
 
 re: fclean all

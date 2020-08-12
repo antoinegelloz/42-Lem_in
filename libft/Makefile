@@ -10,157 +10,266 @@
 #                                                                              #
 # **************************************************************************** #
 
+################################################################################
+################################                ################################
+################################ MAIN VARIABLES ################################
+################################                ################################
+################################################################################
+
+# Name
 NAME = libft.a
+
+# Compiler
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -g3
-#CFLAGS = -Wall -Wextra -Werror -O3 -ffreestanding -fno-builtin -flto
-#CFLAGS = -Wall -Wextra -g3 -fsanitize=address,undefined -Wpadded
-CLEANUP = /bin/rm -rf
-INC = libft.h
-INC_DIR = inc/
-OBJ_DIR = obj/
 
-vpath %.c src/lists
-vpath %.c src/other
-vpath %.c src/printing
-vpath %.c src/strings
-vpath %.c src/printf
-vpath %.h inc/
+# Compiler Flags
+CFLAGS += -Wall
+CFLAGS += -Wextra
 
-SRC += float_aux.c
-SRC += float_calc.c
-SRC += float_calc_string.c
-SRC += float_calc_string2.c
-SRC += float_format.c
-SRC += formatting.c
-SRC += initialize.c
-SRC += parsing.c
-SRC += print_address.c
-SRC += print_char.c
-SRC += print_error.c
-SRC += print_float.c
-SRC += print_octal.c
-SRC += print_percent.c
-SRC += print_signed_base.c
-SRC += print_string.c
-SRC += print_unsigned_base.c
-SRC += printf.c
-SRC += ft_memalloc.c
-SRC += ft_memccpy.c
-SRC += ft_memchr.c
-SRC += ft_memcmp.c
-SRC += ft_memcpy.c
-SRC += ft_memdel.c
-SRC += ft_memmove.c
-SRC += ft_memset.c
-SRC += ft_delcontent.c
-SRC += ft_cpycontent.c
-SRC += ft_ascending_order.c
-SRC += ft_descending_order.c
-SRC += ft_bzero.c
-SRC += ft_isalnum.c
-SRC += ft_isalpha.c
-SRC += ft_isascii.c
-SRC += ft_isdigit.c
-SRC += ft_isprint.c
-SRC += ft_strcat.c
-SRC += ft_strchr.c
-SRC += ft_strclr.c
-SRC += ft_strcmp.c
-SRC += ft_strcpy.c
-SRC += ft_strdel.c
-SRC += ft_strdup.c
-SRC += ft_strdupfree.c
-SRC += ft_strequ.c
-SRC += ft_striter.c
-SRC += ft_striteri.c
-SRC += ft_strjoin.c
-SRC += ft_strjoin_free.c
-SRC += ft_strlcat.c
-SRC += ft_strlen.c
-SRC += ft_strmap.c
-SRC += ft_strmapi.c
-SRC += ft_strncat.c
-SRC += ft_strncmp.c
-SRC += ft_strncpy.c
-SRC += ft_strnequ.c
-SRC += ft_strnew.c
-SRC += ft_strnstr.c
-SRC += ft_strrchr.c
-SRC += ft_strsplit.c
-SRC += ft_strstr.c
-SRC += ft_strsub.c
-SRC += ft_strtrim.c
-SRC += ft_tolower.c
-SRC += ft_toupper.c
-SRC += ft_atoi.c
-SRC += ft_atol.c
-SRC += ft_itoa.c
-SRC += ft_putchar.c
-SRC += ft_putchar_fd.c
-SRC += ft_putendl.c
-SRC += ft_putendl_fd.c
-SRC += ft_putnbr.c
-SRC += ft_putnbr_fd.c
-SRC += ft_putstr.c
-SRC += ft_putstr_fd.c
-SRC += ft_lstnew.c
-SRC += ft_lstadd.c
-SRC += ft_lstprepend.c
-SRC += ft_lstappend.c
-SRC += ft_lstdel.c
-SRC += ft_lstdelone.c
-SRC += ft_lstiter.c
-SRC += ft_lstsorted.c
-SRC += ft_lstswap.c
-SRC += ft_lstpush.c
-SRC += ft_lstrotate.c
-SRC += ft_lstrevrotate.c
-SRC += ft_lstcount.c
-SRC += ft_lstcpy.c
-SRC += ft_lstncpy.c
-SRC += ft_lstrev.c
-SRC += ft_lstgetmin.c
-SRC += ft_lstgetmax.c
-SRC += ft_lstgetsize.c
-SRC += ft_lstindex.c
-SRC += ft_lst_mergesort.c
-SRC += get_next_line.c
+# Compiler Debug Flags
+ifeq ($(d), 0)
+	CFLAGS += -g3
+else ifeq ($(d), 1)
+	CFLAGS += -g3
+	CFLAGS += -fsanitize=address,undefined
+else ifeq ($(d), 2)
+	CFLAGS += -g3
+	CFLAGS += -fsanitize=address,undefined
+	CFLAGS += -Wpadded
+else ifeq ($(d), 3)
+	CFLAGS += -g3
+	CFLAGS += -fsanitize=address,undefined
+	CFLAGS += -Wpadded
+	CFLAGS += -pedantic
+else ifeq ($(d), 4)
+	CFLAGS += -g3
+	CFLAGS += -fsanitize=address,undefined
+	CFLAGS += -Wpadded
+	CFLAGS += -pedantic
+	CFLAGS += -Weverything
+endif
+ifneq ($(err), no)
+	CFLAGS += -Werror
+endif
 
-OBJ = $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC))
+# Debug Dir
+DSYM += $(NAME).dSYM
+DSYM += $(DBNAME).dSYM
 
-all: $(OBJ_DIR) $(NAME)
+################################################################################
+################################                ################################
+################################   PRINT VAR    ################################
+################################                ################################
+################################################################################
 
-$(NAME): $(OBJ)
-	ar -rsc $@ $^
-	printf "$(GREEN)created: $@\n$(NC)"
+# Reset
+NC = \033[0m
 
-$(OBJ): $(OBJ_DIR)%.o : %.c $(INC)
-	$(CC) -c $(CFLAGS) -I$(INC_DIR) $< -o $@
-	printf "$(CYAN)compiling: $<\n$(NC)"
+# Regular Colors
+BLACK = \033[0;30m
+RED = \033[0;31m
+GREEN = \033[32m
+YELLOW = \033[0;33m
+BLUE = \033[0;34m
+PURPLE = \033[0;35m
+CYAN = \033[0;36m
+WHITE = \033[0;37m
 
-$(OBJ_DIR):
-	mkdir -p $@
+# One Line Output
+ONELINE =\e[1A\r
+
+################################################################################
+#################################               ################################
+#################################    INCLUDES   ################################
+#################################               ################################
+################################################################################
+
+INCLUDES_LIBFT = inc/
+
+I_INCLUDES += -I $(INCLUDES_LIBFT)
+
+################################################################################
+#################################               ################################
+#################################    HEADERS    ################################
+#################################               ################################
+################################################################################
+
+# libft
+HEADER += libft.h
+
+# ft_printf
+HEADER += printf.h
+HEADER += printf_floats.h
+
+vpath %.h $(INCLUDES_LIBFT)
+
+################################################################################
+#################################               ################################
+#################################  PATH SOURCES ################################
+#################################               ################################
+################################################################################
+
+PATH_SRCS = src/
+PATH_SRCS_PRINTF = src/printf/
+
+################################################################################
+#################################               ################################
+#################################    SOURCES    ################################
+#################################               ################################
+################################################################################
+
+SRCS += float_aux.c
+SRCS += float_calc.c
+SRCS += float_calc_string.c
+SRCS += float_calc_string2.c
+SRCS += float_format.c
+SRCS += formatting.c
+SRCS += initialize.c
+SRCS += parsing.c
+SRCS += print_address.c
+SRCS += print_char.c
+SRCS += print_error.c
+SRCS += print_float.c
+SRCS += print_octal.c
+SRCS += print_percent.c
+SRCS += print_signed_base.c
+SRCS += print_string.c
+SRCS += print_unsigned_base.c
+SRCS += printf.c
+SRCS += ft_memalloc.c
+SRCS += ft_memccpy.c
+SRCS += ft_memchr.c
+SRCS += ft_memcmp.c
+SRCS += ft_memcpy.c
+SRCS += ft_memdel.c
+SRCS += ft_memmove.c
+SRCS += ft_memset.c
+SRCS += ft_delcontent.c
+SRCS += ft_cpycontent.c
+SRCS += ft_ascending_order.c
+SRCS += ft_descending_order.c
+SRCS += ft_bzero.c
+SRCS += ft_isalnum.c
+SRCS += ft_isalpha.c
+SRCS += ft_isascii.c
+SRCS += ft_isdigit.c
+SRCS += ft_isprint.c
+SRCS += ft_strcat.c
+SRCS += ft_strchr.c
+SRCS += ft_strclr.c
+SRCS += ft_strcmp.c
+SRCS += ft_strcpy.c
+SRCS += ft_strdel.c
+SRCS += ft_strdup.c
+SRCS += ft_strdupfree.c
+SRCS += ft_strequ.c
+SRCS += ft_striter.c
+SRCS += ft_striteri.c
+SRCS += ft_strjoin.c
+SRCS += ft_strjoin_free.c
+SRCS += ft_strlcat.c
+SRCS += ft_strlen.c
+SRCS += ft_strmap.c
+SRCS += ft_strmapi.c
+SRCS += ft_strncat.c
+SRCS += ft_strncmp.c
+SRCS += ft_strncpy.c
+SRCS += ft_strnequ.c
+SRCS += ft_strnew.c
+SRCS += ft_strnstr.c
+SRCS += ft_strrchr.c
+SRCS += ft_strsplit.c
+SRCS += ft_strstr.c
+SRCS += ft_strsub.c
+SRCS += ft_strtrim.c
+SRCS += ft_tolower.c
+SRCS += ft_toupper.c
+SRCS += ft_atoi.c
+SRCS += ft_atol.c
+SRCS += ft_itoa.c
+SRCS += ft_putchar.c
+SRCS += ft_putchar_fd.c
+SRCS += ft_putendl.c
+SRCS += ft_putendl_fd.c
+SRCS += ft_putnbr.c
+SRCS += ft_putnbr_fd.c
+SRCS += ft_putstr.c
+SRCS += ft_putstr_fd.c
+SRCS += ft_lstnew.c
+SRCS += ft_lstadd.c
+SRCS += ft_lstprepend.c
+SRCS += ft_lstappend.c
+SRCS += ft_lstdel.c
+SRCS += ft_lstdelone.c
+SRCS += ft_lstiter.c
+SRCS += ft_lstsorted.c
+SRCS += ft_lstswap.c
+SRCS += ft_lstpush.c
+SRCS += ft_lstrotate.c
+SRCS += ft_lstrevrotate.c
+SRCS += ft_lstcount.c
+SRCS += ft_lstcpy.c
+SRCS += ft_lstncpy.c
+SRCS += ft_lstrev.c
+SRCS += ft_lstgetmin.c
+SRCS += ft_lstgetmax.c
+SRCS += ft_lstgetsize.c
+SRCS += ft_lstindex.c
+SRCS += ft_lst_mergesort.c
+SRCS += get_next_line.c
+
+
+################# ATTRIBUTION
+
+vpath %.c $(PATH_SRCS)
+vpath %.c $(PATH_SRCS_PRINTF)
+
+################################################################################
+#################################               ################################
+#################################    OBJECTS    ################################
+#################################               ################################
+################################################################################
+
+PATH_OBJS = obj/
+OBJS = $(patsubst %.c, $(PATH_OBJS)%.o, $(SRCS))
+
+################################################################################
+#################################               ################################
+#################################     RULES     ################################
+#################################               ################################
+################################################################################
+
+#---------------------------------- Standard ----------------------------------#
+
+all: $(PATH_OBJS) $(NAME)
+
+$(NAME): $(OBJS)
+	ar rcs $@ $^
+	printf "$(GREEN)$@ is ready.\n$(NC)"
+
+$(OBJS): $(PATH_OBJS)%.o: %.c $(HEADER) Makefile
+	$(CC) $(CFLAGS) $(I_INCLUDES) -c $< -o $@
+	printf "$(CYAN)compiling $<\n"
+
+$(PATH_OBJS):
+	mkdir $@
+
+#--------------------------------- Basic Rules --------------------------------#
 
 clean:
-	$(CLEANUP) $(OBJ)
-	$(CLEANUP) $(OBJ_DIR)
-	#printf "$(RED)objects removed from libft\n$(NC)"
+	$(RM) $(OBJS)
+	$(RM) -R $(PATH_OBJS)
+	$(RM) -R $(DSYM)
+	printf "$(RED)objs from libft removed\n$(NC)"
 
 fclean: clean
-	$(CLEANUP) $(NAME)
-	printf "$(RED)deleted: $(NAME)\n$(NC)"
+	$(RM) $(NAME)
+	printf "$(RED)$(NAME) removed\n$(NC)"
 
-re: fclean all
+re: fclean
+	$(MAKE)
 
-CYAN=\033[0;36m
-BLUE=\033[0;34m
-GREEN=\033[32m
-RED=\033[0;31m
-WHITE=\033[0;37m
-PURPLE=\033[0;35m
-YELLOW=\033[0;33m
-NC=\033[0m
+#----------------------------------- Special ----------------------------------#
 
-.PHONY: all clean fclean re
+.PHONY: clean fclean re all
 .SILENT:

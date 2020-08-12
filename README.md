@@ -114,7 +114,6 @@ function enqueue(room, neighbour):
 Build the `libft.a` static library and the `lem-in` binary by executing `make` in the cloned repo.
 
 ## Dependencies (for the visual only)
-* PHP
 * Google Chrome
 
 ## Usage
