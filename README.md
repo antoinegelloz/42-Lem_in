@@ -13,24 +13,24 @@ For each round of the algorithm, an augmenting path is found, increasing the pot
 
 We decided to design a tweaked version of the BFS to allow backtracking on a node already included in a selected augmenting path. We were able to find more paths than with regular Edmonds-Karp, thus improving the algorithm efficiency. Below is a case in point. The regular BFS will only find the path on Fig. 1. For a number of ants greater than 2, this is not the best solution. Our modified BFS will find the two paths on Fig. 2: 
 
-![alt text](https://raw.githubusercontent.com/agelloz/42-Lem_in/master/img/modified_bfs.png)
+![alt text](https://raw.githubusercontent.com/ekelkel/42-Lem_in/master/img/modified_bfs.png)
 
 ### Linear programming model
 
-Once all the augmenting paths are found, we have to decide which paths to use in order to minimize the number of rounds given the number of ants. We consider the following : 
+Once all the augmenting paths are found, we have to decide which paths to use in order to minimize the number of rounds given the number of ants. We consider the following : </br>
 
-N = total number of ants
-I = total number of paths
-ni = number of ants on path i
-li = length of path i
-Ci = cost of path i (number of lines) = ni + li - 1
+N = total number of ants</br>
+I = total number of paths</br>
+ni = number of ants on path i</br>
+li = length of path i</br>
+Ci = cost of path i (number of lines) = ni + li - 1</br>
 
-min ( max (Ci : i ∀ i ∈ [0, I]) ) ⟺   min C
+min ( max (Ci : i ∀ i ∈ [0, I]) ) ⟺   min C</br>
 
-At the beginning, C is set to the length of the shortest path. For each incremental value of C, we try to solve the following equations system:
+At the beginning, C is set to the length of the shortest path. For each incremental value of C, we try to solve the following equations system:</br>
 
-Σ ni = N ∀ i ∈ [0, I]
-ni ≤ C - li + 1
+Σ ni = N ∀ i ∈ [0, I]</br>
+ni ≤ C - li + 1</br>
 
 Until a feasible solution is found, we increment C. We finally know how many ants will flow on each path.
 
