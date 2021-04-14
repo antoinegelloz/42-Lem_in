@@ -19,11 +19,18 @@ We decided to design a tweaked version of the BFS to allow backtracking on a nod
 
 Once all the augmenting paths are found, we have to decide which paths to use in order to minimize the number of rounds given the number of ants. We consider the following : 
 
-![alt text](https://raw.githubusercontent.com/agelloz/42-Lem_in/master/img/model.png)
+N = total number of ants
+I = total number of paths
+ni = number of ants on path i
+li = length of path i
+Ci = cost of path i (number of lines) = ni + li - 1
+
+min ( max (Ci : i ∀ i ∈ [0, I]) ) ⟺   min C
 
 At the beginning, C is set to the length of the shortest path. For each incremental value of C, we try to solve the following equations system:
 
-![alt text](https://raw.githubusercontent.com/agelloz/42-Lem_in/master/img/equation.png)
+Σ ni = N ∀ i ∈ [0, I]
+ni ≤ C - li + 1
 
 Until a feasible solution is found, we increment C. We finally know how many ants will flow on each path.
 
