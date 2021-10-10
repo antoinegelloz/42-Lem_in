@@ -202,3 +202,12 @@ L1-r8 L2-r8 L3-r2 L4-r4 L5-r3		<< round 2
 L3-r8 L4-r8 L5-r2			<< round 3
 L5-r8					<< round 4
 ```
+
+## Credits
+
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/antoinegelloz"><img src="https://avatars.githubusercontent.com/u/42968436?v=4" width="100px;" alt=""/><br /><sub><b>Antoine Gelloz</b></sub></a><br />
+    <td align="center"><a href="https://github.com/ekelkel"><img src="https://avatars.githubusercontent.com/u/55737691?v=4" width="100px;" alt=""/><br /><sub><b>Elora Kelkel</b></sub></a><br />
+  </tr>
+</table>
